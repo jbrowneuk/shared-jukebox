@@ -1,0 +1,22 @@
+@import 'palette';
+
+.form-container {
+  overflow: hidden;
+  text-align: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+}
+
+.login-button {
+  background-color: $color-palette4;
+  color: #eeeeee;
+
+  &:hover {
+    background-color: lighten($color-palette4, 10%);
+    color: white;
+  }
+}
