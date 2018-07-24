@@ -1,0 +1,10 @@
+body,
+html {
+  font-family: Nunito, sans-serif;
+  height: 100%;
+}
+
+.vertical-scrolling-panel {
+  overflow-x: hidden;
+  overflow-y: auto;
+}

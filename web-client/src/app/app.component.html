@@ -1,0 +1,18 @@
+<nav class="navbar text-light app-navbar">
+  <div class="container">
+    <span class="navbar-text"><i class="fas fa-music mr-1"></i> Jukebot</span>
+    <span class="navbar-text"><!-- name --></span>
+  </div>
+</nav>
+
+<app-identity *ngIf="shouldShowLogin" (login)="onLogin()" [@loginPageTransition]></app-identity>
+<app-jukebox *ngIf="shouldShowJukebox" [@loginPageTransition]></app-jukebox>
+<div class="full-page-loading pt-5" *ngIf="shouldShowConnecting" [@loginPageTransition]>
+  <div class="text-center">
+    <div>
+      <app-spinner isLarge="true"></app-spinner>
+    </div>
+    <h1 class="h3">Hold up a sec</h1>
+    <span class="text-muted">{{loadingMessage}}…</span>
+  </div>
+</div>

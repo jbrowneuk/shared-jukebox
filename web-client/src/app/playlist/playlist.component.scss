@@ -1,0 +1,26 @@
+.track-title {
+  display: block;
+}
+
+.cut-off {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playlist-table {
+  .col-play {
+    $fixed-width: 30px;
+
+    width: $fixed-width;
+    max-width: $fixed-width;
+  }
+
+  .col-artist {
+    width: 30%;
+  }
+
+  .col-user {
+    width: 20%;
+  }
+}
