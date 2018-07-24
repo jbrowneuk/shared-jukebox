@@ -59,5 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# Project files
+/web-client/src/assets/fa/
+
 # Operating system files
 .DS_Store

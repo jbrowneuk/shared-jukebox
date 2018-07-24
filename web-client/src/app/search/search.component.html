@@ -1,3 +1,13 @@
-<p>
-  search works!
-</p>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Type a song name" [(ngModel)]="searchTerm">
+  <div class="input-group-append">
+    <button id="search-button" class="btn btn-secondary" (click)="onSearchClick()">Search</button>
+  </div>
+</div>
+
+<div class="list-group mb-3" id="search-results" *ngIf="results && results.length > 0">
+  <button *ngFor="let result of results" class="list-group-item list-group-item-action pointer" (click)="onTermClicked(result.spotifyId)">
+    <h6 class="my-0">{{result.name}}</h6>
+    <small class="text-muted">{{result.artist}}</small>
+  </button>
+</div>

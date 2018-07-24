@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AnimationSettings } from './app.component.transitions';
+import { SocketService } from './socket.service';
 
 const loadingMessages = [
   'Adjusting the antenna',
@@ -15,13 +16,23 @@ const loadingMessages = [
   styleUrls: ['./app.component.scss'],
   animations: AnimationSettings
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   public loadingMessage: string;
   private connectionState = 0;
 
-  constructor() {
+  constructor(private socket: SocketService) {
     this.loadingMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+  }
+
+  ngOnInit() {
+    this.socket.subscribe('playlist', () => {
+      this.connectionState = 2;
+    });
+
+    this.socket.subscribe('disconnect', () => {
+      this.connectionState = 3;
+    });
   }
 
   public get shouldShowLogin(): boolean {
@@ -36,8 +47,11 @@ export class AppComponent {
     return this.connectionState === 2;
   }
 
+  public get wasDisconnected(): boolean {
+    return this.connectionState === 3;
+  }
+
   public onLogin(): void {
     this.connectionState = 1;
-    setTimeout(() => { this.connectionState = 2; }, 1000);
   }
 }
