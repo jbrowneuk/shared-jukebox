@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../socket.service';
+import { TrackData } from '../../../../shared/models';
 
 @Component({
   selector: 'app-search',
@@ -9,24 +10,22 @@ import { SocketService } from '../socket.service';
 export class SearchComponent {
 
   public searchTerm: string;
-  public results: any[];
+  public results: TrackData[];
 
   constructor(private socket: SocketService) {
     this.searchTerm = '';
     this.results = [];
+  }
 
-    socket.subscribe('results', (data: any[]) => {
+  public onSearchClick(): void {
+    this.socket.emit('query', this.searchTerm, (data: TrackData[]) => {
       console.log(data);
       this.results = data;
     });
   }
 
-  public onSearchClick(): void {
-    this.socket.emit('query', this.searchTerm);
-  }
-
   public onTermClicked(songId: string): void {
-    const relatedInfo = this.results.find(s => s.spotifyId === songId);
+    const relatedInfo = this.results.find(s => s.songId === songId);
     if (!relatedInfo) {
       return;
     }

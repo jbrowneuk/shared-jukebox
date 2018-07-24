@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as http from 'http';
 import * as io from 'socket.io';
 
-import { User } from '../../shared/models';
+import { User, TrackData } from '../../shared/models';
 
 const currentlySupportedVersion = 1;
 
@@ -13,7 +13,7 @@ const settings = {
 const app = express();
 const server = http.createServer(app);
 const socketServer = io(server);
-const currentPlaylist = [];
+const currentPlaylist: TrackData[] = [];
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -59,12 +59,28 @@ socketServer.on('connection', (socket: io.Socket) => {
   });
 
   socket.on('request', () => {
-    console.log('fake request!');
+    let username;
+    if (!userInfo) {
+      console.log('fake request!');
+      username = 'Server test page';
+    } else {
+      username = userInfo.name;
+    }
 
-    const songWrapper = { title: 'title', artist: 'artist', songId: '12345' };
+    const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: username };
     currentPlaylist.push(songWrapper);
     socketServer.emit('queued-track', songWrapper);
   });
+
+  socket.on('query', (data: string, callback: Function) => {
+    if (!callback) {
+      return;
+    }
+
+    console.log('fake query!');
+    const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: '' };
+    callback([songWrapper]);
+  })
 });
 
 server.listen(settings.port, () => {

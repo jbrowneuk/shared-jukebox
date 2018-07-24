@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimationSettings } from './playlist.component.transitions';
+import { SocketService } from '../socket.service';
+import { TrackData } from '../../../../shared/models';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
@@ -19,58 +21,27 @@ const emptyComments = [
 })
 export class PlaylistComponent implements OnInit {
 
-  public playlist: any[];
+  public playlist: TrackData[];
   public snarkyEmptyPlaylistComment: string;
 
-  private testInterval: any;
-
-  constructor() {
+  constructor(private socket: SocketService) {
     this.playlist = [];
     this.updateEmptyPlaylistComment();
   }
 
   ngOnInit() {
-    this.fakeSetup();
+    this.socket.subscribe('playlist', (data: TrackData[]) => {
+      this.playlist = data;
+      this.updateEmptyPlaylistComment();
+    });
+
+    this.socket.subscribe('queued-track', (data: TrackData) => {
+      this.playlist.push(data);
+    });
   }
 
   private updateEmptyPlaylistComment(): void {
     this.snarkyEmptyPlaylistComment = emptyComments[Math.floor(Math.random() * emptyComments.length)];
-  }
-
-  private fakeSetup(): void {
-    this.playlist.push({
-      title: 'Feels pretty good',
-      artist: 'TWRP',
-      album: 'Together through time',
-      spotifyId: '1234',
-      requestedBy: 'Not you'
-    });
-    this.playlist.push({
-      title: 'Holding On',
-      artist: 'Tracey Chattaway',
-      album: 'Nightsky',
-      spotifyId: '1235',
-      requestedBy: 'Jimmy'
-    });
-    this.playlist.push({
-      title: 'Let It Go - From "Frozen"',
-      artist: 'Idina Menzel',
-      album: 'Frozen (Original Motion Picture Soundtrack)',
-      spotifyId: '1236',
-      requestedBy: 'benwells'
-    });
-
-    this.testInterval = setInterval(() => this.fakeRemoveTrack(), 5000);
-  }
-
-  private fakeRemoveTrack(): void {
-    if (this.playlist.length === 0) {
-      clearInterval(this.testInterval);
-      this.updateEmptyPlaylistComment();
-      this.fakeSetup();
-      return;
-    }
-    this.playlist.splice(0, 1);
   }
 
 }

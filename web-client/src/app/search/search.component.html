@@ -6,8 +6,8 @@
 </div>
 
 <div class="list-group mb-3" id="search-results" *ngIf="results && results.length > 0">
-  <button *ngFor="let result of results" class="list-group-item list-group-item-action pointer" (click)="onTermClicked(result.spotifyId)">
-    <h6 class="my-0">{{result.name}}</h6>
+  <button *ngFor="let result of results" class="list-group-item list-group-item-action pointer" (click)="onTermClicked(result.songId)">
+    <h6 class="my-0">{{result.title}}</h6>
     <small class="text-muted">{{result.artist}}</small>
   </button>
 </div>
