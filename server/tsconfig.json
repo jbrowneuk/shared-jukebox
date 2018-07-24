@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "outDir": "dist",
+    "rootDir": "src"
+  }
+}
