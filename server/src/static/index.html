@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <pre id="update-output"></pre>
+  <pre id="song-output"></pre>
+  <button id="request-fake">Request</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+let playlistCache = [];
+
+function updateSongs() {
+  const str = playlistCache.reduce((acc, curr) => `${acc}\n${curr.title}`, '');
+  const outputArea = document.querySelector('#song-output');
+  outputArea.innerHTML = str;
+}
+
+var socket = io.connect('http://localhost:8080'); // This needs to change
+socket.on('client', (_, fn) => {
+  console.log('got client info request');
+
+  const client = {
+    name: 'Web-page based foobar',
+    version: 0
+  };
+
+  fn(client);
+});
+
+socket.on('require-update', (data) => {
+  console.log('Outdated client');
+
+  const outputArea = document.querySelector('#update-output');
+  outputArea.innerHTML = `You need to update to version ${data}. Do this by refreshing the page.`;
+});
+
+socket.on('playlist', (data) => {
+  if (!Array.isArray(data)) {
+    return;
+  }
+
+  playlistCache = data;
+  updateSongs();
+});
+
+socket.on('queued-track', (data) => {
+  console.log('Got a queued track');
+  playlistCache.push(data);
+  updateSongs();
+});
+
+var button = document.querySelector('#request-fake');
+button.addEventListener('click', () => {
+  socket.emit('request', 'song');
+});
+  </script>
+</body>
+</html>
