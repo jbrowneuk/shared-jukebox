@@ -1,7 +1,9 @@
 <nav class="navbar text-light app-navbar">
   <div class="container">
     <span class="navbar-text"><i class="fas fa-music mr-1"></i> Jukebot</span>
-    <span class="navbar-text"><!-- name --></span>
+    <span class="navbar-text">
+      {{(userInfo$ | async)?.name}}
+    </span>
   </div>
 </nav>
 

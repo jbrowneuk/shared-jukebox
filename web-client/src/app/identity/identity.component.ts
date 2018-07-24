@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { SocketService } from '../socket.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-identity',
@@ -11,7 +11,7 @@ export class IdentityComponent implements OnInit {
   @Output() public login: EventEmitter<void>;
   public userName: string;
 
-  constructor(private socket: SocketService) {
+  constructor(private userService: UserService) {
     this.userName = '';
     this.login = new EventEmitter<void>();
   }
@@ -20,8 +20,8 @@ export class IdentityComponent implements OnInit {
     // Get username from cookie?
   }
 
-  onConnectClick(): void {
-    this.socket.emit('login', { name: this.userName });
+  public onConnectClick(): void {
+    this.userService.authenticate(this.userName);
     this.login.emit();
   }
 
