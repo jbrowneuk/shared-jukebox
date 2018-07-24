@@ -9,6 +9,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { JukeboxComponent } from './jukebox/jukebox.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
+import { SocketService } from './socket.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SearchComponent } from './search/search.component';
     FormsModule
   ],
   providers: [],
+  providers: [SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
