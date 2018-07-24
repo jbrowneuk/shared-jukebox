@@ -20,13 +20,8 @@ import { SocketService } from './socket.service';
     PlaylistComponent,
     SearchComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule
-  ],
-  providers: [],
+  imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
   providers: [SocketService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
