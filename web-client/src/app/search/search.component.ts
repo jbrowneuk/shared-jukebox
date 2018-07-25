@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { SocketService } from '../socket.service';
 import { TrackData } from '../../../../shared/models';
 
+import { AnimationSettings } from './search.component.transitions';
+
 type ResultsTuple = [TrackData, boolean];
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
+  animations: AnimationSettings
 })
 export class SearchComponent {
 
@@ -21,7 +24,7 @@ export class SearchComponent {
 
   public onSearchClick(): void {
     this.socket.emit('query', this.searchTerm, (data: TrackData[]) => {
-      this.results = data.map(x => [x, false] as ResultsTuple);
+      this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
     });
   }
 
@@ -32,8 +35,6 @@ export class SearchComponent {
     }
 
     this.socket.emit('request', relatedInfo, (addedId: string) => {
-      console.log('added ', addedId);
-
       if (!addedId) {
         // Need to show error in UI
         return;
