@@ -58,7 +58,7 @@ socketServer.on('connection', (socket: io.Socket) => {
     socket.emit('playlist', currentPlaylist);
   });
 
-  socket.on('request', () => {
+  socket.on('request', (trackInfo: TrackData, callback: Function) => {
     let username;
     if (!userInfo) {
       console.log('fake request!');
@@ -67,9 +67,19 @@ socketServer.on('connection', (socket: io.Socket) => {
       username = userInfo.name;
     }
 
-    const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: username };
-    currentPlaylist.push(songWrapper);
-    socketServer.emit('queued-track', songWrapper);
+    const safeTrackInfo: TrackData = {
+      title: trackInfo.title,
+      album: trackInfo.album,
+      artist: trackInfo.artist,
+      songId: trackInfo.songId,
+      requestedBy: username
+    };
+
+    currentPlaylist.push(safeTrackInfo);
+    socketServer.emit('queued-track', safeTrackInfo);
+    if (callback) {
+      callback(safeTrackInfo.songId);
+    }
   });
 
   socket.on('query', (data: string, callback: Function) => {
