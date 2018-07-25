@@ -90,7 +90,12 @@ socketServer.on('connection', (socket: io.Socket) => {
     console.log('fake query!');
     const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: '' };
     callback([songWrapper]);
-  })
+  });
+
+  socket.on('get-playlist', (_, callback: Function) => {
+    console.log(`Sending playlist with ${currentPlaylist.length} items`);
+    callback(currentPlaylist);
+  });
 });
 
 server.listen(settings.port, () => {

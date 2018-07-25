@@ -32,11 +32,6 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socket.subscribe('playlist', (data: TrackData[]) => {
-      this.playlist = data;
-      this.updateEmptyPlaylistComment();
-    });
-
     this.socket.subscribe('queued-track', (data: TrackData) => {
       this.playlist.push(data);
     });
@@ -56,6 +51,12 @@ export class PlaylistComponent implements OnInit {
 
     this.socket.subscribe('pause', () => {
       this.isPlaying = false;
+    });
+
+    this.socket.emit('get-playlist', null, (data: TrackData[]) => {
+      console.log(`Got a playlist with ${data.length} items`);
+      this.playlist = data;
+      this.updateEmptyPlaylistComment();
     });
   }
 
