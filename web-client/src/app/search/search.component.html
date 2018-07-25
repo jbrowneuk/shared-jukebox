@@ -1,9 +1,9 @@
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Type a song name" [(ngModel)]="searchTerm">
+<form class="input-group mb-3" (submit)="onSearchClick()">
+  <input type="text" class="form-control" placeholder="Type a song name" name="search-term" [(ngModel)]="searchTerm">
   <div class="input-group-append">
-    <button id="search-button" class="btn btn-secondary" (click)="onSearchClick()">Search</button>
+    <button id="search-button" class="btn btn-secondary" type="submit">Search</button>
   </div>
-</div>
+</form>
 
 <div class="list-group mb-3" id="search-results" *ngIf="results && results.length > 0">
   <button *ngFor="let tuple of results" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
