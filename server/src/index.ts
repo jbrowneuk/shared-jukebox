@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as http from 'http';
 import * as io from 'socket.io';
+import * as Haikunator from 'haikunator';
 
 import { User, TrackData } from '../../shared/models';
 
@@ -14,6 +15,7 @@ const app = express();
 const server = http.createServer(app);
 const socketServer = io(server);
 const currentPlaylist: TrackData[] = [];
+const haikunator = new Haikunator();
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -44,11 +46,7 @@ socketServer.on('connection', (socket: io.Socket) => {
     userInfo = user;
 
     if (!userInfo.name || userInfo.name === '') {
-      userInfo.name = 'Suspicious carrot';
-    }
-
-    if (!userInfo.ulid || userInfo.ulid === '') {
-      userInfo.ulid = 'ulid';
+      userInfo.name = haikunator.haikunate({ tokenLength: 0, delimiter: ' ' });
     }
 
     if (callback) {
