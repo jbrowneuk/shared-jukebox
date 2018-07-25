@@ -23,9 +23,11 @@ export class PlaylistComponent implements OnInit {
 
   public playlist: TrackData[];
   public snarkyEmptyPlaylistComment: string;
+  public isPlaying: boolean;
 
   constructor(private socket: SocketService) {
     this.playlist = [];
+    this.isPlaying = false;
     this.updateEmptyPlaylistComment();
   }
 
@@ -37,6 +39,23 @@ export class PlaylistComponent implements OnInit {
 
     this.socket.subscribe('queued-track', (data: TrackData) => {
       this.playlist.push(data);
+    });
+
+    this.socket.subscribe('dequeued-track', (songId: string) => {
+      const relatedTrackInfo = this.playlist.findIndex(s => s.songId === songId);
+      if (relatedTrackInfo < 0) {
+        return;
+      }
+
+      this.playlist.splice(relatedTrackInfo, 1);
+    });
+
+    this.socket.subscribe('play', () => {
+      this.isPlaying = true;
+    });
+
+    this.socket.subscribe('pause', () => {
+      this.isPlaying = false;
     });
   }
 

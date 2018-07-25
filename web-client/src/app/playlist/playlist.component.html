@@ -29,7 +29,7 @@
     <tbody>
       <tr *ngFor="let trackDetails of playlist; let idx=index" [@itemTransition]>
         <td class="col-play text-center align-middle p-0">
-          <app-spinner *ngIf="idx == 0"></app-spinner>
+          <app-spinner *ngIf="idx == 0" [isAnimated]="isPlaying"></app-spinner>
         </td>
         <td>
           <span class="track-title cut-off">{{trackDetails.title}}</span>
