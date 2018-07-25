@@ -13,8 +13,8 @@ const loginPageTransition = trigger('loginPageTransition', [
     animate(
       DefaultTransitions.linear,
       keyframes([
-        style({ opacity: 0, position: 'absolute', width: '100%', offset: 0 }),
-        style({ opacity: 1, position: 'absolute', width: '100%', offset: 1 })
+        style({ opacity: 0, position: 'absolute', height: '100%', width: '100%', offset: 0 }),
+        style({ opacity: 1, position: 'absolute', height: '100%', width: '100%', offset: 1 })
       ])
     )
   ),
@@ -23,8 +23,8 @@ const loginPageTransition = trigger('loginPageTransition', [
     animate(
       DefaultTransitions.linear,
       keyframes([
-        style({ opacity: 1, position: 'absolute', width: '100%', offset: 0 }),
-        style({ opacity: 0, position: 'absolute', width: '100%', offset: 1 })
+        style({ opacity: 1, position: 'absolute', height: '100%', width: '100%', offset: 0 }),
+        style({ opacity: 0, position: 'absolute', height: '100%', width: '100%', offset: 1 })
       ])
     )
   )

@@ -1,25 +1,25 @@
 <nav class="navbar text-light app-navbar">
   <div class="container">
     <span class="navbar-text"><i class="fas fa-music mr-1"></i> Jukebot</span>
-    <span class="navbar-text">
-      {{(userInfo$ | async)?.name}}
-    </span>
+    <span class="navbar-text">{{(userInfo$ | async)?.name}}</span>
   </div>
 </nav>
 
-<app-identity *ngIf="shouldShowLogin" (login)="onLogin()" [@loginPageTransition]></app-identity>
-<app-jukebox *ngIf="shouldShowJukebox" [@loginPageTransition]></app-jukebox>
-<div class="full-page-loading pt-5" *ngIf="shouldShowConnecting" [@loginPageTransition]>
-  <div class="text-center">
-    <div>
-      <app-spinner isLarge="true"></app-spinner>
+<main class="position-relative">
+  <app-identity *ngIf="shouldShowLogin" (login)="onLogin()" [@loginPageTransition]></app-identity>
+  <app-jukebox *ngIf="shouldShowJukebox" [@loginPageTransition]></app-jukebox>
+  <div class="full-page-loading pt-5" *ngIf="shouldShowConnecting" [@loginPageTransition]>
+    <div class="text-center">
+      <div>
+        <app-spinner isLarge="true"></app-spinner>
+      </div>
+      <h1 class="h3">Hold up a sec</h1>
+      <span class="text-muted">{{loadingMessage}}…</span>
     </div>
-    <h1 class="h3">Hold up a sec</h1>
-    <span class="text-muted">{{loadingMessage}}…</span>
   </div>
-</div>
-<div class="full-page-loading pt-5" *ngIf="wasDisconnected" [@loginPageTransition]>
-  <div class="text-center">
-    Service has gone down. Refresh to try again.
+  <div class="full-page-loading pt-5" *ngIf="wasDisconnected" [@loginPageTransition]>
+    <div class="text-center">
+      Service has gone down. Refresh to try again.
+    </div>
   </div>
-</div>
+</main>
