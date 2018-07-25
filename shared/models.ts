@@ -1,6 +1,5 @@
 export interface User {
   name: string;
-  ulid: string;
 }
 
 export interface TrackData {
