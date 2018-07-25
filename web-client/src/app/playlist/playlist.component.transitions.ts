@@ -3,17 +3,15 @@ import {
   trigger,
   style,
   animate,
-  keyframes,
-  group
+  keyframes
 } from '@angular/animations';
-
-const defaultTransition = '200ms ease-in';
+import { DefaultTransitions } from '../animation.settings';
 
 const helpTransition = trigger('helpTransition', [
   transition(
     ':enter',
     animate(
-      defaultTransition,
+      DefaultTransitions.easeOut,
       keyframes([
         style({ opacity: 0, height: 0, offset: 0 }),
         style({ opacity: 1, height: '*', offset: 1 })
@@ -23,7 +21,7 @@ const helpTransition = trigger('helpTransition', [
   transition(
     ':leave',
     animate(
-      defaultTransition,
+      DefaultTransitions.easeIn,
       keyframes([
         style({ opacity: 1, height: '*', offset: 0 }),
         style({ opacity: 0, height: 0, offset: 1 })
@@ -36,7 +34,7 @@ const itemTransition = trigger('itemTransition', [
   transition(
     ':enter',
     animate(
-      defaultTransition,
+      DefaultTransitions.easeOut,
       keyframes([
         style({ opacity: 0, height: 0, transform: 'translateX(-50%)', offset: 0 }),
         style({ opacity: 1, height: '*', transform: 'none', offset: 1 })
@@ -46,7 +44,7 @@ const itemTransition = trigger('itemTransition', [
   transition(
     ':leave',
     animate(
-      defaultTransition,
+      DefaultTransitions.easeIn,
       keyframes([
         style({ opacity: 1, height: '*', transform: 'none', offset: 0 }),
         style({ opacity: 0, height: 0, transform: 'translateX(50%)', offset: 1 })

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimationSettings } from './app.component.transitions';
 import { SocketService } from './socket.service';
+import { UserService } from './user.service';
+import { User } from '../../../shared/models';
+import { Observable } from 'rxjs';
 
 const loadingMessages = [
   'Adjusting the antenna',
@@ -21,7 +24,7 @@ export class AppComponent implements OnInit {
   public loadingMessage: string;
   private connectionState = 0;
 
-  constructor(private socket: SocketService) {
+  constructor(private socket: SocketService, private userService: UserService) {
     this.loadingMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
   }
 
@@ -49,6 +52,10 @@ export class AppComponent implements OnInit {
 
   public get wasDisconnected(): boolean {
     return this.connectionState === 3;
+  }
+
+  public get userInfo$(): Observable<User> {
+    return this.userService.currentUser$();
   }
 
   public onLogin(): void {

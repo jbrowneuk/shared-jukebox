@@ -2,6 +2,8 @@ import * as express from 'express';
 import * as http from 'http';
 import * as io from 'socket.io';
 
+import { User, TrackData } from '../../shared/models';
+
 const currentlySupportedVersion = 1;
 
 const settings = {
@@ -11,32 +13,88 @@ const settings = {
 const app = express();
 const server = http.createServer(app);
 const socketServer = io(server);
-const currentPlaylist = [];
+const currentPlaylist: TrackData[] = [];
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 app.use(express.static(__dirname + '/static'));
 
 socketServer.on('connection', (socket: io.Socket) => {
+  let userInfo: User;
   console.log('Client connected');
-  socket.emit('client', undefined, (data) => {
+  socket.emit('client', undefined, data => {
     console.log('got client data');
 
     if (!data || !data.version || data.version < currentlySupportedVersion) {
       socket.emit('require-update', currentlySupportedVersion);
     }
-
-    socket.emit('playlist', currentPlaylist);
   });
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
 
-  socket.on('request', () => {
-    console.log('fake request!');
+  socket.on('login', (user: User, callback: Function) => {
+    userInfo = user;
 
-    const songWrapper = { title: 'title', artist: 'artist', songId: '12345' };
-    currentPlaylist.push(songWrapper);
-    socketServer.emit('queued-track', songWrapper);
+    if (!userInfo.name || userInfo.name === '') {
+      userInfo.name = 'Suspicious carrot';
+    }
+
+    if (!userInfo.ulid || userInfo.ulid === '') {
+      userInfo.ulid = 'ulid';
+    }
+
+    if (callback) {
+      callback(userInfo);
+    }
+
+    socket.emit('playlist', currentPlaylist);
+  });
+
+  socket.on('request', (trackInfo: TrackData, callback: Function) => {
+    let username;
+    if (!userInfo) {
+      console.log('fake request!');
+      username = 'Server test page';
+    } else {
+      username = userInfo.name;
+    }
+
+    const safeTrackInfo: TrackData = {
+      title: trackInfo.title,
+      album: trackInfo.album,
+      artist: trackInfo.artist,
+      songId: trackInfo.songId,
+      requestedBy: username
+    };
+
+    currentPlaylist.push(safeTrackInfo);
+    socketServer.emit('queued-track', safeTrackInfo);
+    if (callback) {
+      callback(safeTrackInfo.songId);
+    }
+  });
+
+  socket.on('query', (data: string, callback: Function) => {
+    if (!callback) {
+      return;
+    }
+
+    console.log('fake query!');
+    const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: '' };
+    callback([songWrapper]);
+  });
+
+  socket.on('get-playlist', (_, callback: Function) => {
+    console.log(`Sending playlist with ${currentPlaylist.length} items`);
+    callback(currentPlaylist);
   });
 });
 

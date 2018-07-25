@@ -16,6 +16,12 @@
       width: 10px;
     }
   }
+
+  &:not(.animated) {
+    .bar {
+      animation-play-state: paused;
+    }
+  }
 }
 
 .visuals {
@@ -24,12 +30,12 @@
   align-items: flex-end;
 
   .bar {
+    animation-duration: 600ms;
+    animation-iteration-count: infinite;
+    animation-name: musicPlaying;
     background-color: $color-palette1;
     height: 10%;
     margin: 0 2px;
-    animation-duration: 600ms;
-    animation-name: spinanim;
-    animation-iteration-count: infinite;
 
     &:nth-child(2) {
       animation-delay: 200ms;
@@ -41,7 +47,7 @@
   }
 }
 
-@keyframes spinanim {
+@keyframes musicPlaying {
   0% {
     height: 10%;
   }

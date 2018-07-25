@@ -10,6 +10,7 @@ import { JukeboxComponent } from './jukebox/jukebox.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SocketService } from './socket.service';
+import { NowPlayingComponent } from './now-playing/now-playing.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SocketService } from './socket.service';
     SpinnerComponent,
     JukeboxComponent,
     PlaylistComponent,
-    SearchComponent
+    SearchComponent,
+    NowPlayingComponent
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
   providers: [SocketService],

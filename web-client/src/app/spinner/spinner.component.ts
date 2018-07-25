@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SpinnerComponent {
 
-  @Input() isLarge: boolean;
+  @Input() isLarge = false;
+  @Input() isAnimated = true;
 
 }

@@ -3,30 +3,28 @@ import {
   trigger,
   style,
   animate,
-  keyframes,
-  group
+  keyframes
 } from '@angular/animations';
-
-const defaultTransition = 200;
+import { DefaultTransitions } from './animation.settings';
 
 const loginPageTransition = trigger('loginPageTransition', [
   transition(
     ':enter',
     animate(
-      defaultTransition,
+      DefaultTransitions.linear,
       keyframes([
-        style({ opacity: 0, position: 'absolute', width: '100%', offset: 0 }),
-        style({ opacity: 1, position: 'absolute', width: '100%', offset: 1 })
+        style({ opacity: 0, position: 'absolute', height: '100%', width: '100%', offset: 0 }),
+        style({ opacity: 1, position: 'absolute', height: '100%', width: '100%', offset: 1 })
       ])
     )
   ),
   transition(
     ':leave',
     animate(
-      defaultTransition,
+      DefaultTransitions.linear,
       keyframes([
-        style({ opacity: 1, position: 'absolute', width: '100%', offset: 0 }),
-        style({ opacity: 0, position: 'absolute', width: '100%', offset: 1 })
+        style({ opacity: 1, position: 'absolute', height: '100%', width: '100%', offset: 0 }),
+        style({ opacity: 0, position: 'absolute', height: '100%', width: '100%', offset: 1 })
       ])
     )
   )

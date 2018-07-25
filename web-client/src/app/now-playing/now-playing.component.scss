@@ -1,0 +1,29 @@
+@import 'palette';
+
+$component-height: 60px;
+
+.now-playing-wrapper {
+  height: $component-height;
+}
+
+.now-playing {
+  background-color: transparentize(white, 0.2);
+  border-top: 1px solid #eeeeee;
+  height: $component-height;
+  left: 0;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.control-button {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 200ms, background-color 200ms;
+
+  &:hover {
+    color: $color-palette1;
+  }
+}
