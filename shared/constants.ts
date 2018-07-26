@@ -1,15 +1,19 @@
 export const ServerEvents = {
   RequestClientInfo: 'client',
   ClientOutdated: 'require-update',
-  ClientSentLogin: 'login',
-  SearchQuery: 'query',
-  SongRequest: 'request',
   QueuedTrack: 'queued-track',
-  RequestPlaylist: 'get-playlist',
-  RequestPlaystate: 'get-playstate',
-  ChangePlaystate: 'change-playstate',
+  DequeuedTrack: 'dequeued-track',
   PlaystateChanged: 'playstate-changed'
 };
+
+export const WebClientEvents = {
+  ClientSentLogin: 'login',
+  RequestPlaylist: 'get-playlist',
+  RequestPlaystate: 'get-playstate',
+  SearchQuery: 'query',
+  SongRequest: 'request',
+  ChangePlaystate: 'change-playstate'
+}
 
 export const MusicClientEvents = {
   SetPlaystate: 'set-playstate'

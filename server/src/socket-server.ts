@@ -3,7 +3,7 @@ import * as io from 'socket.io';
 import * as Haikunator from 'haikunator';
 
 import { ClientData, TrackData, User } from '../../shared/models';
-import { ServerEvents, MusicClientEvents } from '../../shared/constants';
+import { ServerEvents, MusicClientEvents, WebClientEvents } from '../../shared/constants';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
@@ -53,33 +53,33 @@ export class SocketServer {
     );
 
     socket.on(
-      ServerEvents.ClientSentLogin,
+      WebClientEvents.ClientSentLogin,
       (user: User, callback: Function) => {
         userInfo = this.handleClientLogin(user, callback);
       }
     );
 
     socket.on(
-      ServerEvents.SearchQuery,
+      WebClientEvents.SearchQuery,
       (searchTerm: string, callback: Function) =>
-        this.handleSearchQuery(searchTerm, userInfo, callback)
+        this.handleSearchQuery(searchTerm, callback)
     );
 
     socket.on(
-      ServerEvents.SongRequest,
+      WebClientEvents.SongRequest,
       (trackInfo: TrackData, callback: Function) =>
         this.handleSongRequest(trackInfo, userInfo, callback)
     );
 
-    socket.on(ServerEvents.RequestPlaylist, (_, callback: Function) =>
+    socket.on(WebClientEvents.RequestPlaylist, (_, callback: Function) =>
       this.handlePlaylistRequest(callback)
     );
 
-    socket.on(ServerEvents.RequestPlaystate, (_, callback: Function) =>
+    socket.on(WebClientEvents.RequestPlaystate, (_, callback: Function) =>
       this.handlePlaystateRequest(callback)
     );
 
-    socket.on(ServerEvents.ChangePlaystate, () => this.togglePlaystate(socket));
+    socket.on(WebClientEvents.ChangePlaystate, () => this.togglePlaystate(socket));
   }
 
   private handleClientLogin(user: User, callback: Function): User {
@@ -101,7 +101,6 @@ export class SocketServer {
 
   private handleSearchQuery(
     searchTerm: string,
-    userInfo: User,
     callback: Function
   ): void {
     if (!searchTerm || !callback || typeof callback !== 'function') {
