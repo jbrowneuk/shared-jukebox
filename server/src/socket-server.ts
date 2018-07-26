@@ -86,6 +86,8 @@ export class SocketServer {
     let safeUsername;
     if (!user.name || user.name === '') {
       safeUsername = haikunator.haikunate({ tokenLength: 0, delimiter: ' ' });
+    } else {
+      safeUsername = user.name;
     }
 
     const userInfo: User = {
