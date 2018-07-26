@@ -2,7 +2,8 @@
   <div class="now-playing">
     <div class="h-100 d-flex align-items-center justify-content-center">
       <button class="control-button" (click)="onPlayClicked()">
-        <i class="fas fa-2x" [class.fa-play]="!isPlaying" [class.fa-pause]="isPlaying"></i>
+        <i class="fas fa-fw fa-2x fa-play" *ngIf="!isPlaying" [@playPauseTransition]></i>
+        <i class="fas fa-fw fa-2x fa-pause" *ngIf="isPlaying" [@playPauseTransition]></i>
       </button>
     </div>
   </div>
