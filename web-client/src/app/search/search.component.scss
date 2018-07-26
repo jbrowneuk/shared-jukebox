@@ -1,3 +1,15 @@
+@import 'palette';
+
 .pointer {
   cursor: pointer;
+}
+
+.search-button {
+  background-color: $color-palette4;
+  color: #eeeeee;
+
+  &:hover {
+    background-color: lighten($color-palette4, 10%);
+    color: white;
+  }
 }
