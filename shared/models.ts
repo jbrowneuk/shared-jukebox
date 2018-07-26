@@ -9,3 +9,8 @@ export interface TrackData {
   songId: string;
   requestedBy: string;
 }
+
+export interface ClientData {
+  name: string;
+  supportedApiVersion: number;
+}
