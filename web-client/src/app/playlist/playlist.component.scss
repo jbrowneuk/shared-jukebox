@@ -3,15 +3,14 @@
 }
 
 .cut-off {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: calc(100% - 1.5rem);
 }
 
 .playlist-table {
   .col-play {
     $fixed-width: 30px;
 
+    text-align: center;
     width: $fixed-width;
     max-width: $fixed-width;
   }

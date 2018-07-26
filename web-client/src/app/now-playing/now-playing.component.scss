@@ -11,7 +11,7 @@ $component-height: 60px;
   border-top: 1px solid #eeeeee;
   height: $component-height;
   left: 0;
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
 }
@@ -20,6 +20,7 @@ $component-height: 60px;
   background: transparent;
   border: none;
   border-radius: 50%;
+  color: $color-palette5;
   cursor: pointer;
   transition: color 200ms, background-color 200ms;
 
