@@ -21,9 +21,9 @@
         <th scope="col" class="col-play text-center align-middle p-0">
           <i class="fal fa-play-circle"></i>
         </th>
-        <th scope="col" class="col-track">Track</th>
-        <th scope="col" class="col-artist">Artist</th>
-        <th scope="col" class="col-user">Added by</th>
+        <th scope="col" class="col-track"><span class="d-block text-truncate cut-off">Track</span></th>
+        <th scope="col" class="col-artist"><span class="d-block text-truncate cut-off">Artist</span></th>
+        <th scope="col" class="col-user"><span class="d-block text-truncate cut-off">Added by</span></th>
       </tr>
     </thead>
     <tbody>
@@ -32,14 +32,14 @@
           <app-spinner *ngIf="idx == 0" [isAnimated]="isPlaying"></app-spinner>
         </td>
         <td>
-          <span class="track-title cut-off">{{trackDetails.title}}</span>
-          <small class="cut-off">{{trackDetails.album}}</small>
+          <span class="track-title d-block text-truncate cut-off">{{trackDetails.title}}</span>
+          <small class="d-block text-truncate cut-off">{{trackDetails.album}}</small>
         </td>
         <td>
-          <span class="cut-off">{{trackDetails.artist}}</span>
+          <span class="d-block text-truncate cut-off">{{trackDetails.artist}}</span>
         </td>
         <td>
-          <span class="cut-off">{{trackDetails.requestedBy}}</span>
+          <span class="d-block text-truncate cut-off">{{trackDetails.requestedBy}}</span>
         </td>
       </tr>
     </tbody>
