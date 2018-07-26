@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SocketService } from '../socket.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { ServerEvents, WebClientEvents } from '../../../../shared/constants';
+
+import { SocketService } from '../socket.service';
 import { AnimationSettings } from './now-playing.component.transitions';
 
 @Component({
@@ -9,19 +11,23 @@ import { AnimationSettings } from './now-playing.component.transitions';
   styleUrls: ['./now-playing.component.scss'],
   animations: AnimationSettings
 })
-export class NowPlayingComponent implements OnInit {
+export class NowPlayingComponent implements OnInit, OnDestroy {
 
   public isPlaying: boolean;
 
   constructor(private socket: SocketService) { }
 
   ngOnInit() {
-    this.socket.subscribe('playstate-changed', (state: string) => this.updatePlaystate(state));
-    this.socket.emit('get-playstate', null, (state: string) => this.updatePlaystate(state));
+    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
+    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));
+  }
+
+  ngOnDestroy() {
+    this.socket.unsubscribe(ServerEvents.PlaystateChanged);
   }
 
   onPlayClicked() {
-    this.socket.emit('change-playstate', 'todo');
+    this.socket.emit(WebClientEvents.ChangePlaystate, 'todo');
   }
 
   private updatePlaystate(state: string): void {

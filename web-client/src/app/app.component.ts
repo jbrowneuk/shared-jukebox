@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { User } from '../../../shared/models';
+
 import { AnimationSettings } from './app.component.transitions';
 import { SocketService } from './socket.service';
 import { UserService } from './user.service';
-import { User } from '../../../shared/models';
-import { Observable } from 'rxjs';
-
-const loadingMessages = [
-  'Adjusting the antenna',
-  'Grabbing CDs from the flea market',
-  'Torrenting tracks',
-  'Putting cats in tubes',
-  'Singing in the shower'
-];
 
 @Component({
   selector: 'app-root',
@@ -19,39 +13,30 @@ const loadingMessages = [
   styleUrls: ['./app.component.scss'],
   animations: AnimationSettings
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  public loadingMessage: string;
-  private connectionState = 0;
+  private isConnected: boolean;
 
   constructor(private socket: SocketService, private userService: UserService) {
-    this.loadingMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+    this.isConnected = false;
   }
 
   ngOnInit() {
-    this.socket.subscribe('playlist', () => {
-      this.connectionState = 2;
-    });
-
     this.socket.subscribe('disconnect', () => {
-      this.connectionState = 3;
+      this.isConnected = false;
     });
+  }
+
+  ngOnDestroy() {
+    this.socket.unsubscribe('disconnect');
   }
 
   public get shouldShowLogin(): boolean {
-    return this.connectionState === 0;
-  }
-
-  public get shouldShowConnecting(): boolean {
-    return this.connectionState === 1;
+    return !this.isConnected;
   }
 
   public get shouldShowJukebox(): boolean {
-    return this.connectionState === 2;
-  }
-
-  public get wasDisconnected(): boolean {
-    return this.connectionState === 3;
+    return this.isConnected;
   }
 
   public get userInfo$(): Observable<User> {
@@ -59,6 +44,6 @@ export class AppComponent implements OnInit {
   }
 
   public onLogin(): void {
-    this.connectionState = 1;
+    this.isConnected = true;
   }
 }

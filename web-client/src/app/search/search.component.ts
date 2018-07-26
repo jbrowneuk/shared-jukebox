@@ -3,6 +3,7 @@ import { SocketService } from '../socket.service';
 import { TrackData } from '../../../../shared/models';
 
 import { AnimationSettings } from './search.component.transitions';
+import { WebClientEvents } from '../../../../shared/constants';
 
 type ResultsTuple = [TrackData, boolean];
 
@@ -23,7 +24,7 @@ export class SearchComponent {
   }
 
   public onSearchClick(): void {
-    this.socket.emit('query', this.searchTerm, (data: TrackData[]) => {
+    this.socket.emit(WebClientEvents.SearchQuery, this.searchTerm, (data: TrackData[]) => {
       this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
     });
   }
@@ -34,7 +35,7 @@ export class SearchComponent {
       return;
     }
 
-    this.socket.emit('request', relatedInfo, (addedId: string) => {
+    this.socket.emit(WebClientEvents.SongRequest, relatedInfo, (addedId: string) => {
       if (!addedId) {
         // Need to show error in UI
         return;
