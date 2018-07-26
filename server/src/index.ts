@@ -20,6 +20,7 @@ const haikunator = new Haikunator();
 
 let spotifyApi: any;
 let spotifyCredentialExpiry: Date;
+let isPlaying = false;
 
 function checkSpotifyCreds(): Promise<void> {
   if (!spotifyCredentialExpiry || spotifyCredentialExpiry < new Date()) {
@@ -152,6 +153,27 @@ socketServer.on('connection', (socket: io.Socket) => {
   socket.on('get-playlist', (_, callback: Function) => {
     console.log(`Sending playlist with ${currentPlaylist.length} items`);
     callback(currentPlaylist);
+  });
+
+  socket.on('get-playstate', (__dirname, callback: Function) => {
+    if (!callback) {
+      return;
+    }
+
+    callback(isPlaying ? 'PLAYING' : 'PAUSED');
+  });
+
+  socket.on('change-playstate', () => {
+    if (currentPlaylist.length === 0) {
+      return;
+    }
+
+    console.log('got request to change playstate…');
+    isPlaying = !isPlaying;
+    setTimeout(() => {
+      console.log('Faking changed play state');
+      socket.emit('playstate-changed', isPlaying ? 'PLAYING' : 'PAUSED');
+    }, 500);
   });
 });
 
