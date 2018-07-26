@@ -14,8 +14,8 @@
       <i class="fal fa-check-square fa-2x" *ngIf="tuple[1]"></i>
     </div>
     <div class="flex-grow-1 pl-2">
-      <h6 class="my-0">{{tuple[0].title}}</h6>
-      <small class="text-muted">{{tuple[0].artist}}</small>
+      <h6 class="my-0 d-block text-truncate">{{tuple[0].title}}</h6>
+      <small class="text-muted d-block text-truncate">{{tuple[0].artist}} – {{tuple[0].album}}</small>
     </div>
   </button>
 </div>
