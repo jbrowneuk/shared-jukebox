@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as http from 'http';
 import * as io from 'socket.io';
 import * as Haikunator from 'haikunator';
+import * as SpotifyWebApi from 'spotify-web-api-node';
 
 import { User, TrackData } from '../../shared/models';
 
@@ -16,6 +17,45 @@ const server = http.createServer(app);
 const socketServer = io(server);
 const currentPlaylist: TrackData[] = [];
 const haikunator = new Haikunator();
+
+let spotifyApi: any;
+let spotifyCredentialExpiry: Date;
+
+function checkSpotifyCreds(): Promise<void> {
+  if (!spotifyCredentialExpiry || spotifyCredentialExpiry < new Date()) {
+    return spotifyApi.clientCredentialsGrant()
+      .then((data) => {
+        spotifyCredentialExpiry = new Date();
+        const expiry = spotifyCredentialExpiry.getTime() + (data.body.expires_in * 1000);
+        spotifyCredentialExpiry.setTime(expiry);
+        spotifyApi.setAccessToken(data.body.access_token);
+      });
+  }
+
+  return Promise.resolve(null);
+}
+
+function setupSpotify(): void {
+  spotifyApi = new SpotifyWebApi({
+    /*
+ ______
+(______)                      _
+ _     _ ___     ____   ___ _| |_
+| |   | / _ \   |  _ \ / _ (_   _)
+| |__/ / |_| |  | | | | |_| || |_
+|_____/ \___/   |_| |_|\___/  \__)
+
+            _           _
+           | |         (_)  _
+  ___ _   _| |__  ____  _ _| |_
+ /___) | | |  _ \|    \| (_   _)
+|___ | |_| | |_) ) | | | | | |_
+(___/|____/|____/|_|_|_|_|  \__)
+    */
+    clientId: '',
+    clientSecret: ''
+  });
+}
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -85,9 +125,28 @@ socketServer.on('connection', (socket: io.Socket) => {
       return;
     }
 
-    console.log('fake query!');
-    const songWrapper: TrackData = { title: 'title', artist: 'artist', album: 'hello world', songId: '12345', requestedBy: '' };
-    callback([songWrapper]);
+    const types = ['track'];
+    checkSpotifyCreds().then(() => {
+      return spotifyApi.search(data, types, {
+        limit: 10,
+        offset: 0
+      }).then((data) => {
+        const rawTrackData: any[] = data.body.tracks.items;
+        const parsedTrackData: TrackData[] = rawTrackData.map(track => {
+          return {
+            title: track.name,
+            album: track.album.name,
+            artist: track.artists.map((artist) => artist.name).join(', '),
+            songId: track.uri,
+            requestedBy: ''
+          };
+        });
+
+        callback(parsedTrackData);
+      });
+    }).catch(() => {
+      callback(null);
+    });
   });
 
   socket.on('get-playlist', (_, callback: Function) => {
@@ -95,6 +154,8 @@ socketServer.on('connection', (socket: io.Socket) => {
     callback(currentPlaylist);
   });
 });
+
+setupSpotify();
 
 server.listen(settings.port, () => {
   console.log(`Server listening on port ${settings.port}`);

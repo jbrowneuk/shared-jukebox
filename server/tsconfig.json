@@ -5,6 +5,9 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "lib": [
+      "es2015", "es2017"
+    ]
   }
 }
