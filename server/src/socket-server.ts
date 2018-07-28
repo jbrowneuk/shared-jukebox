@@ -2,8 +2,7 @@ import * as http from 'http';
 import * as io from 'socket.io';
 import * as Haikunator from 'haikunator';
 
-import { ClientData, TrackData, User } from '../../shared/models';
-import { ServerEvents, MusicClientEvents, WebClientEvents } from '../../shared/constants';
+import { ClientData, TrackData, User, ServerEvents, MusicClientEvents, WebClientEvents } from 'jukebox-common';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 

@@ -1,5 +1,5 @@
 import { Playlist } from './interfaces/playlist';
-import { TrackData } from '../../shared/models';
+import { TrackData } from 'jukebox-common';
 
 enum PlayState {
   Paused = 'PAUSED',

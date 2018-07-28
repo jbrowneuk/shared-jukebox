@@ -1,6 +1,6 @@
 import * as SpotifyWebApi from 'spotify-web-api-node';
 import { SpotifyApi } from './interfaces/spotify-api';
-import { TrackData } from '../../shared/models';
+import { TrackData } from 'jukebox-common';
 
 export class SpotifyWrapper implements SpotifyApi {
   private spotifyApi: any;
