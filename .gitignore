@@ -62,6 +62,7 @@ typings/
 
 # Project files
 /web-client/src/assets/fa/
+dist
 
 # Operating system files
 .DS_Store
