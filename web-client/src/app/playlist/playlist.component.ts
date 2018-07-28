@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AnimationSettings } from './playlist.component.transitions';
-import { SocketService } from '../socket.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { TrackData } from '../../../../shared/models';
+import { ServerEvents, WebClientEvents } from '../../../../shared/constants';
+
+import { SocketService } from '../socket.service';
+import { AnimationSettings } from './playlist.component.transitions';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
@@ -19,11 +22,13 @@ const emptyComments = [
   styleUrls: ['./playlist.component.scss'],
   animations: AnimationSettings
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
 
   public playlist: TrackData[];
   public snarkyEmptyPlaylistComment: string;
   public isPlaying: boolean;
+
+  private subscriptions: SocketIOClient.Emitter[];
 
   constructor(private socket: SocketService) {
     this.playlist = [];
@@ -32,11 +37,11 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socket.subscribe('queued-track', (data: TrackData) => {
+    this.socket.subscribe(ServerEvents.QueuedTrack, (data: TrackData) => {
       this.playlist.push(data);
     });
 
-    this.socket.subscribe('dequeued-track', (songId: string) => {
+    this.socket.subscribe(ServerEvents.DequeuedTrack, (songId: string) => {
       const relatedTrackInfo = this.playlist.findIndex(s => s.songId === songId);
       if (relatedTrackInfo < 0) {
         return;
@@ -45,23 +50,29 @@ export class PlaylistComponent implements OnInit {
       this.playlist.splice(relatedTrackInfo, 1);
     });
 
-    this.socket.subscribe('play', () => {
-      this.isPlaying = true;
-    });
+    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
 
-    this.socket.subscribe('pause', () => {
-      this.isPlaying = false;
-    });
-
-    this.socket.emit('get-playlist', null, (data: TrackData[]) => {
+    this.socket.emit(WebClientEvents.RequestPlaylist, null, (data: TrackData[]) => {
       console.log(`Got a playlist with ${data.length} items`);
       this.playlist = data;
       this.updateEmptyPlaylistComment();
     });
+
+    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));
+  }
+
+  ngOnDestroy() {
+    this.socket.unsubscribe(ServerEvents.QueuedTrack);
+    this.socket.unsubscribe(ServerEvents.DequeuedTrack);
+    this.socket.unsubscribe(ServerEvents.PlaystateChanged);
   }
 
   private updateEmptyPlaylistComment(): void {
     this.snarkyEmptyPlaylistComment = emptyComments[Math.floor(Math.random() * emptyComments.length)];
+  }
+
+  private updatePlaystate(state: string): void {
+    this.isPlaying = state === 'PLAYING';
   }
 
 }

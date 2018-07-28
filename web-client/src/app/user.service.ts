@@ -3,6 +3,7 @@ import { SocketService } from './socket.service';
 
 import { User } from '../../../shared/models';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { WebClientEvents } from '../../../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,11 @@ export class UserService {
 
   constructor(private socket: SocketService) {
     this.userSubject = new BehaviorSubject<User>(null);
+    this.socket.subscribe('disconnect', () => this.userSubject.next(null));
   }
 
   public authenticate(name: string): void {
-    this.socket.emit('login', { name }, (user: User) => this.onUserAcknowledged(user));
+    this.socket.emit(WebClientEvents.ClientSentLogin, { name }, (user: User) => this.onUserAcknowledged(user));
   }
 
   private onUserAcknowledged(user: User): void {
