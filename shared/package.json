@@ -2,7 +2,8 @@
   "name": "jukebox-shared",
   "version": "0.0.1",
   "description": "Shared files for jukebox application",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
