@@ -1,7 +1,7 @@
 {
-  "name": "jukebox-shared",
+  "name": "jukebox-common",
   "version": "0.0.1",
-  "description": "Shared files for jukebox application",
+  "description": "Common files for jukebox application",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
