@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { SocketService } from '../socket.service';
-import { TrackData } from '../../../../shared/models';
 
+import { SocketService } from '../socket.service';
+import { TrackData, WebClientEvents } from 'jukebox-common';
 import { AnimationSettings } from './search.component.transitions';
-import { WebClientEvents } from '../../../../shared/constants';
 
 type ResultsTuple = [TrackData, boolean];
 

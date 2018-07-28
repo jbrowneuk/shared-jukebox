@@ -1,4 +1,4 @@
-import { TrackData } from '../../../shared/models';
+import { TrackData } from 'jukebox-common';
 
 export interface Playlist {
   getTracks(): TrackData[];

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 
-import { User } from '../../../shared/models';
+import { User, WebClientEvents } from 'jukebox-common';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { WebClientEvents } from '../../../shared/constants';
 
 @Injectable({
   providedIn: 'root'

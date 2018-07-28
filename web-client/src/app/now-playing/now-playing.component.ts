@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { ServerEvents, WebClientEvents } from '../../../../shared/constants';
+import { ServerEvents, WebClientEvents } from 'jukebox-common';
 
 import { SocketService } from '../socket.service';
 import { AnimationSettings } from './now-playing.component.transitions';

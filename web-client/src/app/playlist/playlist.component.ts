@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { TrackData } from '../../../../shared/models';
-import { ServerEvents, WebClientEvents } from '../../../../shared/constants';
+import { TrackData, ServerEvents, WebClientEvents } from 'jukebox-common';
 
 import { SocketService } from '../socket.service';
 import { AnimationSettings } from './playlist.component.transitions';
