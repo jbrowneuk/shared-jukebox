@@ -11,7 +11,7 @@ export class SocketService {
   private socket: SocketIOClient.Socket; // Not sure how this builds without an import :/
 
   constructor() {
-    this.socket = socketIo('http://localhost:8080');
+    this.socket = socketIo();
 
     this.socket.on(ServerEvents.RequestClientInfo, (_, callback: Function) => {
       const clientData: ClientData = {
