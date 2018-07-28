@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": [
+      "es2015", "es2017"
+    ]
+  }
+}
