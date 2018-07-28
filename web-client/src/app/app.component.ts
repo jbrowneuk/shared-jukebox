@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { User } from '../../../shared/models';
+import { User } from 'jukebox-common';
 
 import { AnimationSettings } from './app.component.transitions';
 import { SocketService } from './socket.service';

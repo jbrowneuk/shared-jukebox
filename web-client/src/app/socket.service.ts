@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 
-import { ServerEvents } from '../../../shared/constants';
-import { ClientData } from '../../../shared/models';
+import { ServerEvents, ClientData } from 'jukebox-common';
 
 @Injectable({
   providedIn: 'root'
