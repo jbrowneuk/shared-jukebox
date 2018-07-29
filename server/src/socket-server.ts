@@ -36,7 +36,7 @@ export class SocketServer {
     // As soon as a client joins, request information on it
     socket.emit(
       ServerEvents.RequestClientInfo,
-      undefined,
+      null,
       (data: ClientData) => {
         if (
           !data ||
