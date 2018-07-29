@@ -28,6 +28,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "helmet": "^3.13.0",
+    "jukebox-common": "file:../jukebox-common",
     "socket.io-client": "2.1.1"
   },
   "nyc": {
