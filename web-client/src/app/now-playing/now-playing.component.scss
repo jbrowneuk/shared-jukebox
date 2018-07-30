@@ -4,6 +4,7 @@ $component-height: 60px;
 
 .now-playing-wrapper {
   height: $component-height;
+  z-index: 5;
 }
 
 .now-playing {
