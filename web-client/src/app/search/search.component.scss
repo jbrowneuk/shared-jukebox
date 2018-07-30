@@ -13,3 +13,15 @@
     color: white;
   }
 }
+
+.search-result-container {
+  $icon-width: 40px;
+
+  .icon-pane {
+    width: $icon-width;
+  }
+
+  .text-pane {
+    width: calc(100% - #{$icon-width});
+  }
+}
