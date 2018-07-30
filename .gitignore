@@ -62,6 +62,8 @@ typings/
 
 # Project files
 /web-client/src/assets/fa/
+/server/src/static/
+/server/config.json
 dist
 
 # Operating system files
