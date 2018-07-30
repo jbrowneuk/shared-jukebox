@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { User } from 'jukebox-common';
+import { User, ServerEvents } from 'jukebox-common';
 
 import { AnimationSettings } from './app.component.transitions';
 import { SocketService } from './socket.service';
@@ -15,35 +15,46 @@ import { UserService } from './user.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  private isConnected: boolean;
+  private isLoggedIn: boolean;
+  private isOutdated: boolean;
 
   constructor(private socket: SocketService, private userService: UserService) {
-    this.isConnected = false;
+    this.isLoggedIn = false;
+    this.isOutdated = false;
   }
 
   ngOnInit() {
     this.socket.subscribe('disconnect', () => {
-      this.isConnected = false;
+      this.isLoggedIn = false;
+    });
+
+    this.socket.subscribe(ServerEvents.ClientOutdated, () => {
+      this.isOutdated = true;
     });
   }
 
   ngOnDestroy() {
     this.socket.unsubscribe('disconnect');
+    this.socket.unsubscribe(ServerEvents.ClientOutdated);
   }
 
   public get shouldShowLogin(): boolean {
-    return !this.isConnected;
+    return !this.isLoggedIn;
   }
 
   public get shouldShowJukebox(): boolean {
-    return this.isConnected;
+    return this.isLoggedIn;
   }
 
   public get userInfo$(): Observable<User> {
     return this.userService.currentUser$();
   }
 
+  public get requiresUpdate(): boolean {
+    return this.isOutdated;
+  }
+
   public onLogin(): void {
-    this.isConnected = true;
+    this.isLoggedIn = true;
   }
 }
