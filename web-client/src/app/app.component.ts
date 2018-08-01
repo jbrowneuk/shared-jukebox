@@ -3,15 +3,13 @@ import { Observable } from 'rxjs';
 
 import { User, ServerEvents } from 'jukebox-common';
 
-import { AnimationSettings } from './app.component.transitions';
 import { SocketService } from './socket.service';
 import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: AnimationSettings
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
 
