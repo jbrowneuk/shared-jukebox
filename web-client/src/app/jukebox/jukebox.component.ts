@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 
+import { AnimationSettings } from '../common.transitions';
+
 @Component({
   selector: 'app-jukebox',
   templateUrl: './jukebox.component.html',
-  styleUrls: ['./jukebox.component.scss']
+  styleUrls: ['./jukebox.component.scss'],
+  animations: AnimationSettings
 })
 export class JukeboxComponent {
 

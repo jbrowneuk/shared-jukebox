@@ -1,24 +1,10 @@
 <main class="position-relative">
   <div class="container my-4">
-    <div class="row">
-      <div class="col-md-4 order-md-2">
-        <app-search *ngIf="isUserAuthenticated; else noUserMessage"></app-search>
-      </div>
-
-      <div class="col-md-8 order-md-1">
-        <app-playlist></app-playlist>
-      </div>
-    </div>
+    <app-search *ngIf="isUserAuthenticated"></app-search>
+    <app-playlist></app-playlist>
   </div>
 
   <app-now-playing></app-now-playing>
 
-  <app-identity *ngIf="showLogin" (login)="onLoginClicked()"></app-identity>
+  <app-identity *ngIf="showLogin" (login)="onLoginClicked()" [@fadeTransition]></app-identity>
 </main>
-
-<ng-template #noUserMessage>
-  <h4>Want to join in?</h4>
-  <p>Blurb</p>
-  <p>Let me know what you’d like to be called.</p>
-  <button class="btn" (click)="onIdentifyClicked()">ok</button>
-</ng-template>
