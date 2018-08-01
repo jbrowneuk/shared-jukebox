@@ -1,11 +1,5 @@
 @import 'palette';
 
-main {
-  height: calc(100vh - 56px);
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
 .app-navbar {
   background-color: $color-palette5;
 }

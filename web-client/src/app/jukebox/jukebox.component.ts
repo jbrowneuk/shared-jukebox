@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-jukebox',
   templateUrl: './jukebox.component.html',
   styleUrls: ['./jukebox.component.scss']
 })
-export class JukeboxComponent implements OnInit {
+export class JukeboxComponent {
 
-  constructor() { }
+  public showLogin: boolean;
 
-  ngOnInit() {
+  constructor(private userService: UserService) {
+    this.showLogin = true;
+  }
+
+  public get isUserAuthenticated(): boolean {
+    return this.userService.isAuthenticated();
+  }
+
+  public onIdentifyClicked(): void {
+    this.showLogin = true;
+  }
+
+  public onLoginClicked(): void {
+    this.showLogin = false;
   }
 
 }

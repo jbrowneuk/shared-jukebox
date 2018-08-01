@@ -15,35 +15,28 @@ import { UserService } from './user.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  private isLoggedIn: boolean;
+  public isConnected: boolean;
   private isOutdated: boolean;
 
   constructor(private socket: SocketService, private userService: UserService) {
-    this.isLoggedIn = false;
     this.isOutdated = false;
+    this.isConnected = false;
+
+    const subscription = socket.connection$.subscribe(
+      (isOnline: boolean) => this.isConnected = isOnline,
+      (err: any) => this.isConnected = false,
+      () => subscription.unsubscribe()
+    );
   }
 
   ngOnInit() {
-    this.socket.subscribe('disconnect', () => {
-      this.isLoggedIn = false;
-    });
-
     this.socket.subscribe(ServerEvents.ClientOutdated, () => {
       this.isOutdated = true;
     });
   }
 
   ngOnDestroy() {
-    this.socket.unsubscribe('disconnect');
     this.socket.unsubscribe(ServerEvents.ClientOutdated);
-  }
-
-  public get shouldShowLogin(): boolean {
-    return !this.isLoggedIn;
-  }
-
-  public get shouldShowJukebox(): boolean {
-    return this.isLoggedIn;
   }
 
   public get userInfo$(): Observable<User> {
@@ -52,9 +45,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public get requiresUpdate(): boolean {
     return this.isOutdated;
-  }
-
-  public onLogin(): void {
-    this.isLoggedIn = true;
   }
 }

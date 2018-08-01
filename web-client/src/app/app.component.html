@@ -1,18 +1,26 @@
-<nav class="navbar text-light app-navbar">
+<nav class="navbar navbar-dark text-light app-navbar">
   <div class="container">
-    <span class="navbar-text"><i class="fas fa-music mr-1"></i> Jukebot</span>
+    <span class="navbar-brand"><i class="fas fa-music mr-1"></i> Jukebot</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="//jbrowne.io">?</a>
+      </li>
+    </ul>
     <span class="navbar-text">{{(userInfo$ | async)?.name}}</span>
   </div>
 </nav>
 
-<main class="position-relative">
-  <app-identity *ngIf="shouldShowLogin" (login)="onLogin()" [@loginPageTransition]></app-identity>
-  <app-jukebox *ngIf="shouldShowJukebox" [@loginPageTransition]></app-jukebox>
-</main>
+<app-jukebox [@loginPageTransition]></app-jukebox>
 
 <div class="upgrade-banner py-1" *ngIf="requiresUpdate">
   <div class="container text-center">
     You're using an <strong>outdated</strong> version of the Jukebot client.<br/>
     Please refresh the page to get the latest changes.
+  </div>
+</div>
+
+<div class="upgrade-banner py-1" *ngIf="!isConnected">
+  <div class="container text-center">
+      Connection has been lost.
   </div>
 </div>
