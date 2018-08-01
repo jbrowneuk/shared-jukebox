@@ -10,21 +10,31 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class UserService {
 
   private userSubject: BehaviorSubject<User>;
+  private hasUserInfo: boolean;
 
   constructor(private socket: SocketService) {
     this.userSubject = new BehaviorSubject<User>(null);
-    this.socket.subscribe('disconnect', () => this.userSubject.next(null));
+    this.hasUserInfo = false;
+    this.socket.subscribe('disconnect', () => {
+      this.hasUserInfo = false;
+      this.userSubject.next(null);
+    });
   }
 
   public authenticate(name: string): void {
     this.socket.emit(WebClientEvents.ClientSentLogin, { name }, (user: User) => this.onUserAcknowledged(user));
   }
 
-  private onUserAcknowledged(user: User): void {
-    this.userSubject.next(user);
-  }
-
   public currentUser$(): Observable<User> {
     return this.userSubject.asObservable();
+  }
+
+  public isAuthenticated(): boolean {
+    return this.hasUserInfo;
+  }
+
+  private onUserAcknowledged(user: User): void {
+    this.userSubject.next(user);
+    this.hasUserInfo = true;
   }
 }
