@@ -1,17 +1,13 @@
 <div class="form-container py-5">
-  <img src="/assets/juke-bot-plain.svg" class="jukebot-logo" alt="application logo" />
-  <div class="login-form card bg-white shadow-sm">
+  <div class="login-form card bg-light shadow-sm">
     <form class="card-body" (submit)="onConnectClick()">
       <h1 class="h3 mb-3 font-weight-normal">Why hello there</h1>
       <div class="form-group">
-        <label for="inputName">What should I call you?</label>
+        <label for="inputName">Who’s on the line?</label>
         <input type="text" maxlength="20" name="user-name" class="form-control" aria-describedby="nameHelp" autofocus [(ngModel)]="userName">
-        <small id="nameHelp" class="form-text text-muted">Leave this blank and I’ll call you something random instead</small>
+        <small id="nameHelp" class="form-text text-muted">Leave this blank and you’ll get a random name</small>
       </div>
       <button class="btn btn-lg login-button btn-block" type="submit">Come on in</button>
     </form>
-  </div>
-  <div class="mt-3 text-muted">
-    <small>&copy; 2017-2018</small>
   </div>
 </div>
