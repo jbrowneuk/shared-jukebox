@@ -1,27 +1,42 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { IMock, Mock } from 'typemoq';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
 import { AppComponent } from './app.component';
+import { SocketService } from './socket.service';
+import { UserService } from './user.service';
+
 describe('AppComponent', () => {
+  let mockSocketService: IMock<SocketService>;
+  let mockUserService: IMock<UserService>;
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
+    mockSocketService = Mock.ofType<SocketService>();
+    mockSocketService
+      .setup(m => m.connection$)
+      .returns(() => of(true).pipe(delay(4)));
+    mockUserService = Mock.ofType<UserService>();
+
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      declarations: [AppComponent],
+      providers: [
+        { provide: SocketService, useFactory: () => mockSocketService.object },
+        { provide: UserService, useFactory: () => mockUserService.object }
+      ]
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+      });
   }));
+
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to song-request!');
+    expect(component).toBeTruthy();
   }));
 });
