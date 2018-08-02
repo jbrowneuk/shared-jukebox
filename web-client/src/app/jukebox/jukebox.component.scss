@@ -1,7 +1,9 @@
+@import 'palette';
+@import 'variables';
+
 .page-root {
-  height: calc(100vh - 56px);
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: calc(100vh - #{$nav-height} - #{$now-playing-bar-height});
+  overflow: hidden;
 }
 
 .page-footer {
@@ -9,9 +11,10 @@
 }
 
 main {
-  min-height: calc(100% - 48px);
-}
-
-.content-area {
+  border: 1px solid $light-border;
+  border-top: none;
+  border-bottom: none;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
