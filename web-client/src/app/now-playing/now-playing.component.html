@@ -1,20 +1,12 @@
-<div class="container now-playing bg-white">
+<div class="container now-playing bg-white" [class.playing]="isPlaying">
   <div class="h-100 d-flex align-items-center justify-content-start">
-    <ng-container *ngIf="userAuthenticated; else notAuthenticated">
-      <button class="control-button" (click)="onPlayClicked()">
-        <i class="fas fa-fw fa-2x fa-play" *ngIf="!isPlaying" [@playPauseTransition]></i>
-        <i class="fas fa-fw fa-2x fa-pause" *ngIf="isPlaying" [@playPauseTransition]></i>
-      </button>
-    </ng-container>
-    <div>
+    <button class="control-button position-relative" (click)="onPlayClicked()">
+      <i class="fas fa-fw fa-2x fa-play" *ngIf="!isPlaying" [@playPauseTransition]></i>
+      <i class="fas fa-fw fa-2x fa-pause" *ngIf="isPlaying" [@playPauseTransition]></i>
+    </button>
+    <div class="ml-2">
       <span class="d-block">Track Title</span>
       <small class="d-block text-muted">Artist</small>
     </div>
   </div>
 </div>
-
-<ng-template #notAuthenticated>
-  <div class="fake-button">
-    <i class="fas fa-fw fa-2x fa-lock-alt"></i>
-  </div>
-</ng-template>
