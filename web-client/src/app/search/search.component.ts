@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { SocketService } from '../socket.service';
 import { TrackData, WebClientEvents } from 'jukebox-common';
@@ -14,16 +14,20 @@ type ResultsTuple = [TrackData, boolean];
 })
 export class SearchComponent {
 
-  public searchTerm: string;
   public results: ResultsTuple[];
 
   constructor(private socket: SocketService) {
-    this.searchTerm = '';
     this.results = null;
   }
 
-  public onSearchClick(): void {
-    this.socket.emit(WebClientEvents.SearchQuery, this.searchTerm, (data: TrackData[]) => {
+  @Input() public set searchTerm(value: string) {
+
+    if (!value || value.length < 2) {
+      this.results = [];
+      return;
+    }
+
+    this.socket.emit(WebClientEvents.SearchQuery, value, (data: TrackData[]) => {
       this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
     });
   }

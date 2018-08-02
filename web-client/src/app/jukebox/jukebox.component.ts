@@ -12,21 +12,37 @@ import { AnimationSettings } from '../common.transitions';
 export class JukeboxComponent {
 
   public showLogin: boolean;
+  public searchTerm: string;
+  public isSearchFocus: boolean;
 
   constructor(private userService: UserService) {
     this.showLogin = true;
+    this.searchTerm = '';
+    this.isSearchFocus = false;
   }
 
   public get isUserAuthenticated(): boolean {
     return this.userService.isAuthenticated();
   }
 
-  public onIdentifyClicked(): void {
-    this.showLogin = true;
+  public get shouldShowPlaylist(): boolean {
+    return !this.isSearchFocus && this.searchTerm.length === 0;
+  }
+
+  public get shouldShowSearchResults(): boolean {
+    return this.isSearchFocus || this.searchTerm.length > 0;
   }
 
   public onLoginClicked(): void {
     this.showLogin = false;
+  }
+
+  public onFocusSearch(): void {
+    this.isSearchFocus = true;
+  }
+
+  public onBlurSearch(): void {
+    this.isSearchFocus = false;
   }
 
 }

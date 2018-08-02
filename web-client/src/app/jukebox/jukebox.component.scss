@@ -1,4 +1,17 @@
-main {
+.page-root {
   height: calc(100vh - 56px);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.page-footer {
+  font-size: 75%;
+}
+
+main {
+  min-height: calc(100% - 48px);
+}
+
+.content-area {
+  height: 100%;
 }

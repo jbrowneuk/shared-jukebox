@@ -26,12 +26,12 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   public playlist: TrackData[];
   public snarkyEmptyPlaylistComment: string;
   public isPlaying: boolean;
-
-  private subscriptions: SocketIOClient.Emitter[];
+  public initialLoad: boolean;
 
   constructor(private socket: SocketService) {
     this.playlist = [];
     this.isPlaying = false;
+    this.initialLoad = true; // Used to prevent the flash of help text
     this.updateEmptyPlaylistComment();
   }
 
@@ -52,9 +52,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
 
     this.socket.emit(WebClientEvents.RequestPlaylist, null, (data: TrackData[]) => {
-      console.log(`Got a playlist with ${data.length} items`);
       this.playlist = data;
       this.updateEmptyPlaylistComment();
+      this.initialLoad = false;
     });
 
     this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));

@@ -1,10 +1,26 @@
-<main class="position-relative">
-  <div class="container my-4">
-    <app-search *ngIf="isUserAuthenticated"></app-search>
-    <app-playlist></app-playlist>
-  </div>
+<div class="position-relative page-root">
+  <main class="container my-4">
+    <div class="my-3 p-3 rounded bg-white shadow-sm content-area">
+      <div class="d-flex align-items-center">
+        <h1 class="my-2 h4">Current playlist</h1>
+        <div class="ml-auto">
+          <input type="search" class="form-control" placeholder="Search…" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" (blur)="onBlurSearch()"/>
+        </div>
+      </div>
+      <div class="position-relative">
+        <app-playlist></app-playlist>
+        <app-search [searchTerm]="searchTerm" *ngIf="shouldShowSearchResults" [@fadeTransition]></app-search>
+      </div>
+    </div>
+
+    <footer class="text-center text-muted page-footer">
+      A <a href="//jbrowne.io">jbrowne.io</a> project<br/>
+      Music search powered by Spotify.<br/>
+      Music playback powered by Mopidy
+    </footer>
+  </main>
 
   <app-now-playing></app-now-playing>
 
   <app-identity *ngIf="showLogin" (login)="onLoginClicked()" [@fadeTransition]></app-identity>
-</main>
+</div>
