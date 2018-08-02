@@ -1,47 +1,40 @@
-<h1 class="mb-3 h4">Current playlist</h1>
-
-<div class="text-center text-muted" *ngIf="!playlist || playlist.length === 0" [@helpTransition]>
-  <div class="card-body">
-    <h2 class="h5">Pretty quiet in here</h2>
-    <p>
-      <em>Pssst…</em>
-      Try queueing up some tracks using the search on your right
-    </p>
-    <p class="text-black-50">
-      <small>{{snarkyEmptyPlaylistComment}}</small>
-    </p>
-    <!-- todo probably add a search here as well -->
-  </div>
+<div class="text-center text-muted" *ngIf="!initialLoad && (!playlist || playlist.length === 0)" [@helpTransition]>
+  <h2 class="h5">Pretty quiet in here</h2>
+  <p>
+    <em>Pssst…</em>
+    Try queueing up some tracks using the search.
+  </p>
+  <p class="text-black-50">
+    <small>{{snarkyEmptyPlaylistComment}}</small>
+  </p>
 </div>
 
-<div class="vertical-scrolling-panel">
-  <table class="table playlist-table">
-    <thead>
-      <tr>
-        <th scope="col" class="col-play text-center align-middle p-0">
-          <i class="fal fa-play-circle"></i>
-        </th>
-        <th scope="col" class="col-track"><span class="d-block text-truncate cut-off">Track</span></th>
-        <th scope="col" class="col-artist"><span class="d-block text-truncate cut-off">Artist</span></th>
-        <th scope="col" class="col-user"><span class="d-block text-truncate cut-off">Added by</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let trackDetails of playlist; let idx=index" [@itemTransition]>
-        <td class="col-play text-center align-middle p-0">
-          <app-spinner *ngIf="idx == 0" [isAnimated]="isPlaying"></app-spinner>
-        </td>
-        <td>
-          <span class="track-title d-block text-truncate cut-off">{{trackDetails.title}}</span>
-          <small class="d-block text-truncate cut-off">{{trackDetails.album}}</small>
-        </td>
-        <td>
-          <span class="d-block text-truncate cut-off">{{trackDetails.artist}}</span>
-        </td>
-        <td>
-          <span class="d-block text-truncate cut-off">{{trackDetails.requestedBy}}</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table class="table playlist-table">
+  <thead>
+    <tr>
+      <th scope="col" class="col-play text-center align-middle p-0">
+        <i class="fal fa-play-circle"></i>
+      </th>
+      <th scope="col" class="col-track"><span class="d-block text-truncate cut-off">Track</span></th>
+      <th scope="col" class="col-artist"><span class="d-block text-truncate cut-off">Artist</span></th>
+      <th scope="col" class="col-user"><span class="d-block text-truncate cut-off">Added by</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trackDetails of playlist; let idx=index" [@itemTransition]>
+      <td class="col-play text-center align-middle p-0">
+        <app-spinner *ngIf="idx == 0" [isAnimated]="isPlaying"></app-spinner>
+      </td>
+      <td>
+        <span class="track-title d-block text-truncate cut-off">{{trackDetails.title}}</span>
+        <small class="d-block text-truncate cut-off">{{trackDetails.album}}</small>
+      </td>
+      <td>
+        <span class="d-block text-truncate cut-off">{{trackDetails.artist}}</span>
+      </td>
+      <td>
+        <span class="d-block text-truncate cut-off">{{trackDetails.requestedBy}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

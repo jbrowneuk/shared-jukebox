@@ -1,8 +1,19 @@
 @import 'palette';
 
 .form-container {
-  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 500px rgba(0, 0, 0, 0.5);
+  overflow: visible;
   text-align: center;
+  position: fixed;
+  left: 0;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
 .login-form {
@@ -19,11 +30,4 @@
     background-color: lighten($color-palette4, 10%);
     color: white;
   }
-}
-
-.jukebot-logo {
-  $dims: 200px;
-
-  height: $dims;
-  width: $dims;
 }

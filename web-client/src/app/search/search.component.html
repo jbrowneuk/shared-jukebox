@@ -1,27 +1,22 @@
-<form class="input-group mb-3" (submit)="onSearchClick()">
-  <input type="text" class="form-control" placeholder="Type a song name" name="search-term" [(ngModel)]="searchTerm">
-  <div class="input-group-append">
-    <button id="search-button" class="btn search-button" type="submit">Search</button>
+<div class="results-area-container">
+  <div class="results-area" id="search-results" *ngIf="results && results.length > 0">
+    <button *ngFor="let tuple of results" class="list-group-item list-group-item-action"
+      (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [class.list-group-item-light]="tuple[1]"
+      [@searchResultTransition]>
+      <div class="d-flex justify-content-between align-items-center search-result-container">
+        <div class="icon-pane">
+          <i class="fal fa-plus-square fa-2x" *ngIf="!tuple[1]"></i>
+          <i class="fal fa-check-square fa-2x" *ngIf="tuple[1]"></i>
+        </div>
+        <div class="text-pane">
+          <h6 class="my-0 d-block text-truncate">{{tuple[0].title}}</h6>
+          <small class="text-muted d-block text-truncate">{{tuple[0].artist}} – {{tuple[0].album}}</small>
+        </div>
+      </div>
+    </button>
   </div>
-</form>
 
-<div class="list-group mb-3" id="search-results" *ngIf="results && results.length > 0">
-  <button *ngFor="let tuple of results" class="list-group-item list-group-item-action"
-    (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [class.list-group-item-light]="tuple[1]"
-    [@searchResultTransition]>
-    <div class="d-flex justify-content-between align-items-center search-result-container">
-      <div class="icon-pane">
-        <i class="fal fa-plus-square fa-2x" *ngIf="!tuple[1]"></i>
-        <i class="fal fa-check-square fa-2x" *ngIf="tuple[1]"></i>
-      </div>
-      <div class="text-pane">
-        <h6 class="my-0 d-block text-truncate">{{tuple[0].title}}</h6>
-        <small class="text-muted d-block text-truncate">{{tuple[0].artist}} – {{tuple[0].album}}</small>
-      </div>
-    </div>
-  </button>
-</div>
-
-<div class="mb-3 text-muted text-center" *ngIf="results && results.length == 0">
-  No results
+  <div class="mb-3 text-muted text-center" *ngIf="results && results.length == 0">
+    No results
+  </div>
 </div>

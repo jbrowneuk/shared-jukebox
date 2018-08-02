@@ -4,7 +4,6 @@ $component-height: 60px;
 
 .now-playing-wrapper {
   height: $component-height;
-  z-index: 5;
 }
 
 .now-playing {
@@ -15,6 +14,7 @@ $component-height: 60px;
   position: fixed;
   right: 0;
   bottom: 0;
+  z-index: 5;
 }
 
 .control-button {

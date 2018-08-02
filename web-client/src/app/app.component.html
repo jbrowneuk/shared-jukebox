@@ -1,14 +1,14 @@
-<nav class="navbar text-light app-navbar">
+<nav class="navbar navbar-dark text-light app-navbar">
   <div class="container">
-    <span class="navbar-text"><i class="fas fa-music mr-1"></i> Jukebot</span>
-    <span class="navbar-text">{{(userInfo$ | async)?.name}}</span>
+    <span class="navbar-brand"><i class="fas fa-fw fa-music mr-1"></i> Jukebot</span>
+    <span class="navbar-text ml-auto">
+      <i class="fas fa-fw fa-user mr-1"></i>
+      <ng-container *ngIf="userInfo$ | async as userInfo; else noUserTemplate">{{userInfo?.name}}</ng-container>
+    </span>
   </div>
 </nav>
 
-<main class="position-relative">
-  <app-identity *ngIf="shouldShowLogin" (login)="onLogin()" [@loginPageTransition]></app-identity>
-  <app-jukebox *ngIf="shouldShowJukebox" [@loginPageTransition]></app-jukebox>
-</main>
+<app-jukebox></app-jukebox>
 
 <div class="upgrade-banner py-1" *ngIf="requiresUpdate">
   <div class="container text-center">
@@ -16,3 +16,11 @@
     Please refresh the page to get the latest changes.
   </div>
 </div>
+
+<div class="upgrade-banner py-1" *ngIf="!isConnected">
+  <div class="container text-center">
+      Connection has been lost.
+  </div>
+</div>
+
+<ng-template #noUserTemplate>anonymous</ng-template>

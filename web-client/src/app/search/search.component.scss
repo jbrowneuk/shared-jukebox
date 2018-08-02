@@ -4,6 +4,17 @@
   cursor: pointer;
 }
 
+.results-area-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: visible;
+  overflow-y: auto;
+  background: white;
+}
+
 .search-button {
   background-color: $color-palette4;
   color: #eeeeee;
