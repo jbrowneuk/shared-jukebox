@@ -1,12 +1,10 @@
 <nav class="navbar navbar-dark text-light app-navbar">
   <div class="container">
-    <span class="navbar-brand"><i class="fas fa-music mr-1"></i> Jukebot</span>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="//jbrowne.io">?</a>
-      </li>
-    </ul>
-    <span class="navbar-text">{{(userInfo$ | async)?.name}}</span>
+    <span class="navbar-brand"><i class="fas fa-fw fa-music mr-1"></i> Jukebot</span>
+    <span class="navbar-text ml-auto">
+      <i class="fas fa-fw fa-user mr-1"></i>
+      <ng-container *ngIf="userInfo$ | async as userInfo; else noUserTemplate">{{userInfo?.name}}</ng-container>
+    </span>
   </div>
 </nav>
 
@@ -24,3 +22,5 @@
       Connection has been lost.
   </div>
 </div>
+
+<ng-template #noUserTemplate>anonymous</ng-template>
