@@ -1,20 +1,25 @@
 @import 'palette';
+@import 'variables';
 
-$component-height: 60px;
-
-.now-playing-wrapper {
-  height: $component-height;
-}
+$control-width: 50px;
 
 .now-playing {
-  background-color: transparentize(white, 0.2);
-  border-top: 1px solid #eeeeee;
-  height: $component-height;
-  left: 0;
-  position: fixed;
-  right: 0;
-  bottom: 0;
+  border: 1px solid $light-border;
+  border-top-width: 2px;
+  border-bottom: none;
+  height: $now-playing-bar-height;
   z-index: 5;
+  height: $now-playing-bar-height;
+  transition: border-top-color 200ms;
+
+  &.playing {
+    border-top-color: $color-palette1;
+  }
+}
+
+.control-button,
+.fake-button {
+  width: $control-width;
 }
 
 .control-button {
@@ -25,7 +30,6 @@ $component-height: 60px;
   cursor: pointer;
   transition: color 200ms, background-color 200ms;
   text-align: center;
-  width: 50px;
   height: 40px;
   padding: 0;
   position: relative;
@@ -39,4 +43,11 @@ $component-height: 60px;
     top: 4px;
     left: 5px;
   }
+}
+
+.almost-badged {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: $color-palette1;
 }
