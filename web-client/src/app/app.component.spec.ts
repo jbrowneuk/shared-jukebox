@@ -6,11 +6,9 @@ import { delay } from 'rxjs/operators';
 
 import { AppComponent } from './app.component';
 import { SocketService } from './socket.service';
-import { UserService } from './user.service';
 
 describe('AppComponent', () => {
   let mockSocketService: IMock<SocketService>;
-  let mockUserService: IMock<UserService>;
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
@@ -19,14 +17,12 @@ describe('AppComponent', () => {
     mockSocketService
       .setup(m => m.connection$)
       .returns(() => of(true).pipe(delay(4)));
-    mockUserService = Mock.ofType<UserService>();
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       declarations: [AppComponent],
       providers: [
-        { provide: SocketService, useFactory: () => mockSocketService.object },
-        { provide: UserService, useFactory: () => mockUserService.object }
+        { provide: SocketService, useFactory: () => mockSocketService.object }
       ]
     })
       .compileComponents()

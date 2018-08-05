@@ -1,13 +1,3 @@
-<nav class="navbar navbar-dark text-light app-navbar">
-  <div class="container">
-    <span class="navbar-brand"><i class="fas fa-fw fa-music mr-1"></i> Jukebot</span>
-    <span class="navbar-text ml-auto">
-      <i class="fas fa-fw fa-user mr-1"></i>
-      <ng-container *ngIf="userInfo$ | async as userInfo; else noUserTemplate">{{userInfo?.name}}</ng-container>
-    </span>
-  </div>
-</nav>
-
 <app-jukebox></app-jukebox>
 
 <div class="upgrade-banner py-1" *ngIf="requiresUpdate">
