@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center mt-3">
       <h1 class="my-2 h4">Current playlist</h1>
       <div class="ml-auto">
-        <input type="search" class="form-control" placeholder="Search…" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" (blur)="onBlurSearch()"/>
+        <input type="search" class="form-control" placeholder="Search…" id="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" (blur)="onBlurSearch()"/>
       </div>
     </div>
     <div class="position-relative">
@@ -12,7 +12,7 @@
     </div>
   </main>
 
-  <app-identity *ngIf="showLogin" (login)="onLoginClicked()" [@fadeTransition]></app-identity>
+  <app-identity *ngIf="showLogin" (login)="onLoginCommenced()" [@fadeTransition]></app-identity>
 </div>
 
 <app-now-playing></app-now-playing>

@@ -16,7 +16,7 @@ export class JukeboxComponent {
   public isSearchFocus: boolean;
 
   constructor(private userService: UserService) {
-    this.showLogin = true;
+    this.showLogin = false;
     this.searchTerm = '';
     this.isSearchFocus = false;
   }
@@ -33,8 +33,18 @@ export class JukeboxComponent {
     return this.isSearchFocus || this.searchTerm.length > 0;
   }
 
-  public onLoginClicked(): void {
+  public onLoginCommenced(): void {
     this.showLogin = false;
+    setTimeout(() => {
+      const box = document.getElementById('search-box');
+      if (box) {
+        box.focus();
+      }
+    }, 200);
+  }
+
+  public onConnectClick(): void {
+    this.showLogin = true;
   }
 
   public onFocusSearch(): void {
