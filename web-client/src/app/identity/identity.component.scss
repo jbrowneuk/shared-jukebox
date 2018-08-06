@@ -23,11 +23,11 @@
 }
 
 .login-button {
-  background-color: $color-palette4;
-  color: #eeeeee;
+  background-color: $color-accent;
+  color: $color-light;
 
   &:hover {
-    background-color: lighten($color-palette4, 10%);
-    color: white;
+    background-color: lighten($color-accent, 10%);
+    color: $color-highlight;
   }
 }
