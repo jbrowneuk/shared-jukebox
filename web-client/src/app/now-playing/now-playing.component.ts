@@ -4,7 +4,6 @@ import { ServerEvents, WebClientEvents } from 'jukebox-common';
 
 import { SocketService } from '../socket.service';
 import { AnimationSettings } from './now-playing.component.transitions';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-now-playing',
@@ -16,11 +15,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   public isPlaying: boolean;
 
-  constructor(private socket: SocketService, private userService: UserService) { }
-
-  public get userAuthenticated(): boolean {
-    return this.userService.isAuthenticated();
-  }
+  constructor(private socket: SocketService) { }
 
   ngOnInit() {
     this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));

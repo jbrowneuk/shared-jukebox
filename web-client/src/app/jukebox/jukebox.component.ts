@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserService } from '../user.service';
 
 import { AnimationSettings } from '../common.transitions';
 
@@ -14,13 +13,9 @@ export class JukeboxComponent {
   public searchTerm: string;
   public isSearchFocus: boolean;
 
-  constructor(private userService: UserService) {
+  constructor() {
     this.searchTerm = '';
     this.isSearchFocus = false;
-  }
-
-  public get isUserAuthenticated(): boolean {
-    return this.userService.isAuthenticated();
   }
 
   public get shouldShowSearchResults(): boolean {
