@@ -1,20 +1,68 @@
 @import 'palette';
 @import 'variables';
 
-.page-root {
-  height: calc(100vh - #{$nav-height} - #{$now-playing-bar-height});
+/* .app-header */
+.app-header {
+  background-color: black;
+  color: white;
+  height: 150px;
   overflow: hidden;
+  position: relative;
 }
 
-.page-footer {
-  font-size: 75%;
+.app-header .header-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
-main {
-  border: 1px solid $light-border;
-  border-top: none;
-  border-bottom: none;
-  height: 100%;
+.app-header .header-content > * {
+  height: 34px;
+}
+
+.app-header h1 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.app-header .search-box {
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid black;
+  color: white;
+  padding: 4px 32px 4px 8px;
+  transition: color 200ms, border-color 200ms, background-color 200ms;
+}
+
+.app-header .search-box ::placeholder,
+.app-header .search-box ::-webkit-input-placeholder {
+  color: white;
+}
+
+.app-header .search-box:focus {
+  background-color: white;
+  border-color: black;
+  color: black;
+}
+
+.app-header .search-button {
+  margin: 0;
+  margin-left: -32px;
+  padding: 0;
+  width: 32px;
+}
+
+.app-header .client-warning {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+/* </> .app-header */
+
+/* .app-main */
+.app-main {
+  height: calc(100vh - 150px - 64px);
   overflow-x: hidden;
   overflow-y: auto;
 }
+/* </> .app-main */

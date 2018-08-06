@@ -11,12 +11,10 @@ import { AnimationSettings } from '../common.transitions';
 })
 export class JukeboxComponent {
 
-  public showLogin: boolean;
   public searchTerm: string;
   public isSearchFocus: boolean;
 
   constructor(private userService: UserService) {
-    this.showLogin = false;
     this.searchTerm = '';
     this.isSearchFocus = false;
   }
@@ -25,33 +23,24 @@ export class JukeboxComponent {
     return this.userService.isAuthenticated();
   }
 
-  public get shouldShowPlaylist(): boolean {
-    return !this.isSearchFocus && this.searchTerm.length === 0;
-  }
-
   public get shouldShowSearchResults(): boolean {
-    return this.isSearchFocus || this.searchTerm.length > 0;
+    return this.isSearchFocus;
   }
 
-  public onLoginCommenced(): void {
-    this.showLogin = false;
-    setTimeout(() => {
-      const box = document.getElementById('search-box');
-      if (box) {
-        box.focus();
-      }
-    }, 200);
-  }
+  public onSearchButtonClicked(): void {
+    if (this.searchTerm.length === 0) {
+      return;
+    }
 
-  public onConnectClick(): void {
-    this.showLogin = true;
+    this.searchTerm = '';
+    this.isSearchFocus = false;
   }
 
   public onFocusSearch(): void {
     this.isSearchFocus = true;
   }
 
-  public onBlurSearch(): void {
+  public onResultsClosed(): void {
     this.isSearchFocus = false;
   }
 

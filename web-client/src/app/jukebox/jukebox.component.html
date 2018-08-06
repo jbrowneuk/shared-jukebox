@@ -1,18 +1,29 @@
-<div class="position-relative page-root">
-  <main class="container bg-white">
-    <div class="d-flex align-items-center mt-3">
-      <h1 class="my-2 h4">Current playlist</h1>
-      <div class="ml-auto">
-        <input type="search" class="form-control" placeholder="Search…" id="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" (blur)="onBlurSearch()"/>
+<header class="app-header">
+  <div class="image-area">
+    <img src="/assets/images/header.jpg" alt="" role="presentation" />
+  </div>
+  <div class="header-content absolute-fill">
+    <div class="d-flex align-items-center justify-content-between container mb-2">
+      <h1 class="uppercase-text spaced-out">
+        <i class="fal fa-fw fa-music"></i> Jukebot</h1>
+      <div class="client-warning bg-danger">
+        <i class="fal fa-fw fa-exclamation-triangle"></i> Jukebot player is offline</div>
+      <div class="search-wrapper">
+        <input type="search" placeholder="Search for music…" class="search-box" id="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
+        <button class="search-button borderless-button" (click)="onSearchButtonClicked()">
+          <i class="fal" [class.fa-search]="searchTerm.length === 0" [class.fa-times]="searchTerm.length > 0"></i>
+          <span class="sr-only">Clear search input</span>
+        </button>
       </div>
     </div>
-    <div class="position-relative">
-      <app-playlist></app-playlist>
-      <app-search [searchTerm]="searchTerm" *ngIf="shouldShowSearchResults" [@fadeTransition]></app-search>
-    </div>
-  </main>
+  </div>
+</header>
 
-  <app-identity *ngIf="showLogin" (login)="onLoginCommenced()" [@fadeTransition]></app-identity>
-</div>
+<main class="app-main vertical-scrolling-panel">
+  <div class="container bg-white collapsing-margins-fix position-relative stretch-to-fill-height">
+    <app-playlist></app-playlist>
+    <app-search [searchTerm]="searchTerm" *ngIf="shouldShowSearchResults" (closeResults)="onResultsClosed()" [@fadeTransition]></app-search>
+  </div>
+</main>
 
 <app-now-playing></app-now-playing>
