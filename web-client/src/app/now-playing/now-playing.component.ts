@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { ServerEvents, WebClientEvents } from 'jukebox-common';
-
-import { SocketService } from '../socket.service';
 import { AnimationSettings } from './now-playing.component.transitions';
+import { PlaylistService } from '../playlist.service';
+import { Observable } from 'rxjs';
+import { PlayState, TrackData } from 'jukebox-common';
 
 @Component({
   selector: 'app-now-playing',
@@ -11,27 +11,27 @@ import { AnimationSettings } from './now-playing.component.transitions';
   styleUrls: ['./now-playing.component.scss'],
   animations: AnimationSettings
 })
-export class NowPlayingComponent implements OnInit, OnDestroy {
+export class NowPlayingComponent {
 
-  public isPlaying: boolean;
+  // For component template binding
+  public PlayState = PlayState;
 
-  constructor(private socket: SocketService) { }
+  constructor(private playlist: PlaylistService) { }
 
-  ngOnInit() {
-    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
-    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));
+  public get playState$(): Observable<PlayState> {
+    return this.playlist.playState$;
   }
 
-  ngOnDestroy() {
-    this.socket.unsubscribe(ServerEvents.PlaystateChanged);
+  public get currentTrack(): TrackData {
+    if (this.playlist.tracks.length === 0) {
+      return null;
+    }
+
+    return this.playlist.tracks[0];
   }
 
   public onPlayClicked() {
-    this.socket.emit(WebClientEvents.ChangePlaystate, 'toggle');
-  }
-
-  private updatePlaystate(state: string): void {
-    this.isPlaying = state === 'PLAYING';
+    this.playlist.togglePlayState();
   }
 
 }

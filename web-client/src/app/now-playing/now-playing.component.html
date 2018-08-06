@@ -1,17 +1,28 @@
 <div class="now-playing-bar">
-  <div class="container">
-    <div class="details-row text-center my-1">
-      <span class="track-title mr-2">Track Title</span>
-      <span class="track-artist text-muted">Artist</span>
-    </div>
-    <div class="controls-row d-flex align-items-begin justify-content-begin">
-      <button class="control-button position-relative" (click)="onPlayClicked()">
-        <i class="fas fa-fw fa-play" *ngIf="!isPlaying" [@playPauseTransition]></i>
-        <i class="fas fa-fw fa-pause" *ngIf="isPlaying" [@playPauseTransition]></i>
-      </button>
-      <button class="control-button position-relative">
-        <i class="fas fa-fw fa-step-forward"></i>
-      </button>
+  <div class="container h-100">
+    <div class="row h-100 d-flex align-items-center justify-content-between">
+      <div class="col-md-4" *ngIf="playState$ | async as playState">
+        <button class="control-button position-relative" (click)="onPlayClicked()">
+          <i class="fas fa-fw fa-play" *ngIf="playState != PlayState.Playing" [@playPauseTransition]></i>
+          <i class="fas fa-fw fa-pause" *ngIf="playState == PlayState.Playing" [@playPauseTransition]></i>
+        </button>
+        <button class="control-button position-relative">
+          <i class="fas fa-fw fa-step-forward"></i>
+        </button>
+      </div>
+      <div class="col-md-4 text-center">
+        <ng-container *ngIf="currentTrack; else noTrackInfo">
+          <span class="track-title mr-2">{{currentTrack.title}}</span>
+          <span class="track-artist text-muted">{{currentTrack.artist}}</span>
+        </ng-container>
+      </div>
+      <div class="col-md-4 text-right">
+        v
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #noTrackInfo>
+  <span class="text-muted">No tracks</span>
+</ng-template>
