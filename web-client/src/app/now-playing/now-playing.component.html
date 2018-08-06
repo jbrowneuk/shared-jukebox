@@ -4,10 +4,13 @@
       <span class="track-title mr-2">Track Title</span>
       <span class="track-artist text-muted">Artist</span>
     </div>
-    <div class="controls-row">
+    <div class="controls-row d-flex align-items-begin justify-content-begin">
       <button class="control-button position-relative" (click)="onPlayClicked()">
         <i class="fas fa-fw fa-play" *ngIf="!isPlaying" [@playPauseTransition]></i>
         <i class="fas fa-fw fa-pause" *ngIf="isPlaying" [@playPauseTransition]></i>
+      </button>
+      <button class="control-button position-relative">
+        <i class="fas fa-fw fa-step-forward"></i>
       </button>
     </div>
   </div>
