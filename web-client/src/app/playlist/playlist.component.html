@@ -1,5 +1,9 @@
-<div class="text-center text-muted" *ngIf="!initialLoad && (!playlist || playlist.length === 0)" [@helpTransition]>
-  <h2 class="h5">Pretty quiet in here</h2>
+<h2 class="content-pane-title uppercase-text spaced-out my-3">
+  <i class="fal fa-fw fa-list"></i>
+  Now playing
+</h2>
+
+<div class="nothing-queued text-center text-muted" *ngIf="!initialLoad && (!playlist || playlist.length === 0)" [@helpTransition]>
   <p>
     <em>Pssst…</em>
     Try queueing up some tracks using the search.
@@ -9,32 +13,22 @@
   </p>
 </div>
 
-<table class="table playlist-table">
-  <thead>
-    <tr>
-      <th scope="col" class="col-play text-center align-middle p-0">
-        <i class="fal fa-play-circle"></i>
-      </th>
-      <th scope="col" class="col-track"><span class="d-block text-truncate cut-off">Track</span></th>
-      <th scope="col" class="col-artist"><span class="d-block text-truncate cut-off">Artist</span></th>
-      <th scope="col" class="col-user"><span class="d-block text-truncate cut-off">Added by</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let trackDetails of playlist; let idx=index" [@itemTransition]>
-      <td class="col-play text-center align-middle p-0">
-        <app-spinner *ngIf="idx == 0" [isAnimated]="isPlaying"></app-spinner>
-      </td>
-      <td>
-        <span class="track-title d-block text-truncate cut-off">{{trackDetails.title}}</span>
-        <small class="d-block text-truncate cut-off">{{trackDetails.album}}</small>
-      </td>
-      <td>
-        <span class="d-block text-truncate cut-off">{{trackDetails.artist}}</span>
-      </td>
-      <td>
-        <span class="d-block text-truncate cut-off">{{trackDetails.requestedBy}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="tracks">
+
+  <div class="row track" *ngFor="let trackDetails of playlist; let playlistPosition=index" [@itemTransition]>
+    <div class="col-sm-5">
+      <div class="playing" *ngIf="playlistPosition === 0">
+        <app-spinner [isAnimated]="isPlaying"></app-spinner>
+      </div>
+      <div class="title text-truncate">{{trackDetails.title}}</div>
+    </div>
+    <div class="col-sm-3">
+      <div class="text-truncate">{{trackDetails.artist}}</div>
+    </div>
+    <div class="col-sm-3">
+      <div class="text-truncate">{{trackDetails.album}}</div>
+    </div>
+    <div class="col-sm-1">Length</div>
+  </div>
+
+</div>
