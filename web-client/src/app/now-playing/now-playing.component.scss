@@ -3,19 +3,15 @@
 
 $control-width: 50px;
 
-.now-playing {
-  border: 1px solid $light-border;
-  border-top-width: 2px;
-  border-bottom: none;
-  height: $now-playing-bar-height;
-  z-index: 5;
-  height: $now-playing-bar-height;
-  transition: border-top-color 200ms;
-
-  &.playing {
-    border-top-color: $color-palette1;
-  }
+/* .now-playing-bar */
+.now-playing-bar {
+  background-color: black;
+  color: white;
+  height: 64px;
+  overflow: hidden;
+  position: relative;
 }
+/* </> .now-playing-bar */
 
 .control-button,
 .fake-button {
@@ -43,11 +39,4 @@ $control-width: 50px;
     top: 4px;
     left: 5px;
   }
-}
-
-.almost-badged {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: $color-palette1;
 }
