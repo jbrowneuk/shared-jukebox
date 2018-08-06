@@ -1,4 +1,5 @@
 @import 'palette';
+@import 'variables';
 
 .upgrade-banner {
   background-color: white;
@@ -9,4 +10,26 @@
   left: 0;
   right: 0;
   z-index: 10;
+}
+
+.connection-lost {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 500px rgba(0, 0, 0, 0.75);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  .card {
+    border: 2px solid $color-accent;
+    border-left: none;
+    border-right: none;
+    min-width: 250px;
+    width: 25%;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
 }
