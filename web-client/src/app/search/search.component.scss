@@ -2,7 +2,7 @@
 
 .empty-results,
 .results-area {
-  border-top: 1px solid $light-border;
+  border-top: 1px solid $color-light;
 }
 
 .pointer {
@@ -20,16 +20,6 @@
   overflow-y: auto;
   padding-left: 15px;
   padding-right: 15px;
-}
-
-.search-button {
-  background-color: $color-palette4;
-  color: #eeeeee;
-
-  &:hover {
-    background-color: lighten($color-palette4, 10%);
-    color: white;
-  }
 }
 
 .search-result-container {
