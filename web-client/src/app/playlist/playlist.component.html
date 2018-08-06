@@ -28,7 +28,7 @@
     <div class="col-sm-3 text-muted">
       <div class="text-truncate">{{trackDetails.album}}</div>
     </div>
-    <div class="col-sm-1">{{trackDetails.trackLength ? trackDetails.trackLength : ''}}</div>
+    <div class="col-sm-1">{{trackDetails.trackLength ? trackDetails.trackLength : 0 | duration}}</div>
   </div>
 
 </div>

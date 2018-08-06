@@ -10,6 +10,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
 import { SocketService } from './socket.service';
 import { NowPlayingComponent } from './now-playing/now-playing.component';
+import { DurationPipe } from './duration.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NowPlayingComponent } from './now-playing/now-playing.component';
     JukeboxComponent,
     PlaylistComponent,
     SearchComponent,
-    NowPlayingComponent
+    NowPlayingComponent,
+    DurationPipe
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
   providers: [SocketService],

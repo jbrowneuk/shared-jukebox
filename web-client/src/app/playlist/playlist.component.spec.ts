@@ -4,6 +4,7 @@ import { IMock, Mock } from 'typemoq';
 
 import { PlaylistComponent } from './playlist.component';
 import { SocketService } from '../socket.service';
+import { DurationPipe } from '../duration.pipe';
 
 describe('PlaylistComponent', () => {
   let mockSocketService: IMock<SocketService>;
@@ -15,7 +16,7 @@ describe('PlaylistComponent', () => {
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      declarations: [PlaylistComponent],
+      declarations: [PlaylistComponent, DurationPipe],
       providers: [
         { provide: SocketService, useFactory: () => mockSocketService.object }
       ]
