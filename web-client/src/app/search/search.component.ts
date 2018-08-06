@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SocketService } from '../socket.service';
 import { TrackData, WebClientEvents } from 'jukebox-common';
@@ -14,22 +14,36 @@ type ResultsTuple = [TrackData, boolean];
 })
 export class SearchComponent {
 
+  @Output() public closeResults: EventEmitter<void>;
   public results: ResultsTuple[];
 
+  private cachedTerm: string;
+  private debounceTimeout: any;
+
   constructor(private socket: SocketService) {
+    this.closeResults = new EventEmitter<void>();
     this.results = null;
+    this.cachedTerm = '';
   }
 
   @Input() public set searchTerm(value: string) {
+    this.cachedTerm = value;
 
-    if (!value || value.length < 2) {
+    if (!value || value.length < 1) {
       this.results = [];
       return;
     }
 
-    this.socket.emit(WebClientEvents.SearchQuery, value, (data: TrackData[]) => {
-      this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
-    });
+    this.resetDebounce();
+    this.debounceTimeout = setTimeout(() => this.performSearchRequest(value), 200);
+  }
+
+  public get searchTerm(): string {
+    return this.cachedTerm;
+  }
+
+  public get isDebouncing(): boolean {
+    return !!this.debounceTimeout;
   }
 
   public onTermClicked(songId: string): void {
@@ -50,6 +64,27 @@ export class SearchComponent {
       }
 
       this.results[selected][1] = true;
+    });
+  }
+
+  public onCloseClicked(): void {
+    this.closeResults.emit();
+  }
+
+  private resetDebounce(): void {
+    if (!this.debounceTimeout) {
+      return;
+    }
+
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = undefined;
+  }
+
+  private performSearchRequest(term: string): void {
+    this.resetDebounce();
+
+    this.socket.emit(WebClientEvents.SearchQuery, term, (data: TrackData[]) => {
+      this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
     });
   }
 
