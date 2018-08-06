@@ -35,7 +35,7 @@ export class SearchComponent {
     }
 
     this.resetDebounce();
-    this.debounceTimeout = setTimeout(() => this.performSearchRequest(value), 200);
+    this.debounceTimeout = setTimeout(() => this.performSearchRequest(), 200);
   }
 
   public get searchTerm(): string {
@@ -80,11 +80,10 @@ export class SearchComponent {
     this.debounceTimeout = undefined;
   }
 
-  private performSearchRequest(term: string): void {
-    this.resetDebounce();
-
-    this.socket.emit(WebClientEvents.SearchQuery, term, (data: TrackData[]) => {
+  private performSearchRequest(): void {
+    this.socket.emit(WebClientEvents.SearchQuery, this.cachedTerm, (data: TrackData[]) => {
       this.results = data.map(x => [x, false || x.requestedBy !== ''] as ResultsTuple);
+      this.resetDebounce();
     });
   }
 
