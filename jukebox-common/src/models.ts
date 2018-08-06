@@ -7,7 +7,8 @@ export interface TrackData {
   album: string;
   artist: string;
   songId: string;
-  requestedBy: string;
+  requestedBy?: string; // Intent to deprecate
+  trackLength?: any; // Intent to make mandatory
 }
 
 export interface ClientData {
