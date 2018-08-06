@@ -1,4 +1,3 @@
-body,
 html,
 body {
   font-family: 'Encode Sans Semi Condensed', sans-serif;
@@ -7,4 +6,60 @@ body {
 .vertical-scrolling-panel {
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+}
+
+h2.content-pane-title {
+  font-size: 18px;
+}
+
+.borderless-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.collapsing-margins-fix {
+  overflow: hidden;
+}
+
+.image-area {
+  z-index: 0;
+
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    vertical-align: middle;
+  }
+}
+
+.uppercase-text {
+  text-transform: uppercase;
+}
+
+.spaced-out {
+  letter-spacing: .2em;
+}
+
+.stretch-to-fill-height {
+  min-height: 100%;
+}
+
+.absolute-fill,
+.image-area,
+.image-area::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.text-cutoff {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
