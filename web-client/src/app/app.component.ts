@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { User, ServerEvents } from 'jukebox-common';
+import { ServerEvents } from 'jukebox-common';
 
 import { SocketService } from './socket.service';
 
