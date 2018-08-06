@@ -3,57 +3,56 @@
 
 /* .app-header */
 .app-header {
-  background-color: black;
+  background-color: $color-dark;
   color: white;
   height: 150px;
   overflow: hidden;
   position: relative;
 }
 
-.app-header .header-content {
+.header-content {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 }
 
-.app-header .header-content > * {
+.header-content > * {
   height: 34px;
 }
 
-.app-header h1 {
+h1 {
   font-size: 20px;
   margin: 0;
   padding: 0;
 }
 
-.app-header .search-box {
+.search-box {
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.25);
   border: 1px solid black;
   color: white;
   padding: 4px 32px 4px 8px;
   transition: color 200ms, border-color 200ms, background-color 200ms;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    background-color: white;
+    border-color: black;
+    color: black;
+  }
 }
 
-.app-header .search-box ::placeholder,
-.app-header .search-box ::-webkit-input-placeholder {
-  color: white;
-}
-
-.app-header .search-box:focus {
-  background-color: white;
-  border-color: black;
-  color: black;
-}
-
-.app-header .search-button {
+.search-button {
   margin: 0;
   margin-left: -32px;
   padding: 0;
   width: 32px;
 }
 
-.app-header .client-warning {
+.client-warning {
   border-radius: 4px;
   padding: 4px 8px;
 }
