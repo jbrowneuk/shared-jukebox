@@ -4,7 +4,7 @@
 .now-playing-bar {
   background-color: $color-dark;
   color: $color-light;
-  height: 64px;
+  height: $now-playing-bar-height;
   overflow: hidden;
   position: relative;
 }

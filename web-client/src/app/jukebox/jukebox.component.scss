@@ -1,11 +1,13 @@
 @import 'palette';
 @import 'variables';
 
+$header-height: 150px;
+
 /* .app-header */
 .app-header {
   background-color: $color-dark;
   color: white;
-  height: 150px;
+  height: $header-height;
   overflow: hidden;
   position: relative;
 }
@@ -60,7 +62,7 @@ h1 {
 
 /* .app-main */
 .app-main {
-  height: calc(100vh - 150px - 64px);
+  height: calc(100vh - #{$header-height} - #{$now-playing-bar-height});
   overflow-x: hidden;
   overflow-y: auto;
 }
