@@ -9,8 +9,8 @@
       <div class="client-warning bg-danger">
         <i class="fal fa-fw fa-exclamation-triangle"></i> Jukebot player is offline</div>
       <div class="search-wrapper">
-        <input type="search" placeholder="Search for music…" class="search-box" id="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
-        <button class="search-button borderless-button" (click)="onSearchButtonClicked()">
+        <input type="search" placeholder="Search for music…" class="search-box" data-identifier="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
+        <button class="search-button borderless-button" data-identifier="search-input-button" (click)="onSearchButtonClicked()">
           <i class="fal" [class.fa-search]="searchTerm.length === 0" [class.fa-times]="searchTerm.length > 0"></i>
           <span class="sr-only">Clear search input</span>
         </button>
