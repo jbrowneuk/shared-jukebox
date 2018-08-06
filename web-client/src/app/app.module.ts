@@ -8,8 +8,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { JukeboxComponent } from './jukebox/jukebox.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
-import { SocketService } from './socket.service';
 import { NowPlayingComponent } from './now-playing/now-playing.component';
+import { SocketService } from './socket.service';
+import { PlaylistService } from './playlist.service';
 import { DurationPipe } from './duration.pipe';
 
 @NgModule({
@@ -23,7 +24,7 @@ import { DurationPipe } from './duration.pipe';
     DurationPipe
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
-  providers: [SocketService],
+  providers: [SocketService, PlaylistService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
