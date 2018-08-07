@@ -48,7 +48,7 @@ export class SearchComponent {
   }
 
   public get searching(): boolean {
-    return this.isSearching && !!this.debounceTimeout;
+    return this.isSearching || !!this.debounceTimeout;
   }
 
   public onTermClicked(songId: string): void {
