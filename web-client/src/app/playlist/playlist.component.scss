@@ -1,25 +1,13 @@
-.track-title {
-  display: block;
+@import 'palette';
+
+.nothing-queued,
+.track {
+  padding: 8px 0;
+  border-top: 1px solid $color-light;
 }
 
-.cut-off {
-  width: calc(100% - 1.5rem);
-}
-
-.playlist-table {
-  .col-play {
-    $fixed-width: 30px;
-
-    text-align: center;
-    width: $fixed-width;
-    max-width: $fixed-width;
-  }
-
-  .col-artist {
-    width: 30%;
-  }
-
-  .col-user {
-    width: 20%;
+.tracks {
+  .row .playing {
+    float: right;
   }
 }

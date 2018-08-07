@@ -4,26 +4,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { IdentityComponent } from './identity/identity.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { JukeboxComponent } from './jukebox/jukebox.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
-import { SocketService } from './socket.service';
 import { NowPlayingComponent } from './now-playing/now-playing.component';
+import { SocketService } from './socket.service';
+import { PlaylistService } from './playlist.service';
+import { DurationPipe } from './duration.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IdentityComponent,
     SpinnerComponent,
     JukeboxComponent,
     PlaylistComponent,
     SearchComponent,
-    NowPlayingComponent
+    NowPlayingComponent,
+    DurationPipe
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
-  providers: [SocketService],
+  providers: [SocketService, PlaylistService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

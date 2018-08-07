@@ -26,7 +26,7 @@ export class SpotifyWrapper implements SpotifyApi {
             album: track.album.name,
             artist: track.artists.map(artist => artist.name).join(', '),
             songId: track.uri,
-            requestedBy: ''
+            lengthMs: track.duration_ms
           };
         });
 

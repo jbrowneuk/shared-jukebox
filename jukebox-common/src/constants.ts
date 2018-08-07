@@ -18,3 +18,9 @@ export const WebClientEvents = {
 export const MusicClientEvents = {
   SetPlaystate: 'set-playstate'
 };
+
+export enum PlayState {
+  Stopped = 'stopped',
+  Paused = 'paused',
+  Playing = 'playing'
+}

@@ -1,13 +1,11 @@
 import * as http from 'http';
 import * as io from 'socket.io';
-import * as Haikunator from 'haikunator';
 
-import { ClientData, TrackData, User, ServerEvents, MusicClientEvents, WebClientEvents } from 'jukebox-common';
+import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents } from 'jukebox-common';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
-const currentlySupportedApiVersion = 1;
-const haikunator = new Haikunator();
+const currentlySupportedApiVersion = 2;
 
 export class SocketServer {
   private server: io.Server;
@@ -31,7 +29,6 @@ export class SocketServer {
    * @param socket Socket server instance
    */
   private handleConnection(socket: io.Socket): void {
-    let userInfo: User;
 
     // As soon as a client joins, request information on it
     socket.emit(
@@ -52,13 +49,6 @@ export class SocketServer {
     );
 
     socket.on(
-      WebClientEvents.ClientSentLogin,
-      (user: User, callback: Function) => {
-        userInfo = this.handleClientLogin(user, callback);
-      }
-    );
-
-    socket.on(
       WebClientEvents.SearchQuery,
       (searchTerm: string, callback: Function) =>
         this.handleSearchQuery(searchTerm, callback)
@@ -67,7 +57,7 @@ export class SocketServer {
     socket.on(
       WebClientEvents.SongRequest,
       (trackInfo: TrackData, callback: Function) =>
-        this.handleSongRequest(trackInfo, userInfo, callback)
+        this.handleSongRequest(trackInfo, callback)
     );
 
     socket.on(WebClientEvents.RequestPlaylist, (_, callback: Function) =>
@@ -79,25 +69,6 @@ export class SocketServer {
     );
 
     socket.on(WebClientEvents.ChangePlaystate, () => this.togglePlaystate(socket));
-  }
-
-  private handleClientLogin(user: User, callback: Function): User {
-    let safeUsername;
-    if (!user.name || user.name === '') {
-      safeUsername = haikunator.haikunate({ tokenLength: 0, delimiter: ' ' });
-    } else {
-      safeUsername = user.name;
-    }
-
-    const userInfo: User = {
-      name: safeUsername
-    };
-
-    if (callback && typeof callback === 'function') {
-      callback(userInfo);
-    }
-
-    return userInfo;
   }
 
   private handleSearchQuery(
@@ -124,20 +95,18 @@ export class SocketServer {
 
   private handleSongRequest(
     trackInfo: TrackData,
-    userInfo: User,
     callback: Function
   ): void {
-    if (!trackInfo) {
+    if (!trackInfo || !trackInfo.songId) {
       return;
     }
 
-    const username = userInfo.name || 'unknown';
     const saferTrackInfo: TrackData = {
-      title: trackInfo.title,
-      album: trackInfo.album,
-      artist: trackInfo.artist,
+      title: trackInfo.title || 'Unknown track',
+      album: trackInfo.album || 'Unknown album',
+      artist: trackInfo.artist || 'Unknown artist',
       songId: trackInfo.songId,
-      requestedBy: username
+      lengthMs: trackInfo.lengthMs || 0
     };
 
     this.playlistClient.addTrack(saferTrackInfo);

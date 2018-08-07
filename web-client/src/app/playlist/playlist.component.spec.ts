@@ -3,21 +3,22 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { IMock, Mock } from 'typemoq';
 
 import { PlaylistComponent } from './playlist.component';
-import { SocketService } from '../socket.service';
+import { DurationPipe } from '../duration.pipe';
+import { PlaylistService } from '../playlist.service';
 
 describe('PlaylistComponent', () => {
-  let mockSocketService: IMock<SocketService>;
+  let mockSocketService: IMock<PlaylistService>;
   let component: PlaylistComponent;
   let fixture: ComponentFixture<PlaylistComponent>;
 
   beforeEach(async(() => {
-    mockSocketService = Mock.ofType<SocketService>();
+    mockSocketService = Mock.ofType<PlaylistService>();
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      declarations: [PlaylistComponent],
+      declarations: [PlaylistComponent, DurationPipe],
       providers: [
-        { provide: SocketService, useFactory: () => mockSocketService.object }
+        { provide: PlaylistService, useFactory: () => mockSocketService.object }
       ]
     })
       .compileComponents()

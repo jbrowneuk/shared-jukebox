@@ -1,38 +1,39 @@
 @import 'palette';
+@import 'variables';
 
 .pointer {
   cursor: pointer;
 }
 
 .results-area-container {
+  background: white;
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+.results-area {
+  max-height: calc(100% - #{$content-pane-title-height + 2 * $content-pane-margin});
   overflow-x: visible;
-  overflow-y: auto;
-  background: white;
+  overflow-y: scroll;
 }
 
-.search-button {
-  background-color: $color-palette4;
-  color: #eeeeee;
+.result {
+  display: block;
+  width: 100%;
+  border: none;
+  border-top: 1px solid $color-light;
+  background: transparent;
+  padding: 8px 0;
 
-  &:hover {
-    background-color: lighten($color-palette4, 10%);
-    color: white;
+  &:first-child {
+    border-top: none;
   }
 }
 
-.search-result-container {
-  $icon-width: 40px;
-
-  .icon-pane {
-    width: $icon-width;
-  }
-
-  .text-pane {
-    width: calc(100% - #{$icon-width});
-  }
+.search-pane-header {
+  border-bottom: 1px solid $color-light;
+  padding: 0 15px;
 }

@@ -6,12 +6,13 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 declare const require: any;
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
+  [BrowserDynamicTestingModule, NoopAnimationsModule],
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.

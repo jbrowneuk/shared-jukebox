@@ -1,20 +1,69 @@
 @import 'palette';
 @import 'variables';
 
-.page-root {
-  height: calc(100vh - #{$nav-height} - #{$now-playing-bar-height});
+$header-height: 150px;
+
+/* .app-header */
+.app-header {
+  background-color: $color-dark;
+  color: white;
+  height: $header-height;
   overflow: hidden;
+  position: relative;
 }
 
-.page-footer {
-  font-size: 75%;
+.header-content .row .col* {
+  height: 34px;
 }
 
-main {
-  border: 1px solid $light-border;
-  border-top: none;
-  border-bottom: none;
-  height: 100%;
+h1 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.search-box {
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid black;
+  color: white;
+  padding: 4px 32px 4px 8px;
+  transition: color 200ms, border-color 200ms, background-color 200ms;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    background-color: white;
+    border-color: black;
+    color: black;
+
+    & + .search-button {
+      color: $color-dark;
+    }
+  }
+}
+
+.search-button {
+  color: $color-light;
+  margin: 0;
+  margin-left: -32px;
+  padding: 0;
+  width: 32px;
+}
+
+.client-warning {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+/* </> .app-header */
+
+/* .app-main */
+.app-main {
+  height: calc(100vh - #{$header-height} - #{$now-playing-bar-height});
   overflow-x: hidden;
   overflow-y: auto;
 }
+/* </> .app-main */

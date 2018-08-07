@@ -22,7 +22,7 @@ export class SocketService {
     this.socket.on(ServerEvents.RequestClientInfo, (_, callback: Function) => {
       const clientData: ClientData = {
         name: 'jukebot web client',
-        supportedApiVersion: 1
+        supportedApiVersion: 2
       };
 
       callback(clientData);

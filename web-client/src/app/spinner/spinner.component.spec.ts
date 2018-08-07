@@ -22,4 +22,28 @@ describe('SpinnerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should become larger when variable is specified', async(() => {
+    component.isLarge = true;
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const spinnerElement = document.querySelector('.spinner');
+      expect(spinnerElement.className).toContain('large');
+      expect(spinnerElement.clientHeight).toEqual(64);
+    });
+  }));
+
+  it('should pause animation when variable is specified', async(() => {
+    component.isAnimated = false;
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const spinnerElement = document.querySelector('.spinner');
+      expect(spinnerElement.className).not.toContain('animated');
+
+      const barElement = document.querySelector('.spinner .bar');
+      expect(window.getComputedStyle(barElement).animationPlayState).toEqual('paused');
+    });
+  }));
 });

@@ -1,53 +1,45 @@
 @import 'palette';
 @import 'variables';
 
-$control-width: 50px;
+$color-nowplaying-muted: #b6c3d5;
 
-.now-playing {
-  border: 1px solid $light-border;
-  border-top-width: 2px;
-  border-bottom: none;
+.now-playing-bar {
+  background-color: $color-dark;
+  color: $color-nowplaying-muted;
   height: $now-playing-bar-height;
-  z-index: 5;
-  height: $now-playing-bar-height;
-  transition: border-top-color 200ms;
-
-  &.playing {
-    border-top-color: $color-palette1;
-  }
+  overflow: hidden;
+  position: relative;
 }
 
-.control-button,
-.fake-button {
-  width: $control-width;
-}
+$icon-width: 20px;
+$icon-height: 16px;
+$icon-padding-x: 4px;
+$icon-padding-y: 0;
 
 .control-button {
   background: transparent;
   border: none;
   border-radius: 50%;
-  color: $color-palette5;
+  color: $color-nowplaying-muted;
   cursor: pointer;
+  height: $icon-height + 2 * $icon-padding-y;
+  padding: 0;
   transition: color 200ms, background-color 200ms;
   text-align: center;
-  height: 40px;
-  padding: 0;
-  position: relative;
+  vertical-align: middle;
+  width: $icon-width + 2 * $icon-padding-x;
 
   &:hover {
-    color: $color-palette1;
+    color: $color-highlight;
   }
 
   .fa-fw {
     position: absolute;
-    top: 4px;
-    left: 5px;
+    top: $icon-padding-y;
+    left: $icon-padding-x;
   }
 }
 
-.almost-badged {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: $color-palette1;
+.track-title {
+  color: $color-light;
 }

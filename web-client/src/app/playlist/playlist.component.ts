@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { TrackData, ServerEvents, WebClientEvents } from 'jukebox-common';
-
-import { SocketService } from '../socket.service';
 import { AnimationSettings } from './playlist.component.transitions';
+import { PlaylistService } from '../playlist.service';
+import { TrackData } from 'jukebox-common';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
@@ -21,57 +20,22 @@ const emptyComments = [
   styleUrls: ['./playlist.component.scss'],
   animations: AnimationSettings
 })
-export class PlaylistComponent implements OnInit, OnDestroy {
+export class PlaylistComponent {
 
-  public playlist: TrackData[];
   public snarkyEmptyPlaylistComment: string;
   public isPlaying: boolean;
-  public initialLoad: boolean;
 
-  constructor(private socket: SocketService) {
-    this.playlist = [];
+  constructor(private playlist: PlaylistService) {
     this.isPlaying = false;
-    this.initialLoad = true; // Used to prevent the flash of help text
     this.updateEmptyPlaylistComment();
   }
 
-  ngOnInit() {
-    this.socket.subscribe(ServerEvents.QueuedTrack, (data: TrackData) => {
-      this.playlist.push(data);
-    });
-
-    this.socket.subscribe(ServerEvents.DequeuedTrack, (songId: string) => {
-      const relatedTrackInfo = this.playlist.findIndex(s => s.songId === songId);
-      if (relatedTrackInfo < 0) {
-        return;
-      }
-
-      this.playlist.splice(relatedTrackInfo, 1);
-    });
-
-    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
-
-    this.socket.emit(WebClientEvents.RequestPlaylist, null, (data: TrackData[]) => {
-      this.playlist = data;
-      this.updateEmptyPlaylistComment();
-      this.initialLoad = false;
-    });
-
-    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));
-  }
-
-  ngOnDestroy() {
-    this.socket.unsubscribe(ServerEvents.QueuedTrack);
-    this.socket.unsubscribe(ServerEvents.DequeuedTrack);
-    this.socket.unsubscribe(ServerEvents.PlaystateChanged);
+  public get tracks(): TrackData[] {
+    return this.playlist.tracks;
   }
 
   private updateEmptyPlaylistComment(): void {
     this.snarkyEmptyPlaylistComment = emptyComments[Math.floor(Math.random() * emptyComments.length)];
-  }
-
-  private updatePlaystate(state: string): void {
-    this.isPlaying = state === 'PLAYING';
   }
 
 }
