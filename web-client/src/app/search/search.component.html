@@ -1,9 +1,14 @@
 <div class="results-area-container">
-  <div class="w-100 d-flex justify-content-between">
+  <div class="w-100 d-flex align-items-center justify-content-between">
     <h2 class="content-pane-title uppercase-text spaced-out my-3">
       <i class="fal fa-fw fa-search"></i>
       Search
     </h2>
+
+    <div *ngIf="searching">
+      <app-spinner></app-spinner>
+      Searching…
+    </div>
 
     <button class="borderless-button" (click)="onCloseClicked()">
       <i class="fal fa-fw fa-times"></i>
@@ -28,14 +33,11 @@
   </div>
 
   <div class="empty-results pt-3 text-muted text-center" *ngIf="results && results.length == 0">
-    <ng-container *ngIf="isDebouncing">
-      <app-spinner></app-spinner>
-    </ng-container>
-    <ng-container *ngIf="searchTerm.length > 0 && !isDebouncing">
+    <ng-container *ngIf="searchTerm.length > 0 && !searching">
       <h3 class="h6 uppercase-text spaced-out">No results for “{{searchTerm}}”</h3>
       <p>Please make sure your words are spelt correctly or use different keywords.</p>
     </ng-container>
-    <ng-container *ngIf="searchTerm.length == 0 && !isDebouncing">
+    <ng-container *ngIf="searchTerm.length == 0 && !searching">
       <h3 class="h6 uppercase-text spaced-out">Keep typing to search</h3>
     </ng-container>
   </div>
