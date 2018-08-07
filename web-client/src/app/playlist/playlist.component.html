@@ -3,7 +3,7 @@
   Now playing
 </h2>
 
-<div class="nothing-queued text-center text-muted" *ngIf="!initialLoad && (!playlist || playlist.length === 0)" [@helpTransition]>
+<div class="nothing-queued text-center text-muted" *ngIf="!tracks || tracks.length === 0" [@helpTransition]>
   <p>
     <em>Pssst…</em>
     Try queueing up some tracks using the search.
