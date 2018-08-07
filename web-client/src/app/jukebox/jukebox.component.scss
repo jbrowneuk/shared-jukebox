@@ -12,12 +12,6 @@ $header-height: 150px;
   position: relative;
 }
 
-.header-content {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
 .header-content > * {
   height: 34px;
 }
@@ -55,6 +49,7 @@ h1 {
 }
 
 .client-warning {
+  display: inline-block;
   border-radius: 4px;
   padding: 4px 8px;
 }

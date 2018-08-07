@@ -2,18 +2,28 @@
   <div class="image-area">
     <img src="/assets/images/header.jpg" alt="" role="presentation" />
   </div>
-  <div class="header-content absolute-fill">
-    <div class="d-flex align-items-center justify-content-between container mb-2">
-      <h1 class="uppercase-text spaced-out">
-        <i class="fal fa-fw fa-music"></i> Jukebot</h1>
-      <div class="client-warning bg-danger">
-        <i class="fal fa-fw fa-exclamation-triangle"></i> Jukebot player is offline</div>
-      <div class="search-wrapper">
-        <input type="search" placeholder="Search for music…" class="search-box" data-identifier="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
-        <button class="search-button borderless-button" data-identifier="search-input-button" (click)="onSearchButtonClicked()">
-          <i class="fal" [class.fa-search]="searchTerm.length === 0" [class.fa-times]="searchTerm.length > 0"></i>
-          <span class="sr-only">Clear search input</span>
-        </button>
+  <div class="header-content absolute-fill d-flex align-items-end">
+    <div class="container mb-2">
+      <div class="row">
+        <div class="col-md-4">
+          <h1 class="uppercase-text spaced-out">
+            <i class="fal fa-fw fa-music"></i> Jukebot
+          </h1>
+        </div>
+        <div class="col-md-4 text-center">
+          <div class="client-warning bg-danger">
+            <i class="fal fa-fw fa-exclamation-triangle"></i> Jukebot player is offline
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <div class="search-wrapper">
+            <input type="search" placeholder="Search for music…" class="search-box" data-identifier="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
+            <button class="search-button borderless-button" data-identifier="search-input-button" (click)="onSearchButtonClicked()">
+              <i class="fal" [class.fa-search]="searchTerm.length === 0" [class.fa-times]="searchTerm.length > 0"></i>
+              <span class="sr-only">Clear search input</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
