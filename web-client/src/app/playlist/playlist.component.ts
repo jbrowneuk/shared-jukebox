@@ -24,11 +24,9 @@ export class PlaylistComponent {
 
   public snarkyEmptyPlaylistComment: string;
   public isPlaying: boolean;
-  public initialLoad: boolean;
 
   constructor(private playlist: PlaylistService) {
     this.isPlaying = false;
-    this.initialLoad = true; // Used to prevent the flash of help text
     this.updateEmptyPlaylistComment();
   }
 

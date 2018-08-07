@@ -28,7 +28,7 @@
     <div class="col-sm-3 text-muted">
       <div class="text-truncate">{{track.album}}</div>
     </div>
-    <div class="col-sm-1">{{track.trackLength ? track.trackLength : 0 | duration}}</div>
+    <div class="col-sm-1">{{(track.lengthMs ? track.lengthMs : 0) | duration}}</div>
   </div>
 
 </div>
