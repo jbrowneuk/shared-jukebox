@@ -1,3 +1,5 @@
+@import 'variables';
+
 html,
 body {
   font-family: 'Encode Sans Semi Condensed', sans-serif;
@@ -26,6 +28,12 @@ h2.content-pane-title {
   overflow: hidden;
 }
 
+.content-pane-title {
+  height: $content-pane-title-height;
+  line-height: $content-pane-title-height;
+  margin: $content-pane-margin 0;
+}
+
 .image-area {
   z-index: 0;
 
@@ -34,10 +42,6 @@ h2.content-pane-title {
     min-height: 100%;
     vertical-align: middle;
   }
-}
-
-.uppercase-text {
-  text-transform: uppercase;
 }
 
 .spaced-out {

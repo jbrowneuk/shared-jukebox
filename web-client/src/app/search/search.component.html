@@ -1,6 +1,6 @@
 <div class="results-area-container">
-  <div class="w-100 d-flex align-items-center justify-content-between">
-    <h2 class="content-pane-title uppercase-text spaced-out my-3">
+  <div class="w-100 d-flex align-items-center justify-content-between search-pane-header">
+    <h2 class="content-pane-title text-uppercase spaced-out">
       <i class="fal fa-fw fa-search"></i>
       Search
     </h2>
@@ -16,29 +16,28 @@
     </button>
   </div>
 
-  <div class="results-area pt-3" id="search-results" *ngIf="results && results.length > 0">
-    <button *ngFor="let tuple of results" class="list-group-item list-group-item-action" (click)="onTermClicked(tuple[0].songId)"
+  <div class="results-area" id="search-results" *ngIf="results && results.length > 0">
+    <button *ngFor="let tuple of results" class="result row w-100 text-left" (click)="onTermClicked(tuple[0].songId)"
       [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [class.list-group-item-light]="tuple[1]" [@searchResultTransition]>
       <div class="d-flex justify-content-between align-items-center search-result-container">
-        <div class="icon-pane">
-          <i class="fal fa-plus-square fa-2x" *ngIf="!tuple[1]"></i>
-          <i class="fal fa-check-square fa-2x" *ngIf="tuple[1]"></i>
+        <div class="col-md-5 text-truncate">
+          <i class="fal fa-fw mr-1" [class.fa-plus-square]="!tuple[1]" [class.fa-check-square]="tuple[1]"></i>
+          {{tuple[0].title}}
         </div>
-        <div class="text-pane">
-          <h6 class="my-0 d-block text-truncate">{{tuple[0].title}}</h6>
-          <small class="text-muted d-block text-truncate">{{tuple[0].artist}} – {{tuple[0].album}}</small>
-        </div>
+        <div class="col-md-3 text-truncate text-muted">{{tuple[0].artist}}</div>
+        <div class="col-md-3 text-truncate text-muted">{{tuple[0].album}}</div>
+        <div class="col-md-1 text-truncate text-right">{{tuple[0].lengthMs | duration}}</div>
       </div>
     </button>
   </div>
 
   <div class="empty-results pt-3 text-muted text-center" *ngIf="results && results.length == 0">
     <ng-container *ngIf="searchTerm.length > 0 && !searching">
-      <h3 class="h6 uppercase-text spaced-out">No results for “{{searchTerm}}”</h3>
+      <h3 class="h6 text-uppercase spaced-out">No results for “{{searchTerm}}”</h3>
       <p>Please make sure your words are spelt correctly or use different keywords.</p>
     </ng-container>
     <ng-container *ngIf="searchTerm.length == 0 && !searching">
-      <h3 class="h6 uppercase-text spaced-out">Keep typing to search</h3>
+      <h3 class="h6 text-uppercase spaced-out">Keep typing to search</h3>
     </ng-container>
   </div>
 </div>

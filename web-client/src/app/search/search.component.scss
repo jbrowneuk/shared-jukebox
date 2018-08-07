@@ -1,9 +1,5 @@
 @import 'palette';
-
-.empty-results,
-.results-area {
-  border-top: 1px solid $color-light;
-}
+@import 'variables';
 
 .pointer {
   cursor: pointer;
@@ -16,20 +12,28 @@
   top: 0;
   right: 0;
   bottom: 0;
-  overflow-x: visible;
-  overflow-y: auto;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
-.search-result-container {
-  $icon-width: 40px;
+.results-area {
+  max-height: calc(100% - #{$content-pane-title-height + 2 * $content-pane-margin});
+  overflow-x: visible;
+  overflow-y: scroll;
+}
 
-  .icon-pane {
-    width: $icon-width;
-  }
+.result {
+  display: block;
+  width: 100%;
+  border: none;
+  border-top: 1px solid $color-light;
+  background: transparent;
+  padding: 8px 0;
 
-  .text-pane {
-    width: calc(100% - #{$icon-width});
+  &:first-child {
+    border-top: none;
   }
+}
+
+.search-pane-header {
+  border-bottom: 1px solid $color-light;
+  padding: 0 15px;
 }

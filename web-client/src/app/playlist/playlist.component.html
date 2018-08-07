@@ -1,4 +1,4 @@
-<h2 class="content-pane-title uppercase-text spaced-out my-3">
+<h2 class="content-pane-title text-uppercase spaced-out">
   <i class="fal fa-fw fa-list"></i>
   Now playing
 </h2>
@@ -22,13 +22,9 @@
       </div>
       <div class="title text-truncate">{{track.title}}</div>
     </div>
-    <div class="col-sm-3 text-muted">
-      <div class="text-truncate">{{track.artist}}</div>
-    </div>
-    <div class="col-sm-3 text-muted">
-      <div class="text-truncate">{{track.album}}</div>
-    </div>
-    <div class="col-sm-1">{{(track.lengthMs ? track.lengthMs : 0) | duration}}</div>
+    <div class="col-sm-3 text-truncate text-muted">{{track.artist}}</div>
+    <div class="col-sm-3 text-truncate text-muted">{{track.album}}</div>
+    <div class="col-sm-1 text-truncate text-right">{{(track.lengthMs ? track.lengthMs : 0) | duration}}</div>
   </div>
 
 </div>
