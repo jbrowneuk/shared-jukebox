@@ -14,7 +14,7 @@ $color-nowplaying-muted: #b6c3d5;
 $icon-width: 20px;
 $icon-height: 16px;
 $icon-padding-x: 4px;
-$icon-padding-y: 4px;
+$icon-padding-y: 0;
 
 .control-button {
   background: transparent;
@@ -26,6 +26,7 @@ $icon-padding-y: 4px;
   padding: 0;
   transition: color 200ms, background-color 200ms;
   text-align: center;
+  vertical-align: middle;
   width: $icon-width + 2 * $icon-padding-x;
 
   &:hover {
