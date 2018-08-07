@@ -38,10 +38,15 @@ h1 {
     background-color: white;
     border-color: black;
     color: black;
+
+    & + .search-button {
+      color: $color-dark;
+    }
   }
 }
 
 .search-button {
+  color: $color-light;
   margin: 0;
   margin-left: -32px;
   padding: 0;
