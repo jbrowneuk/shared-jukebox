@@ -1,9 +1,11 @@
 @import 'palette';
 @import 'variables';
 
+$color-nowplaying-muted: #b6c3d5;
+
 .now-playing-bar {
   background-color: $color-dark;
-  color: $color-light;
+  color: $color-nowplaying-muted;
   height: $now-playing-bar-height;
   overflow: hidden;
   position: relative;
@@ -18,7 +20,7 @@ $icon-padding-y: 4px;
   background: transparent;
   border: none;
   border-radius: 50%;
-  color: $color-light;
+  color: $color-nowplaying-muted;
   cursor: pointer;
   height: $icon-height + 2 * $icon-padding-y;
   padding: 0;
@@ -35,4 +37,8 @@ $icon-padding-y: 4px;
     top: $icon-padding-y;
     left: $icon-padding-x;
   }
+}
+
+.track-title {
+  color: $color-light;
 }

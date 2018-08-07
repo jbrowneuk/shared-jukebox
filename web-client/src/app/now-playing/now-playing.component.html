@@ -13,11 +13,11 @@
       <div class="col-md-4 text-center">
         <ng-container *ngIf="currentTrack; else noTrackInfo">
           <span class="track-title mr-2">{{currentTrack.title}}</span>
-          <span class="track-artist text-muted">{{currentTrack.artist}}</span>
+          <span class="track-artist">{{currentTrack.artist}}</span>
         </ng-container>
       </div>
       <div class="col-md-4 text-right">
-        v
+        <i class="fas fa-fs fa-volume-up"></i>
       </div>
     </div>
   </div>
