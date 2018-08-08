@@ -61,11 +61,9 @@ export class PlaylistService {
 
   private updatePlaystate(state: string): void {
     const hackySpecifierString = state.charAt(0).toUpperCase() + state.substring(1).toLowerCase();
-    console.log(`got a playstate ${hackySpecifierString}`);
     // Can the param be the enum?
     const convertedState = PlayState[hackySpecifierString];
     if (!convertedState) {
-      console.log('Not converting');
       return;
     }
 
