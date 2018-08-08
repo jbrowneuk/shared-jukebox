@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 import { AnimationSettings } from './playlist.component.transitions';
 import { PlaylistService } from '../playlist.service';
-import { TrackData } from 'jukebox-common';
+import { Observable } from 'rxjs';
+import { PlayState, TrackData } from 'jukebox-common';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
@@ -22,16 +23,21 @@ const emptyComments = [
 })
 export class PlaylistComponent {
 
+  // For component template binding
+  public PlayState = PlayState;
+
   public snarkyEmptyPlaylistComment: string;
-  public isPlaying: boolean;
 
   constructor(private playlist: PlaylistService) {
-    this.isPlaying = false;
     this.updateEmptyPlaylistComment();
   }
 
   public get tracks(): TrackData[] {
     return this.playlist.tracks;
+  }
+
+  public get playState$(): Observable<PlayState> {
+    return this.playlist.playState$;
   }
 
   private updateEmptyPlaylistComment(): void {
