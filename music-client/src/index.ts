@@ -1,25 +1,15 @@
-import * as io from 'socket.io-client';
+import { SocketClient } from './socket-client';
+import { MopidyClient, MopidyEvents } from './mopidy-client';
 
-const socket = io('http://localhost:8080'); // address
+const mopidyUrl = 'ws://talon.local:6680/mopidy/ws/';
+const socketUrl = 'http://localhost:8080';
 
-let playlist = [];
+const mopidyClient = new MopidyClient(mopidyUrl);
 
-socket.on('client', (_: any, fn: Function) => {
-  const client = {
-    name: 'music-service',
-    version: 1
-  };
+function handleMopidyOnline(): void {
+  const socketClient = new SocketClient(socketUrl, mopidyClient);
+  socketClient.initialize();
+}
 
-  fn(client);
-});
-
-socket.on('playlist', (data: any[]) => {
-  console.log('got ' + data.length + ' items')
-  playlist = data;
-});
-
-socket.on('queued-track', (data: any) => {
-  console.log('got a song')
-  playlist.push(data);
-  console.log('try playing now');
-});
+mopidyClient.on(MopidyEvents.Online, () => handleMopidyOnline());
+mopidyClient.initialize();
