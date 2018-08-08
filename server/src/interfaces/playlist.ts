@@ -7,4 +7,5 @@ export interface Playlist {
   togglePlaystate(): void;
   addTrack(track: TrackData): void;
   removeTrack(track: TrackData): void;
+  findTrackWithId(id: string): TrackData;
 }

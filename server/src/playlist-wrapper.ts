@@ -45,4 +45,8 @@ export class PlaylistWrapper implements Playlist {
 
     this.playlist.splice(indexToRemove, 1);
   }
+
+  findTrackWithId(id: string): TrackData {
+    return this.playlist.find(item => item.songId === id);
+  }
 }

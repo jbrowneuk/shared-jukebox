@@ -69,6 +69,8 @@ export class SocketServer {
     );
 
     socket.on(WebClientEvents.ChangePlaystate, (newState: string) => this.togglePlaystate(socket, newState));
+
+    socket.on(MusicClientEvents.DequeueTrack, (uri: string) => this.handleDequeueTrack(uri));
   }
 
   private handleSearchQuery(
@@ -152,5 +154,15 @@ export class SocketServer {
 
     // Propagate the playstate changed event to all clients // TODO: this doesn't sync very well
     this.server.emit(ServerEvents.PlaystateChanged, this.playlistClient.getPlayState());
+  }
+
+  private handleDequeueTrack(uri: string): void {
+    // TODO: sync with playlist client
+    const data = this.playlistClient.findTrackWithId(uri);
+    if (data) {
+      this.playlistClient.removeTrack(data);
+    }
+
+    this.server.emit(ServerEvents.DequeuedTrack, uri);
   }
 }
