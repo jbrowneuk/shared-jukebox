@@ -10,7 +10,6 @@ import { SocketService } from './socket.service';
   providedIn: 'root'
 })
 export class PlaylistService {
-
   private tracklist: TrackData[];
   private playstateSubject: BehaviorSubject<PlayState>;
 
@@ -40,7 +39,9 @@ export class PlaylistService {
     });
 
     this.socket.subscribe(ServerEvents.DequeuedTrack, (songId: string) => {
-      const relatedTrackInfo = this.tracklist.findIndex(s => s.songId === songId);
+      const relatedTrackInfo = this.tracklist.findIndex(
+        s => s.songId === songId
+      );
       if (relatedTrackInfo < 0) {
         return;
       }
@@ -48,19 +49,26 @@ export class PlaylistService {
       this.tracklist.splice(relatedTrackInfo, 1);
     });
 
-    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) => this.updatePlaystate(state));
+    this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) =>
+      this.updatePlaystate(state)
+    );
   }
 
   private getStateFromSocket(): void {
-    this.socket.emit(WebClientEvents.RequestPlaylist, null, (data: TrackData[]) => {
-      this.tracklist = data;
-    });
+    this.socket.emit(
+      WebClientEvents.RequestPlaylist,
+      null,
+      (data: TrackData[]) => (this.tracklist = data)
+    );
 
-    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) => this.updatePlaystate(state));
+    this.socket.emit(WebClientEvents.RequestPlaystate, null, (state: string) =>
+      this.updatePlaystate(state)
+    );
   }
 
   private updatePlaystate(state: string): void {
-    const hackySpecifierString = state.charAt(0).toUpperCase() + state.substring(1).toLowerCase();
+    const hackySpecifierString =
+      state.charAt(0).toUpperCase() + state.substring(1).toLowerCase();
     // Can the param be the enum?
     const convertedState = PlayState[hackySpecifierString];
     if (!convertedState) {
