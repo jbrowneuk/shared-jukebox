@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as io from 'socket.io';
 
-import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents } from 'jukebox-common';
+import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents, PlayState } from 'jukebox-common';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
@@ -68,7 +68,7 @@ export class SocketServer {
       this.handlePlaystateRequest(callback)
     );
 
-    socket.on(WebClientEvents.ChangePlaystate, () => this.togglePlaystate(socket));
+    socket.on(WebClientEvents.ChangePlaystate, (newState: string) => this.togglePlaystate(socket, newState));
   }
 
   private handleSearchQuery(
@@ -133,11 +133,24 @@ export class SocketServer {
     callback(this.playlistClient.getPlayState());
   }
 
-  private togglePlaystate(socket: io.Socket): void {
-    const requestedPlaystate = this.playlistClient.togglePlaystate(); // Kinda debug, depends more on the client
+  private togglePlaystate(socket: io.Socket, newState: string): void {
+    const currentState = this.playlistClient.getPlayState();
+
+    console.log('New state:', newState);
+    console.log('current state:', currentState);
+
+    if (newState === 'toggle') {
+      console.log('Toggling');
+      this.playlistClient.togglePlaystate();
+    } else {
+      this.playlistClient.setPlaystate(PlayState.Playing); // TODO
+    }
+
+    const requestedPlaystate = this.playlistClient.getPlayState();
+    console.log('Setting state:', requestedPlaystate);
     socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
 
-    // Debug (for front-end visuals)
-    socket.emit(ServerEvents.PlaystateChanged, requestedPlaystate);
+    // Propagate the playstate changed event to all clients // TODO: this doesn't sync very well
+    this.server.emit(ServerEvents.PlaystateChanged, this.playlistClient.getPlayState());
   }
 }

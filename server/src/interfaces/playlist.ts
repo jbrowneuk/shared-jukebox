@@ -1,9 +1,10 @@
-import { TrackData } from 'jukebox-common';
+import { TrackData, PlayState } from 'jukebox-common';
 
 export interface Playlist {
   getTracks(): TrackData[];
-  getPlayState(): string;
-  togglePlaystate(): string;
+  getPlayState(): PlayState;
+  setPlaystate(playstate: PlayState): void;
+  togglePlaystate(): void;
   addTrack(track: TrackData): void;
   removeTrack(track: TrackData): void;
 }
