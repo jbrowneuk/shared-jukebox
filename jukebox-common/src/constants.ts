@@ -17,7 +17,8 @@ export const WebClientEvents = {
 
 export const MusicClientEvents = {
   SetPlaystate: 'set-playstate',
-  DequeueTrack: 'dequeue-track'
+  DequeueTrack: 'dequeue-track',
+  ChangedPlayState: 'changed-playstate'
 };
 
 export enum PlayState {

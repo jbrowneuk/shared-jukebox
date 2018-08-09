@@ -12,14 +12,12 @@ export const MopidyEvents = {
 export class MopidyClient extends EventEmitter {
   private mopidy: any;
   private mopidyTrack: any;
-  private lastPlayState: string;
 
   constructor(private mopidyUrl: string) {
     super();
 
     this.mopidy = null;
     this.mopidyTrack = null;
-    this.lastPlayState = PlayState.Stopped;
   }
 
   public initialize(): void {
@@ -64,7 +62,6 @@ export class MopidyClient extends EventEmitter {
       }
 
       this.emit(MopidyEvents.PlayStateChanged, mappedState);
-      this.lastPlayState = mappedState;
     });
 
     this.mopidy.connect();
@@ -78,11 +75,12 @@ export class MopidyClient extends EventEmitter {
     this.mopidy.playback.getState()
       .then((serverState: string) => {
         console.log('Server state:', serverState);
+        console.log('Requested state:', requestedState);
         if (requestedState === PlayState.Playing && serverState !== PlayState.Playing) {
           console.log('-> play');
           return this.mopidy.playback.play();
         }
-    
+
         if (requestedState === PlayState.Paused && serverState !== PlayState.Paused) {
           console.log('-> pause');
           return this.mopidy.playback.pause();

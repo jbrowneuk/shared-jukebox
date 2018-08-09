@@ -34,6 +34,10 @@ export class SocketClient {
     this.client.on(MopidyEvents.TrackComplete, (uri: string) => {
       this.socket.emit(MusicClientEvents.DequeueTrack, uri);
     });
+
+    this.client.on(MopidyEvents.PlayStateChanged, (state: PlayState) => {
+      this.socket.emit(MusicClientEvents.ChangedPlayState, state);
+    })
   }
 
   private onConnected(): void {
