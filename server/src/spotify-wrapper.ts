@@ -2,6 +2,8 @@ import * as SpotifyWebApi from 'spotify-web-api-node';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { TrackData } from 'jukebox-common';
 
+const trackLimit = 20;
+
 export class SpotifyWrapper implements SpotifyApi {
   private spotifyApi: any;
   private credentialExpiry: Date;
@@ -15,7 +17,7 @@ export class SpotifyWrapper implements SpotifyApi {
 
   public search(term: string): Promise<TrackData> {
     const types = ['track'];
-    const options = { limit: 10, offset: 0 };
+    const options = { limit: trackLimit, offset: 0 };
 
     return this.checkCredentials().then(() => {
       return this.spotifyApi.search(term, types, options).then((data: any) => {

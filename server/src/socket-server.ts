@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as io from 'socket.io';
 
-import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents } from 'jukebox-common';
+import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents, PlayState } from 'jukebox-common';
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
@@ -68,7 +68,11 @@ export class SocketServer {
       this.handlePlaystateRequest(callback)
     );
 
-    socket.on(WebClientEvents.ChangePlaystate, () => this.togglePlaystate(socket));
+    socket.on(WebClientEvents.ChangePlaystate, (newState: string) => this.togglePlaystate(socket, newState));
+
+    socket.on(MusicClientEvents.DequeueTrack, (uri: string) => this.handleDequeueTrack(uri));
+
+    socket.on(MusicClientEvents.ChangedPlayState, (newState: PlayState) => this.handlePlayStateChanged(newState));
   }
 
   private handleSearchQuery(
@@ -133,11 +137,37 @@ export class SocketServer {
     callback(this.playlistClient.getPlayState());
   }
 
-  private togglePlaystate(socket: io.Socket): void {
-    const requestedPlaystate = this.playlistClient.togglePlaystate(); // Kinda debug, depends more on the client
-    socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
+  private togglePlaystate(socket: io.Socket, newState: string): void {
+    const currentState = this.playlistClient.getPlayState();
 
-    // Debug (for front-end visuals)
-    socket.emit(ServerEvents.PlaystateChanged, requestedPlaystate);
+    console.log('New state:', newState);
+    console.log('current state:', currentState);
+
+    if (newState === 'toggle') {
+      console.log('Toggling');
+      this.playlistClient.togglePlaystate();
+    } else {
+      this.playlistClient.setPlaystate(PlayState.Playing); // TODO
+    }
+
+    const requestedPlaystate = this.playlistClient.getPlayState();
+    console.log('Setting state:', requestedPlaystate);
+    socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
+  }
+
+  private handleDequeueTrack(uri: string): void {
+    // TODO: sync with playlist client
+    const data = this.playlistClient.findTrackWithId(uri);
+    if (data) {
+      this.playlistClient.removeTrack(data);
+    }
+
+    this.server.emit(ServerEvents.DequeuedTrack, uri);
+  }
+  private handlePlayStateChanged(newState: PlayState): void {
+    console.log('Got a new play state:', newState);
+
+    this.playlistClient.setPlaystate(newState);
+    this.server.emit(ServerEvents.PlaystateChanged, this.playlistClient.getPlayState());
   }
 }

@@ -18,7 +18,9 @@
   <div class="row track" *ngFor="let track of tracks; let playlistPosition=index" [@itemTransition]>
     <div class="col-sm-5">
       <div class="playing" *ngIf="playlistPosition === 0">
-        <app-spinner [isAnimated]="isPlaying"></app-spinner>
+        <ng-container *ngIf="playState$ | async as playState">
+            <app-spinner [isAnimated]="playState == PlayState.Playing"></app-spinner>
+        </ng-container>
       </div>
       <div class="title text-truncate">{{track.title}}</div>
     </div>

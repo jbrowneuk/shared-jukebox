@@ -1,11 +1,5 @@
 import { Playlist } from './interfaces/playlist';
-import { TrackData } from 'jukebox-common';
-
-enum PlayState {
-  Paused = 'PAUSED',
-  Playing = 'PLAYING',
-  Stopped = 'STOPPED'
-}
+import { TrackData, PlayState } from 'jukebox-common';
 
 export class PlaylistWrapper implements Playlist {
 
@@ -21,18 +15,21 @@ export class PlaylistWrapper implements Playlist {
     return this.playlist;
   }
 
-  getPlayState(): string {
+  getPlayState(): PlayState {
     return this.playstate;
   }
 
-  togglePlaystate(): string {
+  togglePlaystate(): void {
     if (this.playlist.length > 0) {
       this.playstate = this.playstate === PlayState.Playing ? PlayState.Paused : PlayState.Playing;
     } else {
       this.playstate = PlayState.Stopped;
     }
+  }
 
-    return this.playstate;
+  setPlaystate(playstate: PlayState): void {
+    this.playstate = playstate;
+    console.log(`Set playstate to ${this.playstate}`);
   }
 
   addTrack(track: TrackData): void {
@@ -46,5 +43,9 @@ export class PlaylistWrapper implements Playlist {
     }
 
     this.playlist.splice(indexToRemove, 1);
+  }
+
+  findTrackWithId(id: string): TrackData {
+    return this.playlist.find(item => item.songId === id);
   }
 }

@@ -1,25 +1,17 @@
-import * as io from 'socket.io-client';
+import * as fs from 'fs';
 
-const socket = io('http://localhost:8080'); // address
+import { SocketClient } from './socket-client';
+import { MopidyClient, MopidyEvents } from './mopidy-client';
 
-let playlist = [];
+const raw = fs.readFileSync('./config.json', { encoding: 'utf8' });
+const settings = JSON.parse(raw);
 
-socket.on('client', (_: any, fn: Function) => {
-  const client = {
-    name: 'music-service',
-    version: 1
-  };
+const mopidyClient = new MopidyClient(settings.mopidyUrl);
 
-  fn(client);
-});
+function handleMopidyOnline(): void {
+  const socketClient = new SocketClient(settings.serverUrl, mopidyClient);
+  socketClient.initialize();
+}
 
-socket.on('playlist', (data: any[]) => {
-  console.log('got ' + data.length + ' items')
-  playlist = data;
-});
-
-socket.on('queued-track', (data: any) => {
-  console.log('got a song')
-  playlist.push(data);
-  console.log('try playing now');
-});
+mopidyClient.on(MopidyEvents.Online, () => handleMopidyOnline());
+mopidyClient.initialize();
