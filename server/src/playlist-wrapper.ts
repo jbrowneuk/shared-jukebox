@@ -27,9 +27,8 @@ export class PlaylistWrapper implements Playlist {
     }
   }
 
-  setPlaystate(playstate: string): void {
-    const sanitizedDebugIdx = playstate.substring(0, 1).toUpperCase() + playstate.substring(1).toLowerCase;
-    this.playstate = PlayState[sanitizedDebugIdx];
+  setPlaystate(playstate: PlayState): void {
+    this.playstate = playstate;
     console.log(`Set playstate to ${this.playstate}`);
   }
 
