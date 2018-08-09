@@ -17,7 +17,7 @@
   </div>
 
   <div class="results-area" id="search-results" *ngIf="results && results.length > 0">
-    <button *ngFor="let tuple of results; let id=index" class="result row w-100 text-left" [attr.data-identifier]="'result-' + id"
+    <button *ngFor="let tuple of results; let id=index" class="result row text-left" [attr.data-identifier]="'result-' + id"
       (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [@searchResultTransition]>
       <div class="d-flex justify-content-between align-items-center search-result-container">
         <div class="col-md-5 text-truncate" data-identifier="track-title">
