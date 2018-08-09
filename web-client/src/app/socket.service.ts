@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import * as socketIo from 'socket.io-client';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { generateSocketClient } from './utils/socket-client';
 
 import { ServerEvents, ClientData } from 'jukebox-common';
 
@@ -14,7 +15,7 @@ export class SocketService {
 
   constructor() {
     this.connectionSubject = new BehaviorSubject<boolean>(false);
-    this.socket = socketIo();
+    this.socket = generateSocketClient();
 
     this.socket.on('connect', () => this.connectionSubject.next(true));
     this.socket.on('disconnect', () => this.connectionSubject.next(false));
