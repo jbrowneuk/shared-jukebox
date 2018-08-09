@@ -64,6 +64,7 @@ typings/
 /web-client/src/assets/fa/
 /server/src/static/
 /server/config.json
+/music-client/config.json
 dist
 
 # Operating system files
