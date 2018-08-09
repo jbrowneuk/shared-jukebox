@@ -1,0 +1,4 @@
+{
+  "mopidyUrl": "ws://localhost:6800/mopidy/ws/",
+  "serverUrl": "http://localhost:8080/"
+}
