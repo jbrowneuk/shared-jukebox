@@ -8,7 +8,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { JukeboxComponent } from './jukebox/jukebox.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchComponent } from './search/search.component';
-import { NowPlayingComponent } from './now-playing/now-playing.component';
+import { ControlsComponent } from './controls/controls.component';
 import { SocketService } from './socket.service';
 import { PlaylistService } from './playlist.service';
 import { DurationPipe } from './duration.pipe';
@@ -20,7 +20,7 @@ import { DurationPipe } from './duration.pipe';
     JukeboxComponent,
     PlaylistComponent,
     SearchComponent,
-    NowPlayingComponent,
+    ControlsComponent,
     DurationPipe
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
