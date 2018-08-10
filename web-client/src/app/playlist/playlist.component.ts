@@ -7,7 +7,7 @@ import { PlayState, TrackData } from 'jukebox-common';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
-  'I should’t have to state the obvious.',
+  'I shouldn’t have to state the obvious.',
   'One song is better than none.',
   'Combined, your tastes in music are terrible. But hey, let’s do this anyway.',
   'Remember when we played some music? That bit was fun.',
