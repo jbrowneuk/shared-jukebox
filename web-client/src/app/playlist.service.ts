@@ -18,7 +18,6 @@ export class PlaylistService {
     this.playstateSubject = new BehaviorSubject<PlayState>(PlayState.Stopped);
 
     this.subscribeToSocket();
-    this.getStateFromSocket();
   }
 
   public get tracks(): TrackData[] {
@@ -52,6 +51,12 @@ export class PlaylistService {
     this.socket.subscribe(ServerEvents.PlaystateChanged, (state: string) =>
       this.updatePlaystate(state)
     );
+
+    this.socket.connection$.subscribe(
+      (value: boolean) => this.handleSocketConnectionChanged(value),
+      (err: any) => {},
+      () => {}
+    );
   }
 
   private getStateFromSocket(): void {
@@ -76,5 +81,13 @@ export class PlaylistService {
     }
 
     this.playstateSubject.next(convertedState);
+  }
+
+  private handleSocketConnectionChanged(isConnected: boolean): void {
+    if (!isConnected) {
+      return;
+    }
+
+    this.getStateFromSocket();
   }
 }
