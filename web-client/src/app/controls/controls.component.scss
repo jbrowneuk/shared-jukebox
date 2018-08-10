@@ -1,8 +1,6 @@
 @import 'palette';
 @import 'variables';
 
-$color-nowplaying-muted: #b6c3d5;
-
 .now-playing-bar {
   background-color: $color-dark;
   color: $color-nowplaying-muted;
