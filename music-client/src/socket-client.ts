@@ -19,7 +19,7 @@ export class SocketClient {
   public initialize(): void {
     this.socket = io(this.serverUrl);
     this.socket.on('connect', () => this.onConnected());
-    this.socket.on('disconnect', () => console.log('disconnect'));
+    this.socket.on('disconnect', () => this.onDisconnected());
     this.socket.on(
       ServerEvents.RequestClientInfo,
       (_: any, callback: Function) => this.onRequestedClientInfo(callback)
@@ -48,6 +48,11 @@ export class SocketClient {
       null,
       (tracks: TrackData[]) => this.handlePlaylistResponse(tracks)
     );
+  }
+
+  private onDisconnected(): void {
+    console.log('Disconnected');
+    this.client.clearTracks();
   }
 
   private onRequestedClientInfo(callback: Function): void {
