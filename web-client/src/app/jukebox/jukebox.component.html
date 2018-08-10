@@ -5,19 +5,23 @@
   <div class="header-content absolute-fill d-flex align-items-end">
     <div class="container mb-2">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 col-8">
           <h1 class="text-uppercase spaced-out">
             <i class="fal fa-fw fa-music"></i> Jukebot
           </h1>
         </div>
-        <div class="col-md-4 text-center">
-          <div class="client-warning bg-danger">
-            <i class="fal fa-fw fa-exclamation-triangle"></i> Jukebot player is offline
+        <div class="col-md-4 col-4 text-right text-md-center">
+          <div class="client-warning bg-danger" *ngIf="playerError">
+            <i class="fal fa-fw fa-exclamation-triangle mr-1"></i>
+            <span class="d-none d-md-inline">Jukebot player is offline</span>
+            <span class="d-none d-sm-inline d-md-none">Player offline</span>
+            <i class="fal fa-fw fa-volume-mute d-inline d-sm-none"></i>
           </div>
         </div>
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 col-12 text-right">
           <div class="search-wrapper">
-            <input type="search" placeholder="Search for music…" class="search-box" data-identifier="search-box" [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
+            <input type="search" placeholder="Search for music…" class="search-box d-inline-block w-100" data-identifier="search-box"
+              [(ngModel)]="searchTerm" (focus)="onFocusSearch()" />
             <button class="search-button borderless-button" data-identifier="search-input-button" (click)="onSearchButtonClicked()">
               <i class="fal" [class.fa-search]="searchTerm.length === 0" [class.fa-times]="searchTerm.length > 0"></i>
               <span class="sr-only">Clear search input</span>
