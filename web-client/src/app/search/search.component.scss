@@ -17,7 +17,7 @@
 .results-area {
   max-height: calc(100% - #{$content-pane-title-height + 2 * $content-pane-margin});
   overflow-x: visible;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .result {
