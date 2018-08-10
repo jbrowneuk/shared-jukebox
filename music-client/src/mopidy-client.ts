@@ -71,6 +71,13 @@ export class MopidyClient extends EventEmitter {
     return this.mopidy.tracklist.add(null, null, url);
   }
 
+  public clearTracks(): void {
+    this.mopidy.tracklist.clear().then(() => {
+      console.log('Cleared playlist');
+      this.emit(MopidyEvents.Offline);
+    });
+  }
+
   public setPlayState(requestedState: PlayState): void {
     this.mopidy.playback.getState()
       .then((serverState: string) => {
