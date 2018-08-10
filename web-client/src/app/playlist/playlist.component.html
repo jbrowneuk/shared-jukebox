@@ -16,17 +16,17 @@
 <div class="tracks">
 
   <div class="row track" *ngFor="let track of tracks; let playlistPosition=index" [@itemTransition]>
-    <div class="col-sm-5">
+    <div class="col-sm-4 col-md-5 track-title-text">
       <div class="playing" *ngIf="playlistPosition === 0">
         <ng-container *ngIf="playState$ | async as playState">
-            <app-spinner [isAnimated]="playState == PlayState.Playing"></app-spinner>
+          <app-spinner [isAnimated]="playState == PlayState.Playing"></app-spinner>
         </ng-container>
       </div>
       <div class="title text-truncate">{{track.title}}</div>
     </div>
-    <div class="col-sm-3 text-truncate text-muted">{{track.artist}}</div>
-    <div class="col-sm-3 text-truncate text-muted">{{track.album}}</div>
-    <div class="col-sm-1 text-truncate text-right">{{(track.lengthMs ? track.lengthMs : 0) | duration}}</div>
+    <div class="col-sm-3 col-md-3 text-truncate">{{track.artist}}</div>
+    <div class="col-sm-3 col-md-3 text-truncate">{{track.album}}</div>
+    <div class="col-sm-2 col-md-1 text-truncate text-right">{{(track.lengthMs ? track.lengthMs : 0) | duration}}</div>
   </div>
 
 </div>

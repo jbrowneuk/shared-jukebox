@@ -4,6 +4,11 @@
 .track {
   padding: 8px 0;
   border-top: 1px solid $color-light;
+  color: $color-playlist-metadata;
+}
+
+.track-title-text {
+  color: $color-playlist-track-title;
 }
 
 .tracks {
