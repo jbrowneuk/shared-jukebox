@@ -27,6 +27,10 @@ h1 {
   font-size: 20px;
   margin: 0;
   padding: 0;
+
+  @media (max-width: $sized-breakpoint) {
+    margin-bottom: 4px;
+  }
 }
 
 .search-box {
@@ -81,5 +85,9 @@ h1 {
   height: calc(100vh - #{$header-height} - #{$now-playing-bar-height});
   overflow-x: hidden;
   overflow-y: auto;
+
+  @media (max-width: $sized-breakpoint) {
+    height: calc(100vh - #{$header-sized-height} - #{$now-playing-bar-height});
+  }
 }
 /* </> .app-main */
