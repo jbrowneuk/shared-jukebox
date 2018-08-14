@@ -17,11 +17,10 @@ $icon-padding-y: 0;
 .control-button {
   background: transparent;
   border: none;
-  border-radius: 50%;
   color: $color-nowplaying-muted;
   height: $icon-height + 2 * $icon-padding-y;
   padding: 0;
-  transition: color 200ms, background-color 200ms;
+  transition: color 200ms;
   text-align: center;
   vertical-align: middle;
   width: $icon-width + 2 * $icon-padding-x;
