@@ -10,7 +10,7 @@
       Searching…
     </div>
 
-    <button class="borderless-button" data-identifier="close-search-pane" (click)="onCloseClicked()">
+    <button class="borderless-button px-0" data-identifier="close-search-pane" (click)="onCloseClicked()">
       Close search <i class="fal fa-fw fa-times"></i>
     </button>
   </div>
@@ -18,15 +18,13 @@
   <div class="results-area" id="search-results" *ngIf="results && results.length > 0">
     <button *ngFor="let tuple of results; let id=index" class="result row text-left" [attr.data-identifier]="'result-' + id"
       (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [@searchResultTransition]>
-      <div class="d-flex justify-content-between align-items-center search-result-container">
-        <div class="col-md-5 text-truncate" data-identifier="track-title">
-          <i class="fal fa-fw mr-1" [class.fa-plus-square]="!tuple[1]" [class.fa-check-square]="tuple[1]"></i>
-          {{tuple[0].title}}
-        </div>
-        <div class="col-md-3 text-truncate text-muted" data-identifier="track-artist">{{tuple[0].artist}}</div>
-        <div class="col-md-3 text-truncate text-muted" data-identifier="track-album">{{tuple[0].album}}</div>
-        <div class="col-md-1 text-truncate text-right" data-identifier="track-duration">{{tuple[0].lengthMs | duration}}</div>
+      <div class="col-12 col-sm-4 col-md-5 text-truncate" data-identifier="track-title">
+        <i class="fal fa-fw mr-1" [class.fa-plus-square]="!tuple[1]" [class.fa-check-square]="tuple[1]"></i>
+        {{tuple[0].title}}
       </div>
+      <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-artist">{{tuple[0].artist}}</div>
+      <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-album">{{tuple[0].album}}</div>
+      <div class="col-2 col-sm-2 col-md-1 text-truncate text-right" data-identifier="track-duration">{{tuple[0].lengthMs | duration}}</div>
     </button>
   </div>
 
