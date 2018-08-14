@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { SocketService } from './socket.service';
-import { ServerEvents } from '../../node_modules/jukebox-common';
+import { ServerEvents } from 'jukebox-common';
 
 describe('AppComponent', () => {
   let mockSocketService: IMock<SocketService>;
