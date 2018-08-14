@@ -30,6 +30,7 @@ export class PlaylistComponent {
 
   constructor(private playlist: PlaylistService) {
     this.updateEmptyPlaylistComment();
+    setInterval(() => this.updateEmptyPlaylistComment(), 30000);
   }
 
   public get tracks(): TrackData[] {
