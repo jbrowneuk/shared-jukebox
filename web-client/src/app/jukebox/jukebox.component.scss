@@ -1,7 +1,10 @@
 @import 'palette';
 @import 'variables';
 
-$header-height: 150px;
+$sized-breakpoint: 768px;
+
+$header-height: 100px;
+$header-sized-height: 80px;
 
 /* .app-header */
 .app-header {
@@ -10,6 +13,10 @@ $header-height: 150px;
   height: $header-height;
   overflow: hidden;
   position: relative;
+
+  @media (max-width: $sized-breakpoint) {
+    height: $header-sized-height;
+  }
 }
 
 .header-content .row .col* {
@@ -20,18 +27,27 @@ h1 {
   font-size: 20px;
   margin: 0;
   padding: 0;
+
+  @media (max-width: $sized-breakpoint) {
+    margin-bottom: 4px;
+  }
 }
 
 .search-box {
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.25);
-  border: 1px solid black;
-  color: white;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid $color-dark;
+  color: $color-dark;
   padding: 4px 32px 4px 8px;
   transition: color 200ms, border-color 200ms, background-color 200ms;
 
+  &::placeholder {
+    opacity: 0.75;
+    transition: opacity 200ms;
+  }
+
   &:hover {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
   }
 
   &:focus {
@@ -39,14 +55,18 @@ h1 {
     border-color: black;
     color: black;
 
+    &::placeholder {
+      opacity: 0.25;
+    }
+
     & + .search-button {
-      color: $color-dark;
+      color: black;
     }
   }
 }
 
 .search-button {
-  color: $color-light;
+  color: $color-dark;
   margin: 0;
   margin-left: -32px;
   padding: 0;
@@ -65,5 +85,9 @@ h1 {
   height: calc(100vh - #{$header-height} - #{$now-playing-bar-height});
   overflow-x: hidden;
   overflow-y: auto;
+
+  @media (max-width: $sized-breakpoint) {
+    height: calc(100vh - #{$header-sized-height} - #{$now-playing-bar-height});
+  }
 }
 /* </> .app-main */

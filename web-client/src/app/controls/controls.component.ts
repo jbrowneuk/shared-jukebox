@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { AnimationSettings } from './now-playing.component.transitions';
+import { AnimationSettings } from './controls.component.transitions';
 import { PlaylistService } from '../playlist.service';
 import { Observable } from 'rxjs';
 import { PlayState, TrackData } from 'jukebox-common';
 
 @Component({
-  selector: 'app-now-playing',
-  templateUrl: './now-playing.component.html',
-  styleUrls: ['./now-playing.component.scss'],
+  selector: 'app-controls',
+  templateUrl: './controls.component.html',
+  styleUrls: ['./controls.component.scss'],
   animations: AnimationSettings
 })
-export class NowPlayingComponent {
+export class ControlsComponent {
 
   // For component template binding
   public PlayState = PlayState;

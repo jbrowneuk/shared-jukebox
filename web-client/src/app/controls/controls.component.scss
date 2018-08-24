@@ -1,8 +1,6 @@
 @import 'palette';
 @import 'variables';
 
-$color-nowplaying-muted: #b6c3d5;
-
 .now-playing-bar {
   background-color: $color-dark;
   color: $color-nowplaying-muted;
@@ -19,18 +17,21 @@ $icon-padding-y: 0;
 .control-button {
   background: transparent;
   border: none;
-  border-radius: 50%;
   color: $color-nowplaying-muted;
-  cursor: pointer;
   height: $icon-height + 2 * $icon-padding-y;
   padding: 0;
-  transition: color 200ms, background-color 200ms;
+  transition: color 200ms;
   text-align: center;
   vertical-align: middle;
   width: $icon-width + 2 * $icon-padding-x;
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: $color-highlight;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 
   .fa-fw {

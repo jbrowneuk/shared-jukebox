@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { PlayState } from 'jukebox-common';
 import { PlaylistService } from '../playlist.service';
 
-import { NowPlayingComponent } from './now-playing.component';
+import { ControlsComponent } from './controls.component';
 
 const mockTracks = [
   {
@@ -34,20 +34,20 @@ const mockTracks = [
 
 describe('NowPlayingComponent', () => {
   let mockPlaylistService: IMock<PlaylistService>;
-  let component: NowPlayingComponent;
-  let fixture: ComponentFixture<NowPlayingComponent>;
+  let component: ControlsComponent;
+  let fixture: ComponentFixture<ControlsComponent>;
 
   beforeEach(async(() => {
     mockPlaylistService = Mock.ofType<PlaylistService>();
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      declarations: [NowPlayingComponent],
+      declarations: [ControlsComponent],
       providers: [
         { provide: PlaylistService, useFactory: () => mockPlaylistService.object }
       ]
     }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(NowPlayingComponent);
+      fixture = TestBed.createComponent(ControlsComponent);
       component = fixture.componentInstance;
     });
   }));

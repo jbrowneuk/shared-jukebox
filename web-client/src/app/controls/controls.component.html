@@ -1,0 +1,37 @@
+<div class="now-playing-bar">
+  <div class="container h-100">
+    <div class="row h-100 d-flex align-items-center justify-content-between">
+      <div class="col-10 col-sm-2" *ngIf="playState$ | async as playState">
+        <button class="control-button position-relative" data-identifier="play-pause-button" (click)="onPlayClicked()">
+          <i class="fas fa-fw fa-play" *ngIf="playState != PlayState.Playing" [@playPauseTransition]></i>
+          <i class="fas fa-fw fa-pause" *ngIf="playState == PlayState.Playing" [@playPauseTransition]></i>
+        </button>
+        <button class="control-button position-relative" disabled>
+          <i class="fas fa-fw fa-step-forward"></i>
+        </button>
+        <div class="d-inline-block d-sm-none ml-1">
+          <ng-container *ngTemplateOutlet="trackInfo; context: { track: currentTrack }"></ng-container>
+        </div>
+      </div>
+      <div class="d-none d-sm-block col-12 col-sm-8 text-center text-truncate">
+        <ng-container *ngTemplateOutlet="trackInfo; context: { track: currentTrack }"></ng-container>
+      </div>
+      <div class="col-2 col-sm-2 text-md-right">
+        <button class="control-button position-relative" disabled>
+          <i class="fas fa-fw fa-volume-up"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #trackInfo let-track>
+  <ng-container *ngIf="track; else noTrackInfo">
+    <span class="align-middle track-title mr-2">{{currentTrack.title}}</span>
+    <span class="align-middle track-artist">{{currentTrack.artist}}</span>
+  </ng-container>
+</ng-template>
+
+<ng-template #noTrackInfo>
+  <span class="align-middle text-muted">No tracks</span>
+</ng-template>
