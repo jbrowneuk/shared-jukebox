@@ -1,6 +1,9 @@
 <h2 class="content-pane-title text-uppercase spaced-out">
   <i class="fal fa-fw fa-list"></i>
-  Now playing
+  Tracks
+  <ng-container *ngIf="playState$ | async as playState">
+    <span class="text-muted" *ngIf="tracks && tracks.length > 0 && playState != PlayState.Playing">not playing</span>
+  </ng-container>
 </h2>
 
 <div class="nothing-queued text-center text-muted" *ngIf="!tracks || tracks.length === 0" [@helpTransition]>
