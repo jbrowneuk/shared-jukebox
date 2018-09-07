@@ -5,6 +5,7 @@ import { PlayState } from 'jukebox-common';
 
 import { TrackData, ServerEvents, WebClientEvents } from 'jukebox-common';
 import { SocketService } from './socket.service';
+import { BrowserTitleService } from './browser-title.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class PlaylistService {
   private tracklist: TrackData[];
   private playstateSubject: BehaviorSubject<PlayState>;
 
-  constructor(private socket: SocketService) {
+  constructor(private socket: SocketService, private titleService: BrowserTitleService) {
     this.tracklist = [];
     this.playstateSubject = new BehaviorSubject<PlayState>(PlayState.Stopped);
 
@@ -75,12 +76,13 @@ export class PlaylistService {
     const hackySpecifierString =
       state.charAt(0).toUpperCase() + state.substring(1).toLowerCase();
     // Can the param be the enum?
-    const convertedState = PlayState[hackySpecifierString];
+    const convertedState: PlayState = PlayState[hackySpecifierString];
     if (!convertedState) {
       return;
     }
 
     this.playstateSubject.next(convertedState);
+    this.updateTitle(convertedState);
   }
 
   private handleSocketConnectionChanged(isConnected: boolean): void {
@@ -89,5 +91,17 @@ export class PlaylistService {
     }
 
     this.getStateFromSocket();
+  }
+
+  private updateTitle(newState: PlayState) {
+    if (newState === PlayState.Playing) {
+      return this.titleService.setTitle('▶️');
+    }
+
+    if (newState === PlayState.Paused) {
+      return this.titleService.setTitle('⏸');
+    }
+
+    this.titleService.resetTitle();
   }
 }
