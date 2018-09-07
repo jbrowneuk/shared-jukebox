@@ -25,12 +25,13 @@ export class PlaylistComponent {
 
   // For component template binding
   public PlayState = PlayState;
-
   public snarkyEmptyPlaylistComment: string;
+
+  private commentRefreshInterval: any; // HACK: Required for tests currently.
 
   constructor(private playlist: PlaylistService) {
     this.updateEmptyPlaylistComment();
-    setInterval(() => this.updateEmptyPlaylistComment(), 30000);
+    this.commentRefreshInterval = setInterval(() => this.updateEmptyPlaylistComment(), 30000);
   }
 
   public get tracks(): TrackData[] {

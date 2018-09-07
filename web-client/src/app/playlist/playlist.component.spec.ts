@@ -7,24 +7,25 @@ import { DurationPipe } from '../duration.pipe';
 import { PlaylistService } from '../playlist.service';
 
 describe('PlaylistComponent', () => {
-  let mockSocketService: IMock<PlaylistService>;
+  let mockPlaylistService: IMock<PlaylistService>;
   let component: PlaylistComponent;
   let fixture: ComponentFixture<PlaylistComponent>;
 
   beforeEach(async(() => {
-    mockSocketService = Mock.ofType<PlaylistService>();
+    mockPlaylistService = Mock.ofType<PlaylistService>();
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       declarations: [PlaylistComponent, DurationPipe],
       providers: [
-        { provide: PlaylistService, useFactory: () => mockSocketService.object }
+        { provide: PlaylistService, useFactory: () => mockPlaylistService.object }
       ]
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(PlaylistComponent);
         component = fixture.componentInstance;
+        clearInterval((component as any).commentRefreshInterval);
       });
   }));
 
