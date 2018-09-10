@@ -12,10 +12,12 @@ export class JukeboxComponent {
 
   public searchTerm: string;
   public isSearchFocus: boolean;
+  public playerError: boolean;
 
   constructor() {
     this.searchTerm = '';
     this.isSearchFocus = false;
+    this.playerError = false;
   }
 
   public get shouldShowSearchResults(): boolean {
