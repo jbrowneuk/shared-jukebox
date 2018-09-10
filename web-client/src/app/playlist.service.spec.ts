@@ -1,8 +1,10 @@
+import { BehaviorSubject } from 'rxjs';
 import { IMock, Mock, It, Times } from 'typemoq';
 
 import { SocketService } from './socket.service';
 import { PlaylistService } from './playlist.service';
 import { WebClientEvents, PlayState, ServerEvents } from 'jukebox-common';
+import { BrowserTitleService } from './browser-title.service';
 
 const mockTrack = {
   title: 'track1',
@@ -14,13 +16,19 @@ const mockTrack = {
 
 describe('PlaylistService', () => {
   let mockSocketService: IMock<SocketService>;
+  let mockTitleService: IMock<BrowserTitleService>;
+  let connectionSubject: BehaviorSubject<boolean>;
 
   beforeEach(() => {
+    connectionSubject = new BehaviorSubject<boolean>(true);
     mockSocketService = Mock.ofType<SocketService>();
+    mockSocketService.setup(s => s.connection$).returns(() => connectionSubject.asObservable());
+
+    mockTitleService = Mock.ofType<BrowserTitleService>();
   });
 
   it('should be created', () => {
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     expect(service).toBeTruthy();
     expect(service.tracks).toEqual([]);
@@ -29,7 +37,7 @@ describe('PlaylistService', () => {
   it('should request playlist and state on construction', () => {
     mockSocketService.setup(s => s.emit(It.isAny(), It.isAny(), It.isAny()));
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
     expect(service).toBeTruthy();
 
     mockSocketService.verify(
@@ -53,7 +61,7 @@ describe('PlaylistService', () => {
   });
 
   it('should toggle play state', () => {
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     service.togglePlayState();
 
@@ -71,7 +79,7 @@ describe('PlaylistService', () => {
     const playStates = [PlayState.Playing, PlayState.Paused, PlayState.Stopped];
     const recordedStates: PlayState[] = [];
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     service.playState$.subscribe(
       (state: PlayState) => {
@@ -105,7 +113,7 @@ describe('PlaylistService', () => {
       )
       .callback((_, callback: Function) => (eventRaiser = callback));
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     service.playState$.subscribe(
       (state: PlayState) => {
@@ -133,7 +141,7 @@ describe('PlaylistService', () => {
       .setup(s => s.subscribe(It.isValue(ServerEvents.QueuedTrack), It.isAny()))
       .callback((_, callback: Function) => (eventRaiser = callback));
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     eventRaiser(mockTrack);
 
@@ -149,7 +157,7 @@ describe('PlaylistService', () => {
       )
       .callback((_, callback: Function) => (eventRaiser = callback));
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     // Poke internal tracklist directly
     (service as any).tracklist = [mockTrack];
@@ -171,7 +179,7 @@ describe('PlaylistService', () => {
       )
       .callback((_, callback: Function) => (eventRaiser = callback));
 
-    const service = new PlaylistService(mockSocketService.object);
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
 
     // Poke internal tracklist directly
     (service as any).tracklist = [mockTrack];

@@ -5,20 +5,26 @@ import { IMock, Mock } from 'typemoq';
 import { PlaylistComponent } from './playlist.component';
 import { DurationPipe } from '../duration.pipe';
 import { PlaylistService } from '../playlist.service';
+import { BehaviorSubject } from 'rxjs';
+import { PlayState } from 'jukebox-common';
 
 describe('PlaylistComponent', () => {
-  let mockSocketService: IMock<PlaylistService>;
+  let mockPlaylistService: IMock<PlaylistService>;
   let component: PlaylistComponent;
   let fixture: ComponentFixture<PlaylistComponent>;
+  let playStateSubject: BehaviorSubject<PlayState>;
 
   beforeEach(async(() => {
-    mockSocketService = Mock.ofType<PlaylistService>();
+    playStateSubject = new BehaviorSubject<PlayState>(PlayState.Stopped);
+
+    mockPlaylistService = Mock.ofType<PlaylistService>();
+    mockPlaylistService.setup(s => s.playState$).returns(() => playStateSubject.asObservable());
 
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       declarations: [PlaylistComponent, DurationPipe],
       providers: [
-        { provide: PlaylistService, useFactory: () => mockSocketService.object }
+        { provide: PlaylistService, useFactory: () => mockPlaylistService.object }
       ]
     })
       .compileComponents()

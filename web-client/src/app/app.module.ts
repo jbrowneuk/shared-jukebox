@@ -11,6 +11,7 @@ import { SearchComponent } from './search/search.component';
 import { ControlsComponent } from './controls/controls.component';
 import { SocketService } from './socket.service';
 import { PlaylistService } from './playlist.service';
+import { BrowserTitleService } from './browser-title.service';
 import { DurationPipe } from './duration.pipe';
 
 @NgModule({
@@ -24,7 +25,7 @@ import { DurationPipe } from './duration.pipe';
     DurationPipe
   ],
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
-  providers: [SocketService, PlaylistService],
+  providers: [SocketService, PlaylistService, BrowserTitleService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

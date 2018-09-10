@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+
+import { PlayState, TrackData } from 'jukebox-common';
 
 import { AnimationSettings } from './playlist.component.transitions';
 import { PlaylistService } from '../playlist.service';
-import { Observable } from 'rxjs';
-import { PlayState, TrackData } from 'jukebox-common';
 
 const emptyComments = [
   'Or don’t. It’s not like I care.',
@@ -21,16 +22,23 @@ const emptyComments = [
   styleUrls: ['./playlist.component.scss'],
   animations: AnimationSettings
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnDestroy {
 
-  // For component template binding
-  public PlayState = PlayState;
-
+  public readonly PlayState = PlayState; // For component template binding
   public snarkyEmptyPlaylistComment: string;
 
+  private playstateSubscription: Subscription;
+
   constructor(private playlist: PlaylistService) {
-    this.updateEmptyPlaylistComment();
-    setInterval(() => this.updateEmptyPlaylistComment(), 30000);
+    this.playstateSubscription = playlist.playState$.subscribe(
+      (newState: PlayState) => this.handlePlayStateChange(newState),
+      (err: any) => {},
+      () => {}
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.playstateSubscription.unsubscribe();
   }
 
   public get tracks(): TrackData[] {
@@ -41,7 +49,11 @@ export class PlaylistComponent {
     return this.playlist.playState$;
   }
 
-  private updateEmptyPlaylistComment(): void {
+  private handlePlayStateChange(state: PlayState): void {
+    if (state !== PlayState.Stopped) {
+      return;
+    }
+
     this.snarkyEmptyPlaylistComment = emptyComments[Math.floor(Math.random() * emptyComments.length)];
   }
 

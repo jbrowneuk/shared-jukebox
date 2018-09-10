@@ -52,8 +52,10 @@ h1 {
 
   &:focus {
     background-color: white;
-    border-color: black;
+    border-color: $color-focus;
+    box-shadow: 0 0 2px 1px $color-focus;
     color: black;
+    outline: none;
 
     &::placeholder {
       opacity: 0.25;
