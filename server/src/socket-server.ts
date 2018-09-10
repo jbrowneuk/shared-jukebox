@@ -140,18 +140,18 @@ export class SocketServer {
   private togglePlaystate(socket: io.Socket, newState: string): void {
     const currentState = this.playlistClient.getPlayState();
 
-    console.log('New state:', newState);
-    console.log('current state:', currentState);
+    console.log('Requested state:', newState);
+    console.log('Server state:', currentState);
 
+    let requestedPlaystate: PlayState;
     if (newState === 'toggle') {
       console.log('Toggling');
-      this.playlistClient.togglePlaystate();
+      requestedPlaystate = currentState === PlayState.Playing ? PlayState.Paused : PlayState.Playing;
     } else {
-      this.playlistClient.setPlaystate(PlayState.Playing); // TODO
+      // TODO
     }
 
-    const requestedPlaystate = this.playlistClient.getPlayState();
-    console.log('Setting state:', requestedPlaystate);
+    console.log('Emitting new state to music client:', requestedPlaystate);
     socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
   }
 
@@ -164,6 +164,7 @@ export class SocketServer {
 
     this.server.emit(ServerEvents.DequeuedTrack, uri);
   }
+
   private handlePlayStateChanged(newState: PlayState): void {
     console.log('Got a new play state:', newState);
 
