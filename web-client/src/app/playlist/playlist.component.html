@@ -2,7 +2,7 @@
   <i class="fal fa-fw fa-list"></i>
   Tracks
   <ng-container *ngIf="playState$ | async as playState">
-    <span class="text-muted" *ngIf="tracks && tracks.length > 0 && playState != PlayState.Playing">not playing</span>
+    <small class="text-muted" *ngIf="tracks && tracks.length > 0 && playState != PlayState.Playing">not playing</small>
   </ng-container>
 </h2>
 
