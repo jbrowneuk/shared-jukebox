@@ -90,14 +90,11 @@ export class SearchComponent {
     this.resetDebounce();
 
     if (this.blockSearch) {
-      console.log('Too fast!');
       this.debounceTimeout = setTimeout(() => this.performSearchRequest(), 200);
       return;
     }
 
     this.blockSearch = true;
-
-    console.log('Searching for', this.cachedTerm);
     this.socket.emit(WebClientEvents.SearchQuery, this.cachedTerm, (data: TrackData[]) => {
       this.results = data.map(x => [x, false] as ResultsTuple);
       this.blockSearch = false;
