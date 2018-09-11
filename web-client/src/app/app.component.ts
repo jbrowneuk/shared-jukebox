@@ -3,11 +3,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServerEvents } from 'jukebox-common';
 
 import { SocketService } from './socket.service';
+import { AnimationSettings } from './common.transitions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: AnimationSettings
 })
 export class AppComponent implements OnInit, OnDestroy {
 
