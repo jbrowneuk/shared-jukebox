@@ -36,6 +36,16 @@
   &:not(:disabled):hover {
     background-color: $color-light;
   }
+
+  &.added {
+    background-color: $color-light;
+  }
+
+  .added-text {
+    color: $color-accent;
+    float: right;
+    margin-left: .5em;
+  }
 }
 
 .search-pane-header {
