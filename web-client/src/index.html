@@ -16,10 +16,8 @@
 </head>
 <body>
   <app-root>
-    <div class="text-center py-5">
-      <i class="fal fa-music fa-5x mb-3"></i>
-      <h1>One second…</h1>
-      <span class="text-muted">You’ll also need JavaScript for this to work.</span>
+    <div class="loading-cover" *ngIf="!isOnline" [@coverTransition]>
+      <i class="fal fa-fw fa-headphones fa-5x"></i>
     </div>
   </app-root>
 </body>
