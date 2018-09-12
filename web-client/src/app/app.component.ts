@@ -4,12 +4,13 @@ import { ServerEvents } from 'jukebox-common';
 
 import { SocketService } from './socket.service';
 import { AnimationSettings } from './common.transitions';
+import { AppComponentTransitions } from './app.component.transitions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: AnimationSettings
+  animations: [...AnimationSettings, ...AppComponentTransitions]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -25,6 +26,10 @@ export class AppComponent implements OnInit, OnDestroy {
       (err: any) => this.isConnected = false,
       () => subscription.unsubscribe()
     );
+  }
+
+  public get isOnline(): boolean {
+    return this.isConnected;
   }
 
   ngOnInit() {
