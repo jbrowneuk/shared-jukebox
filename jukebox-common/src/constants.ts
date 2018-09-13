@@ -23,6 +23,10 @@ export const MusicClientEvents = {
   SkipTrack: 'skip-track'
 };
 
+export const MusicClientConstants = {
+  PlayerName: 'jukebox-player'
+}
+
 export enum PlayState {
   Stopped = 'stopped',
   Paused = 'paused',

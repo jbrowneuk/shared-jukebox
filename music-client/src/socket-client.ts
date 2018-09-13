@@ -59,8 +59,8 @@ export class SocketClient {
 
   private onRequestedClientInfo(callback: Function): void {
     const clientInfo: ClientData = {
-      name: 'jukebox-player',
-      supportedApiVersion: 2
+      name: MusicClientConstants.PlayerName,
+      supportedApiVersion: 3
     };
 
     callback(clientInfo);
