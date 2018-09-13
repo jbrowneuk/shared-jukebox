@@ -5,7 +5,7 @@ import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
-const currentlySupportedApiVersion = 2;
+const currentlySupportedApiVersion = 3;
 
 export class SocketServer {
   private server: io.Server;
@@ -69,6 +69,8 @@ export class SocketServer {
     );
 
     socket.on(WebClientEvents.ChangePlaystate, (newState: string) => this.togglePlaystate(socket, newState));
+
+    socket.on(WebClientEvents.SongSkip, () => this.skipTrack(socket));
 
     socket.on(MusicClientEvents.DequeueTrack, (uri: string) => this.handleDequeueTrack(uri));
 
@@ -153,6 +155,12 @@ export class SocketServer {
 
     console.log('Emitting new state to music client:', requestedPlaystate);
     socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
+  }
+
+  private skipTrack(socket: io.Socket): void {
+    console.log('Emitting skip track to music client');
+
+    socket.broadcast.emit(MusicClientEvents.SkipTrack);
   }
 
   private handleDequeueTrack(uri: string): void {
