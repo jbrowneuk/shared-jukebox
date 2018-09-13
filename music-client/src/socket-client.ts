@@ -37,7 +37,9 @@ export class SocketClient {
 
     this.client.on(MopidyEvents.PlayStateChanged, (state: PlayState) => {
       this.socket.emit(MusicClientEvents.ChangedPlayState, state);
-    })
+    });
+
+    this.client.on(MusicClientEvents.SkipTrack, () => this.skipTrack());
   }
 
   private onConnected(): void {
@@ -92,5 +94,10 @@ export class SocketClient {
       .then(() => console.log('Added current playlist'));
 
     // this.socket.emit(WebClientEvents.RequestPlaystate, null, (tracks: TrackData[]) => {});
+  }
+
+  private skipTrack(): void {
+    console.log('Asking mopidy to skip current track');
+    this.client.skipTrack();
   }
 }
