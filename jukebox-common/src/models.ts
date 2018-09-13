@@ -4,7 +4,6 @@ export interface TrackData {
   artist: string;
   songId: string;
   lengthMs: number;
-  requestedBy?: string; // Intent to deprecate
 }
 
 export interface ClientData {
