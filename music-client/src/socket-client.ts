@@ -31,6 +31,7 @@ export class SocketClient {
     this.socket.on(MusicClientEvents.SetPlaystate, (state: PlayState) =>
       this.onReceivedPlayState(state)
     );
+    this.socket.on(MusicClientEvents.SkipTrack, () => this.skipTrack());
 
     this.client.on(MopidyEvents.TrackComplete, (uri: string) => {
       this.socket.emit(MusicClientEvents.DequeueTrack, uri);
@@ -39,8 +40,6 @@ export class SocketClient {
     this.client.on(MopidyEvents.PlayStateChanged, (state: PlayState) => {
       this.socket.emit(MusicClientEvents.ChangedPlayState, state);
     });
-
-    this.client.on(MusicClientEvents.SkipTrack, () => this.skipTrack());
   }
 
   private onConnected(): void {
