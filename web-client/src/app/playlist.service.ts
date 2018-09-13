@@ -33,6 +33,10 @@ export class PlaylistService {
     this.socket.emit(WebClientEvents.ChangePlaystate, 'toggle');
   }
 
+  public skipTrack(): void {
+    this.socket.emit(WebClientEvents.SongSkip, WebClientEvents.SongSkip);
+  }
+
   private subscribeToSocket(): void {
     this.socket.subscribe(ServerEvents.QueuedTrack, (data: TrackData) => {
       this.tracklist.push(data);
