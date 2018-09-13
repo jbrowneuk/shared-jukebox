@@ -7,7 +7,7 @@ import {
 } from '@angular/animations';
 import { DefaultTransitions } from './animation.settings';
 
-const loginPageTransition = trigger('fadeTransition', [
+const fadeTransition = trigger('fadeTransition', [
   transition(
     ':enter',
     animate(
@@ -30,4 +30,4 @@ const loginPageTransition = trigger('fadeTransition', [
   )
 ]);
 
-export const AnimationSettings = [loginPageTransition];
+export const AnimationSettings = [fadeTransition];

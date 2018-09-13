@@ -35,8 +35,8 @@
 
 <main class="app-main vertical-scrolling-panel">
   <div class="container bg-white collapsing-margins-fix position-relative stretch-to-fill-height">
-    <app-playlist></app-playlist>
-    <app-search [searchTerm]="searchTerm" *ngIf="shouldShowSearchResults" (closeResults)="onResultsClosed()" [@fadeTransition]></app-search>
+    <app-playlist [@searchModeTransition]="shouldShowSearchResults"></app-playlist>
+    <app-search [searchTerm]="searchTerm" *ngIf="shouldShowSearchResults" (closeResults)="onResultsClosed()" [@searchContainerTransition]></app-search>
   </div>
 </main>
 

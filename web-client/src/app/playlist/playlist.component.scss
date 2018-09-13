@@ -1,5 +1,9 @@
 @import 'palette';
 
+:host {
+  display: block
+}
+
 .nothing-queued,
 .track {
   padding: 8px 0;

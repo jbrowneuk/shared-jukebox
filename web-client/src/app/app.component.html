@@ -1,13 +1,19 @@
-<app-jukebox></app-jukebox>
+<div class="animation-box" *ngIf="isOnline" [@jukeboxLoadTransition]>
+  <app-jukebox></app-jukebox>
+</div>
 
-<div class="upgrade-banner py-1" *ngIf="requiresUpdate">
+<div class="loading-cover" *ngIf="!isOnline" [@coverTransition]>
+  <i class="fal fa-fw fa-headphones fa-5x"></i>
+</div>
+
+<div class="upgrade-banner py-1 modal-message" *ngIf="requiresUpdate" [@fadeTransition]>
   <div class="container text-center">
     You're using an <strong>outdated</strong> version of the Jukebot client.<br/>
     Please refresh the page to get the latest changes.
   </div>
 </div>
 
-<div class="connection-lost d-flex align-items-center justify-content-center" *ngIf="!isConnected">
+<div class="connection-lost d-flex align-items-center justify-content-center modal-message" *ngIf="!isOnline" [@fadeTransition]>
   <div class="card shadow" data-identifier="disconnected-message">
     <div class="card-body text-center">
       <h1 class="card-title text-uppercase spaced-out">Disconnected</h1>
@@ -16,5 +22,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #noUserTemplate>anonymous</ng-template>
