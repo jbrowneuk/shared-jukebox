@@ -5,7 +5,7 @@ import { ClientData, TrackData, ServerEvents, MusicClientEvents, WebClientEvents
 import { SpotifyApi } from './interfaces/spotify-api';
 import { Playlist } from './interfaces/playlist';
 
-const currentlySupportedApiVersion = 2;
+const currentlySupportedApiVersion = 3;
 
 export class SocketServer {
   private server: io.Server;
@@ -69,6 +69,8 @@ export class SocketServer {
     );
 
     socket.on(WebClientEvents.ChangePlaystate, (newState: string) => this.togglePlaystate(socket, newState));
+
+    socket.on(WebClientEvents.SongSkip, () => this.skipTrack(socket));
 
     socket.on(MusicClientEvents.DequeueTrack, (uri: string) => this.handleDequeueTrack(uri));
 
@@ -140,19 +142,25 @@ export class SocketServer {
   private togglePlaystate(socket: io.Socket, newState: string): void {
     const currentState = this.playlistClient.getPlayState();
 
-    console.log('New state:', newState);
-    console.log('current state:', currentState);
+    console.log('Requested state:', newState);
+    console.log('Server state:', currentState);
 
+    let requestedPlaystate: PlayState;
     if (newState === 'toggle') {
       console.log('Toggling');
-      this.playlistClient.togglePlaystate();
+      requestedPlaystate = currentState === PlayState.Playing ? PlayState.Paused : PlayState.Playing;
     } else {
-      this.playlistClient.setPlaystate(PlayState.Playing); // TODO
+      // TODO
     }
 
-    const requestedPlaystate = this.playlistClient.getPlayState();
-    console.log('Setting state:', requestedPlaystate);
+    console.log('Emitting new state to music client:', requestedPlaystate);
     socket.broadcast.emit(MusicClientEvents.SetPlaystate, requestedPlaystate);
+  }
+
+  private skipTrack(socket: io.Socket): void {
+    console.log('Emitting skip track to music client');
+
+    socket.broadcast.emit(MusicClientEvents.SkipTrack);
   }
 
   private handleDequeueTrack(uri: string): void {
@@ -164,6 +172,7 @@ export class SocketServer {
 
     this.server.emit(ServerEvents.DequeuedTrack, uri);
   }
+
   private handlePlayStateChanged(newState: PlayState): void {
     console.log('Got a new play state:', newState);
 

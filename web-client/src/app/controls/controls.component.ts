@@ -30,8 +30,12 @@ export class ControlsComponent {
     return this.playlist.tracks[0];
   }
 
-  public onPlayClicked() {
+  public onPlayClicked(): void {
     this.playlist.togglePlayState();
+  }
+
+  public onSkipClicked(): void {
+    this.playlist.skipTrack();
   }
 
 }

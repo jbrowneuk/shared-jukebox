@@ -6,7 +6,7 @@
           <i class="fas fa-fw fa-play" *ngIf="playState != PlayState.Playing" [@playPauseTransition]></i>
           <i class="fas fa-fw fa-pause" *ngIf="playState == PlayState.Playing" [@playPauseTransition]></i>
         </button>
-        <button class="control-button position-relative" disabled>
+        <button class="control-button position-relative" (click)="onSkipClicked()">
           <i class="fas fa-fw fa-step-forward"></i>
         </button>
         <div class="d-inline-block d-sm-none ml-1">

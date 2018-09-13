@@ -92,6 +92,18 @@ export class MopidyClient extends EventEmitter {
           console.log('-> pause');
           return this.mopidy.playback.pause();
         }
-      })
+      });
+  }
+
+  public skipTrack(): void {
+    this.mopidy.playback.getState()
+      .then((serverState: string) => {
+        if (serverState === PlayState.Stopped) {
+          return;
+        }
+
+        console.log('-> skip');
+        this.mopidy.playback.next();
+      });
   }
 }

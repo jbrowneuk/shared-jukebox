@@ -6,7 +6,8 @@ import {
   MusicClientEvents,
   ClientData,
   TrackData,
-  PlayState
+  PlayState,
+  MusicClientConstants
 } from 'jukebox-common';
 
 import { MopidyClient, MopidyEvents } from './mopidy-client';
@@ -30,6 +31,7 @@ export class SocketClient {
     this.socket.on(MusicClientEvents.SetPlaystate, (state: PlayState) =>
       this.onReceivedPlayState(state)
     );
+    this.socket.on(MusicClientEvents.SkipTrack, () => this.skipTrack());
 
     this.client.on(MopidyEvents.TrackComplete, (uri: string) => {
       this.socket.emit(MusicClientEvents.DequeueTrack, uri);
@@ -37,7 +39,7 @@ export class SocketClient {
 
     this.client.on(MopidyEvents.PlayStateChanged, (state: PlayState) => {
       this.socket.emit(MusicClientEvents.ChangedPlayState, state);
-    })
+    });
   }
 
   private onConnected(): void {
@@ -57,8 +59,8 @@ export class SocketClient {
 
   private onRequestedClientInfo(callback: Function): void {
     const clientInfo: ClientData = {
-      name: 'jukebox-player',
-      supportedApiVersion: 2
+      name: MusicClientConstants.PlayerName,
+      supportedApiVersion: 3
     };
 
     callback(clientInfo);
@@ -92,5 +94,10 @@ export class SocketClient {
       .then(() => console.log('Added current playlist'));
 
     // this.socket.emit(WebClientEvents.RequestPlaystate, null, (tracks: TrackData[]) => {});
+  }
+
+  private skipTrack(): void {
+    console.log('Asking mopidy to skip current track');
+    this.client.skipTrack();
   }
 }
