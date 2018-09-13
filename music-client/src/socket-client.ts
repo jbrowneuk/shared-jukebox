@@ -6,7 +6,8 @@ import {
   MusicClientEvents,
   ClientData,
   TrackData,
-  PlayState
+  PlayState,
+  MusicClientConstants
 } from 'jukebox-common';
 
 import { MopidyClient, MopidyEvents } from './mopidy-client';
