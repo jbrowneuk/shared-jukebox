@@ -12,13 +12,15 @@ export const WebClientEvents = {
   RequestPlaystate: 'get-playstate',
   SearchQuery: 'query',
   SongRequest: 'request',
-  ChangePlaystate: 'change-playstate'
+  ChangePlaystate: 'change-playstate',
+  SongSkip: 'skip'
 }
 
 export const MusicClientEvents = {
   SetPlaystate: 'set-playstate',
   DequeueTrack: 'dequeue-track',
-  ChangedPlayState: 'changed-playstate'
+  ChangedPlayState: 'changed-playstate',
+  SkipTrack: 'skip-track'
 };
 
 export enum PlayState {
