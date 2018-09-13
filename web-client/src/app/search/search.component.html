@@ -1,15 +1,8 @@
 <div class="w-100 d-flex align-items-center justify-content-between search-pane-header">
-  <h2 class="content-pane-title text-uppercase spaced-out">
-    <i class="fal fa-fw fa-search"></i>
-    Search
-  </h2>
-
-  <div *ngIf="searching">
-    <app-spinner></app-spinner>
-    Searching…
-  </div>
-
-  <button class="borderless-button px-0" data-identifier="close-search-pane" (click)="onCloseClicked()">
+  <button class="px0 borderless-button content-pane-title text-uppercase spaced-out" data-identifier="close-search-pane" (click)="onCloseClicked()">
+    <i class="fal fa-fw fa-chevron-left"></i> Tracks
+  </button>
+  <button class="px0 borderless-button" (click)="onCloseClicked()">
     Close search <i class="fal fa-fw fa-times"></i>
   </button>
 </div>
@@ -40,4 +33,9 @@
   <ng-container *ngIf="searchTerm.length == 0 && !searching">
     <h3 class="h6 text-uppercase spaced-out">Keep typing to search</h3>
   </ng-container>
+</div>
+
+<div *ngIf="searching" class="search-overlay">
+  <app-spinner isLarge="true"></app-spinner>
+  <div class="h1 ml-4 text-muted">Searching…</div>
 </div>

@@ -17,7 +17,7 @@
 .results-area {
   max-height: calc(100% - #{$content-pane-title-height + 2 * $content-pane-margin});
   overflow-x: visible;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .result {
@@ -51,4 +51,22 @@
 .search-pane-header {
   border-bottom: 1px solid $color-light;
   padding: 0 15px;
+}
+
+.search-overlay {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.borderless-button {
+  transition: color 200ms;
+
+  &:hover {
+    color: $color-focus;
+  }
 }
