@@ -1,45 +1,43 @@
-<div class="results-area-container">
-  <div class="w-100 d-flex align-items-center justify-content-between search-pane-header">
-    <h2 class="content-pane-title text-uppercase spaced-out">
-      <i class="fal fa-fw fa-search"></i>
-      Search
-    </h2>
+<div class="w-100 d-flex align-items-center justify-content-between search-pane-header">
+  <h2 class="content-pane-title text-uppercase spaced-out">
+    <i class="fal fa-fw fa-search"></i>
+    Search
+  </h2>
 
-    <div *ngIf="searching">
-      <app-spinner></app-spinner>
-      Searching…
-    </div>
-
-    <button class="borderless-button px-0" data-identifier="close-search-pane" (click)="onCloseClicked()">
-      Close search <i class="fal fa-fw fa-times"></i>
-    </button>
+  <div *ngIf="searching">
+    <app-spinner></app-spinner>
+    Searching…
   </div>
 
-  <div class="results-area" id="search-results" *ngIf="results && results.length > 0">
-    <button *ngFor="let tuple of results; let id=index" class="result row text-left" [attr.data-identifier]="'result-' + id"
-      (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [class.added]="tuple[1]"
-      [@searchResultTransition]>
-      <div class="col-12 col-sm-4 col-md-5" data-identifier="track-title">
-        <div class="added-text" *ngIf="tuple[1]">(added)</div>
-        <div class="text-truncate">
-          <i class="fal fa-fw mr-1" [class.fa-plus-square]="!tuple[1]" [class.fa-check-square]="tuple[1]"></i>
-          {{tuple[0].title}}
-        </div>
+  <button class="borderless-button px-0" data-identifier="close-search-pane" (click)="onCloseClicked()">
+    Close search <i class="fal fa-fw fa-times"></i>
+  </button>
+</div>
+
+<div class="results-area" id="search-results" *ngIf="results && results.length > 0">
+  <button *ngFor="let tuple of results; let id=index" class="result row text-left" [attr.data-identifier]="'result-' + id"
+    (click)="onTermClicked(tuple[0].songId)" [disabled]="tuple[1]" [class.pointer]="!tuple[1]" [class.added]="tuple[1]"
+    [@searchResultTransition]>
+    <div class="col-12 col-sm-4 col-md-5" data-identifier="track-title">
+      <div class="added-text" *ngIf="tuple[1]">(added)</div>
+      <div class="text-truncate">
+        <i class="fal fa-fw mr-1" [class.fa-plus-square]="!tuple[1]" [class.fa-check-square]="tuple[1]"></i>
+        {{tuple[0].title}}
       </div>
-      <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-artist">{{tuple[0].artist}}</div>
-      <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-album">{{tuple[0].album}}</div>
-      <div class="col-2 col-sm-2 col-md-1 text-truncate text-right" data-identifier="track-duration">{{tuple[0].lengthMs
-        | duration}}</div>
-    </button>
-  </div>
+    </div>
+    <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-artist">{{tuple[0].artist}}</div>
+    <div class="col-5 col-sm-3 col-md-3 text-truncate text-muted" data-identifier="track-album">{{tuple[0].album}}</div>
+    <div class="col-2 col-sm-2 col-md-1 text-truncate text-right" data-identifier="track-duration">{{tuple[0].lengthMs
+      | duration}}</div>
+  </button>
+</div>
 
-  <div class="empty-results pt-3 text-muted text-center" *ngIf="results && results.length == 0">
-    <ng-container *ngIf="searchTerm.length > 0 && !searching">
-      <h3 class="h6 text-uppercase spaced-out">No results for “{{searchTerm}}”</h3>
-      <p>Please make sure your words are spelt correctly or use different keywords.</p>
-    </ng-container>
-    <ng-container *ngIf="searchTerm.length == 0 && !searching">
-      <h3 class="h6 text-uppercase spaced-out">Keep typing to search</h3>
-    </ng-container>
-  </div>
+<div class="empty-results pt-3 text-muted text-center" *ngIf="results && results.length == 0">
+  <ng-container *ngIf="searchTerm.length > 0 && !searching">
+    <h3 class="h6 text-uppercase spaced-out">No results for “{{searchTerm}}”</h3>
+    <p>Please make sure your words are spelt correctly or use different keywords.</p>
+  </ng-container>
+  <ng-container *ngIf="searchTerm.length == 0 && !searching">
+    <h3 class="h6 text-uppercase spaced-out">Keep typing to search</h3>
+  </ng-container>
 </div>

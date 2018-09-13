@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
 import { AnimationSettings } from '../common.transitions';
+import { JukeboxAnimationSettings } from './jukebox.component.transitions';
 
 @Component({
   selector: 'app-jukebox',
   templateUrl: './jukebox.component.html',
   styleUrls: ['./jukebox.component.scss'],
-  animations: AnimationSettings
+  animations: [...AnimationSettings, ...JukeboxAnimationSettings]
 })
 export class JukeboxComponent {
 
