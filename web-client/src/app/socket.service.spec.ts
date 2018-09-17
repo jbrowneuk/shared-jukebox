@@ -78,4 +78,26 @@ describe('SocketService', () => {
 
     socket.verify(s => s.emit(It.isValue(event), It.isValue(payload), It.isAny()), Times.once());
   });
+
+  it('should add subscriber to socket', () => {
+    socket.setup(s => s.on(It.isAny(), It.isAny()));
+
+    const eventName = 'COMPLEX TRIANGULAR RELATIONSHIP BREAK';
+
+    const service = new SocketService();
+    service.subscribe(eventName, () => {});
+
+    socket.verify(s => s.on(It.isValue(eventName), It.isAny()), Times.once());
+  });
+
+  it('should remove subscriber from socket', () => {
+    socket.setup(s => s.off(It.isAny(), It.isAny()));
+
+    const eventName = 'bought it for son as he request';
+
+    const service = new SocketService();
+    service.unsubscribe(eventName, () => {});
+
+    socket.verify(s => s.off(It.isValue(eventName), It.isAny()), Times.once());
+  });
 });
