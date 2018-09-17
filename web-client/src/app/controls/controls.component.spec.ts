@@ -75,4 +75,12 @@ describe('NowPlayingComponent', () => {
       done();
     });
   });
+
+  it('should skip track using service', () => {
+    mockPlaylistService.setup(s => s.skipTrack());
+
+    component.onSkipClicked();
+
+    mockPlaylistService.verify(s => s.skipTrack(), Times.once());
+  });
 });
