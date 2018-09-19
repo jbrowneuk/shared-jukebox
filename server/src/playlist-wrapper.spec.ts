@@ -1,5 +1,5 @@
 import { PlaylistWrapper } from './playlist-wrapper';
-import { TrackData, PlayState } from 'jukebox-common';
+import { PlayState } from 'jukebox-common';
 
 const mockTrackId = 'id12345';
 const mockTrack = { title: 't', album: 'a', artist: 'r', songId: mockTrackId, lengthMs: 5 };
@@ -73,6 +73,18 @@ describe('Playlist wrapper', () => {
       service.togglePlaystate();
 
       expect(service.getPlayState()).toEqual(PlayState.Paused);
+    });
+  });
+
+  describe('setPlaystate', () => {
+    it('should update internal playstate', () => {
+      const service = new PlaylistWrapper();
+
+      const states = [PlayState.Paused, PlayState.Playing, PlayState.Stopped];
+      states.forEach((state) => {
+        service.setPlaystate(state);
+        expect(service.getPlayState()).toEqual(state);
+      });
     });
   });
 
