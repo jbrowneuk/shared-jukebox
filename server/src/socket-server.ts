@@ -115,8 +115,14 @@ export class SocketServer {
       lengthMs: trackInfo.lengthMs || 0
     };
 
+    const playAfterAdding = this.playlistClient.getTracks().length === 0;
+
     this.playlistClient.addTrack(saferTrackInfo);
     this.server.emit(ServerEvents.QueuedTrack, saferTrackInfo);
+
+    if (playAfterAdding && this.playlistClient.getPlayState() !== PlayState.Playing) {
+      this.server.emit(MusicClientEvents.SetPlaystate, PlayState.Playing);
+    }
 
     if (callback && typeof callback === 'function') {
       callback(saferTrackInfo);
