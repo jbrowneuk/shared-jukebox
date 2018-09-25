@@ -6,7 +6,7 @@ import { PlaylistComponent } from './playlist.component';
 import { DurationPipe } from '../duration.pipe';
 import { PlaylistService } from '../playlist.service';
 import { BehaviorSubject } from 'rxjs';
-import { PlayState } from 'jukebox-common';
+import { PlayState, TrackData } from 'jukebox-common';
 
 describe('PlaylistComponent', () => {
   let mockPlaylistService: IMock<PlaylistService>;
@@ -36,5 +36,41 @@ describe('PlaylistComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return track list', () => {
+    const mockTracks: TrackData[] = [
+      { title: 't', album: 'a', artist: 'r', songId: 'i', lengthMs: 5 }
+    ];
+
+    mockPlaylistService.setup(s => s.tracks).returns(() => mockTracks);
+    const tracks = component.tracks;
+
+    expect(tracks).toEqual(mockTracks);
+  });
+
+  it('should return playstate as observable', (done: DoneFn) => {
+    const states = [PlayState.Playing, PlayState.Paused, PlayState.Stopped];
+    const receivedStates = [];
+
+    const sub = component.playState$.subscribe(
+      (s: PlayState) => {
+        receivedStates.push(s);
+
+        // length + 1 as the initial state is recorded as well
+        if (receivedStates.length < states.length + 1) {
+          return;
+        }
+
+        expect(receivedStates).toEqual([PlayState.Stopped, ...states]);
+        done();
+      },
+      (err: any) => fail(err),
+      () => sub.unsubscribe()
+    );
+
+    states.forEach((state: PlayState) => {
+      playStateSubject.next(state);
+    });
   });
 });

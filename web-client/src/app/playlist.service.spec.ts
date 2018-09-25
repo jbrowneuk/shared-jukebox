@@ -102,7 +102,7 @@ describe('PlaylistService', () => {
     });
   });
 
-  it('Should update play state when value is pushed to socket', (done: DoneFn) => {
+  it('should update play state when value is pushed to socket', (done: DoneFn) => {
     const playStates = [PlayState.Playing, PlayState.Paused, PlayState.Stopped];
     const recordedStates: PlayState[] = [];
     let eventRaiser: Function = null;
@@ -190,5 +190,14 @@ describe('PlaylistService', () => {
       expect(service.tracks).toContain(mockTrack);
       done();
     });
+  });
+
+  it('should skip a track', () => {
+    mockSocketService.setup(s => s.emit(It.isAny(), It.isAny()));
+
+    const service = new PlaylistService(mockSocketService.object, mockTitleService.object);
+    service.skipTrack();
+
+    mockSocketService.verify(s => s.emit(It.isValue(WebClientEvents.SongSkip), It.isAny()), Times.once());
   });
 });
