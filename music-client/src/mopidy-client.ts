@@ -7,7 +7,7 @@ export const MopidyEvents = {
   Offline: 'offline',
   TrackComplete: 'track-complete',
   PlayStateChanged: 'playstate-changed'
-}
+};
 
 export class MopidyClient extends EventEmitter {
   private mopidy: any;

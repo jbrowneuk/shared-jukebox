@@ -14,7 +14,7 @@ export const WebClientEvents = {
   SongRequest: 'request',
   ChangePlaystate: 'change-playstate',
   SongSkip: 'skip'
-}
+};
 
 export const MusicClientEvents = {
   SetPlaystate: 'set-playstate',
@@ -25,10 +25,10 @@ export const MusicClientEvents = {
 
 export const MusicClientConstants = {
   PlayerName: 'jukebox-player'
-}
+};
 
 export enum PlayState {
   Stopped = 'stopped',
   Paused = 'paused',
   Playing = 'playing'
-}
+};
