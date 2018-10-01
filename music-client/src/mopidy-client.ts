@@ -45,7 +45,7 @@ export class MopidyClient extends EventEmitter {
 
     this.mopidy.on('state:offline', () => {
       this.emit(MopidyEvents.Offline);
-    })
+    });
 
     this.mopidy.on('event:trackPlaybackStarted', (event: any) => {
       this.mopidyTrack = event.tl_track.track;
