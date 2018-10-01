@@ -13,19 +13,25 @@ export class MopidyClient extends EventEmitter {
   private mopidy: any;
   private mopidyTrack: any;
 
-  constructor(private mopidyUrl: string) {
+  constructor(private mopidyUrl: string, private mopidyFactory?: (url: string) => any) {
     super();
 
     this.mopidy = null;
     this.mopidyTrack = null;
+
+    if (!this.mopidyFactory) {
+      this.mopidyFactory = (url: string) => {
+        return new Mopidy({
+          autoConnect: false,
+          callingConvention: 'by-position-only',
+          webSocketUrl: url
+        });
+      };
+    }
   }
 
   public initialize(): void {
-    this.mopidy = new Mopidy({
-      autoConnect: false,
-      callingConvention: 'by-position-only',
-      webSocketUrl: this.mopidyUrl
-    });
+    this.mopidy = this.mopidyFactory(this.mopidyUrl);
 
     this.mopidy.on('state:online', () => {
       this.mopidy.tracklist.setConsume(true).then(() => {
